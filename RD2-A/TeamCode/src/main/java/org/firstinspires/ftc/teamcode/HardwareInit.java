@@ -37,7 +37,7 @@ public class HardwareInit {
 //
         armTurner = hwMap.get(Servo.class, "armTurner");
 //        webcam = hwMap.get(WebcamName.class, "Webcam");
-       clawServo = hwMap.get(Servo.class, "clawServo");
+        clawServo = hwMap.get(Servo.class, "clawServo");
         //clawServo = hwMap.get(Servo.class, "clawServo");
 
         // Reset encoders
@@ -59,7 +59,7 @@ public class HardwareInit {
             rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
             //frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-            rearLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+            //rearLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         } else {
             frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -74,7 +74,10 @@ public class HardwareInit {
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Set motor directions
+
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         rearLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rearRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 }
