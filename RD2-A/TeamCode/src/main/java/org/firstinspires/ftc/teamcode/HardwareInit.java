@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
@@ -75,9 +76,12 @@ public class HardwareInit {
 
         // Set motor directions
 
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        rearLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        rearRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rearLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rearRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);  //probleme la strafe
+        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
+
     }
 }
