@@ -35,9 +35,9 @@ public class HardwareInit {
         //ballGrabber = hwMap.dcMotor.get("ballGrabber");
         //clawLifter = hwMap.dcMotor.get("clawLifter");
 
-//
+
         armTurner = hwMap.get(Servo.class, "armTurner");
-//        webcam = hwMap.get(WebcamName.class, "Webcam");
+        //webcam = hwMap.get(WebcamName.class, "Webcam");
         clawServo = hwMap.get(Servo.class, "clawServo");
         //clawServo = hwMap.get(Servo.class, "clawServo");
 
