@@ -78,7 +78,7 @@ public class HardwareInit {
 
         frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rearLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        rearRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);  //probleme la strafe
+        rearRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
