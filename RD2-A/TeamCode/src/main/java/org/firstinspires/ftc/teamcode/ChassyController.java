@@ -27,7 +27,7 @@ public class ChassyController {
         double gp1RotationX = _gamepad1.right_stick_x;
 
         double denominator = Math.max(Math.abs(gp1Y) + Math.abs(gp1X) + Math.abs(gp1RotationX), 1);
-        double frontLefPower = ((gp1Y - gp1X -gp1RotationX)/denominator);
+        double frontLefPower = ((gp1Y + gp1X -gp1RotationX)/denominator);
         double rearLeftPower = ((gp1Y- gp1X - gp1RotationX)/denominator);
         double frontRightPower = ((gp1Y- gp1X + gp1RotationX)/denominator);
         double rearRightPower = ((gp1Y+ gp1X + gp1RotationX)/denominator);
