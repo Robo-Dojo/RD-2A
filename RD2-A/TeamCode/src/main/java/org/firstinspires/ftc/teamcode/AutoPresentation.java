@@ -31,86 +31,152 @@ public class AutoPresentation extends LinearOpMode {
             rd1.frontRightMotor.setPower(1);
             rd1.rearLeftMotor.setPower(1);
             rd1.rearRightMotor.setPower(1);
+            sleep(400);  // Move forward for 0.4 seconds, towards front limit
 
-            sleep(440);  // Move forward for 0.44 seconds, towards front limit
+            rd1.frontLeftMotor.setPower(0);
+            rd1.frontRightMotor.setPower(0);
+            rd1.rearLeftMotor.setPower(0);
+            rd1.rearRightMotor.setPower(0);
+            sleep(300);
 
             rd1.frontLeftMotor.setPower(-1);
             rd1.frontRightMotor.setPower(-1);
             rd1.rearLeftMotor.setPower(-1);
             rd1.rearRightMotor.setPower(-1);
+            sleep(800); // Move backwards for 0.5 seconds, towards back limit
 
-            sleep(880); // Move backwards for 0.88 seconds, towards back limit
+            rd1.frontLeftMotor.setPower(0);
+            rd1.frontRightMotor.setPower(0);
+            rd1.rearLeftMotor.setPower(0);
+            rd1.rearRightMotor.setPower(0);
+            sleep(300);
+
+            rd1.frontLeftMotor.setPower(1);
+            rd1.frontRightMotor.setPower(1);
+            rd1.rearLeftMotor.setPower(1);
+            rd1.rearRightMotor.setPower(1);
+            sleep(400);  // Move forward for 0.4 seconds, returns to starting point
+
+            rd1.frontLeftMotor.setPower(0);
+            rd1.frontRightMotor.setPower(0);
+            rd1.rearLeftMotor.setPower(0);
+            rd1.rearRightMotor.setPower(0);
+            sleep(300);
 
             rd1.frontLeftMotor.setPower(1);
             rd1.frontRightMotor.setPower(-1);
             rd1.rearLeftMotor.setPower(-1);
             rd1.rearRightMotor.setPower(1);
+            sleep(400);  // Move right for 0.4 seconds, towards right limit
 
-            sleep(440);  // Move forward for 0.44 seconds, returns to starting point
+            rd1.frontLeftMotor.setPower(0);
+            rd1.frontRightMotor.setPower(0);
+            rd1.rearLeftMotor.setPower(0);
+            rd1.rearRightMotor.setPower(0);
+            sleep(300);
 
             rd1.frontLeftMotor.setPower(-1);
+            rd1.frontRightMotor.setPower(1);
+            rd1.rearLeftMotor.setPower(1);
+            rd1.rearRightMotor.setPower(-1);
+            sleep(800); // Move left for 0.8 seconds, towards left limit
+
+            rd1.frontLeftMotor.setPower(0);
+            rd1.frontRightMotor.setPower(0);
+            rd1.rearLeftMotor.setPower(0);
+            rd1.rearRightMotor.setPower(0);
+            sleep(300);
+
+            rd1.frontLeftMotor.setPower(1);
             rd1.frontRightMotor.setPower(-1);
             rd1.rearLeftMotor.setPower(-1);
-            rd1.rearRightMotor.setPower(-1);
+            rd1.rearRightMotor.setPower(1);
+            sleep(400);  // Move right for 0.4 seconds, returns to starting point
 
-            sleep(440);  // Move right for 0.44 seconds, towards right limit
+            rd1.frontLeftMotor.setPower(0);
+            rd1.frontRightMotor.setPower(0);
+            rd1.rearLeftMotor.setPower(0);
+            rd1.rearRightMotor.setPower(0);
+            sleep(300);
 
-            rd1.frontLeftMotor.setPower(-1);
+            rd1.frontLeftMotor.setPower(1);
             rd1.frontRightMotor.setPower(1);
             rd1.rearLeftMotor.setPower(1);
-            rd1.rearRightMotor.setPower(-1);
+            rd1.rearRightMotor.setPower(1);
+            sleep(400);  // Move forward for 0.4 seconds, towards upper right limit
 
-            sleep(880); // Move left for 0.88 seconds, towards left limit
-
-            rd1.frontLeftMotor.setPower(-1);
-            rd1.frontRightMotor.setPower(1);
-            rd1.rearLeftMotor.setPower(1);
-            rd1.rearRightMotor.setPower(-1);
-
-            sleep(440);  // Move right for 0.44 seconds, returns to starting point
+            rd1.frontLeftMotor.setPower(0);
+            rd1.frontRightMotor.setPower(0);
+            rd1.rearLeftMotor.setPower(0);
+            rd1.rearRightMotor.setPower(0);
+            sleep(300);
 
             rd1.frontLeftMotor.setPower(-1);
-            rd1.frontRightMotor.setPower(1);
-            rd1.rearLeftMotor.setPower(1);
             rd1.rearRightMotor.setPower(-1);
+            sleep(800); // Move backwards for 0.8 seconds, towards lower left limit
 
-            sleep(440);  // Move forward for 0.44 seconds, towards upper right limit
+            rd1.frontLeftMotor.setPower(0);
+            rd1.frontRightMotor.setPower(0);
+            rd1.rearLeftMotor.setPower(0);
+            rd1.rearRightMotor.setPower(0);
+            sleep(300);
 
             rd1.frontLeftMotor.setPower(1);
             rd1.rearRightMotor.setPower(1);
+            sleep(200);  // Move forward for 0.4 seconds, returns to starting point
 
-            sleep(880); // Move backwards for 0.88 seconds, towards lower left limit
-
-            rd1.frontLeftMotor.setPower(-1);
-            rd1.rearRightMotor.setPower(-1);
-
-            sleep(440);  // Move forward for 0.44 seconds, returns to starting point
-
-            rd1.frontLeftMotor.setPower(1);
-            rd1.rearRightMotor.setPower(1);
-
-            sleep(440);  // Move forward for 0.44 seconds, towards upper left limit
+            rd1.frontLeftMotor.setPower(0);
+            rd1.frontRightMotor.setPower(0);
+            rd1.rearLeftMotor.setPower(0);
+            rd1.rearRightMotor.setPower(0);
+            sleep(300);
 
             rd1.frontRightMotor.setPower(1);
             rd1.rearLeftMotor.setPower(1);
+            sleep(200);  // Move forward for 0.4 seconds, towards upper left limit
 
-            sleep(880); // Move backwards for 0.88 seconds, towards lower right limit
+            rd1.frontLeftMotor.setPower(0);
+            rd1.frontRightMotor.setPower(0);
+            rd1.rearLeftMotor.setPower(0);
+            rd1.rearRightMotor.setPower(0);
+            sleep(300);
 
             rd1.frontRightMotor.setPower(-1);
             rd1.rearLeftMotor.setPower(-1);
+            sleep(800); // Move backwards for 0.8 seconds, towards lower right limit
 
-            sleep(440);  // Move forward for 0.44 seconds, returns to starting point
+            rd1.frontLeftMotor.setPower(0);
+            rd1.frontRightMotor.setPower(0);
+            rd1.rearLeftMotor.setPower(0);
+            rd1.rearRightMotor.setPower(0);
+            sleep(300);
 
             rd1.frontRightMotor.setPower(1);
             rd1.rearLeftMotor.setPower(1);
+            sleep(200);  // Move forward for 0.4 seconds, returns to starting point
 
-            sleep(2000); // Will rotate for 2 seconds
+            rd1.frontLeftMotor.setPower(0);
+            rd1.frontRightMotor.setPower(0);
+            rd1.rearLeftMotor.setPower(0);
+            rd1.rearRightMotor.setPower(0);
+            sleep(300);
+
+            rd1.frontLeftMotor.setPower(-1);
+            rd1.frontRightMotor.setPower(1);
+            rd1.rearLeftMotor.setPower(-1);
+            rd1.rearRightMotor.setPower(1);
+            sleep(1800); // Will rotate for 2 seconds
+
+            rd1.frontLeftMotor.setPower(0);
+            rd1.frontRightMotor.setPower(0);
+            rd1.rearLeftMotor.setPower(0);
+            rd1.rearRightMotor.setPower(0);
+            sleep(300);
 
             rd1.frontLeftMotor.setPower(1);
             rd1.frontRightMotor.setPower(-1);
             rd1.rearLeftMotor.setPower(1);
             rd1.rearRightMotor.setPower(-1);
-
             sleep(1000); // Motors stop
 
             rd1.frontLeftMotor.setPower(0);
