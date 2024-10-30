@@ -46,18 +46,21 @@ public class ArmController {
         telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
         telemetry.update();
         // get joystick params
-        if (rd1.armLifterMotorLeft.getCurrentPosition() < 1500 && rd1.armLifterMotorRight.getCurrentPosition() < 1500 && _gamepad2.right_trigger > 0) {
+        if ( _gamepad2.right_trigger > 0) {
             this.rd1.armLifterMotorLeft.setPower(0.30);
             this.rd1.armLifterMotorRight.setPower(-0.30);
             telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
             telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
             telemetry.update();
-        } else if (rd1.armLifterMotorLeft.getCurrentPosition() > 0 && rd1.armLifterMotorRight.getCurrentPosition() > -10 && _gamepad2.left_trigger > 0) {
+        } else if (_gamepad2.left_trigger > 0) {
             this.rd1.armLifterMotorLeft.setPower(-0.30);
             this.rd1.armLifterMotorRight.setPower(0.30);
             telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
             telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
             telemetry.update();
+        } else {
+            this.rd1.armLifterMotorLeft.setPower(0);
+            this.rd1.armLifterMotorRight.setPower(0);
         }
     }
 }

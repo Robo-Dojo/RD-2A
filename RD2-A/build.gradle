@@ -8,7 +8,7 @@ buildscript {
     ext {
         agp_version = '8.5.6'
         agp_version1 = agp_version
-        agp_version2 = '8.6.1'
+        agp_version2 = '8.5.2'
     }
     repositories {
         mavenCentral()
