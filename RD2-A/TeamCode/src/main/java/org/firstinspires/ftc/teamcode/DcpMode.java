@@ -23,6 +23,7 @@ public class DcpMode extends LinearOpMode {
             ChassyController.dcpMovement(gamepad1);
             //ArmController.armTurner(gamepad2);
             ArmController.clawServo(gamepad2);
+            ArmController.armLifter(gamepad2);
 
             telemetry.update();
         }

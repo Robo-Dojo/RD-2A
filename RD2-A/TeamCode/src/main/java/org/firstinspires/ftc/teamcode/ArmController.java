@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode;
-
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -37,6 +37,26 @@ public class ArmController {
         } else if (_gamepad2.left_trigger > 0) {
             rd1.clawServo.setPosition(0.96);
             telemetry.addData("Gheara inchisa, plasat la pozitia: ", rd1.clawServo.getPosition());
+            telemetry.update();
+        }
+    }
+
+    public void armLifter(Gamepad _gamepad2) {
+        telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
+        telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
+        telemetry.update();
+        // get joystick params
+        if (rd1.armLifterMotorLeft.getCurrentPosition() < 1500 && rd1.armLifterMotorRight.getCurrentPosition() < 1500 && _gamepad2.right_trigger > 0) {
+            this.rd1.armLifterMotorLeft.setPower(0.30);
+            this.rd1.armLifterMotorRight.setPower(-0.30);
+            telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
+            telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
+            telemetry.update();
+        } else if (rd1.armLifterMotorLeft.getCurrentPosition() > 0 && rd1.armLifterMotorRight.getCurrentPosition() > -10 && _gamepad2.left_trigger > 0) {
+            this.rd1.armLifterMotorLeft.setPower(-0.30);
+            this.rd1.armLifterMotorRight.setPower(0.30);
+            telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
+            telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
             telemetry.update();
         }
     }
