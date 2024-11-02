@@ -16,11 +16,8 @@ public class HardwareInit {
     public Servo armTurner = null;
     public DcMotor armLifterMotorLeft = null;
     public DcMotor armLifterMotorRight = null;
-//    public WebcamName webcam = null;
     public Servo clawServo = null;
-//    public DcMotor ballGrabber = null;
-//    public DcMotor clawLifter = null;
-//    public Servo clawServo = null;
+
 
     HardwareMap hwMap = null;
 
@@ -34,14 +31,7 @@ public class HardwareInit {
         rearRightMotor = hwMap.dcMotor.get("rearRightMotor");
         armLifterMotorLeft = hwMap.dcMotor.get("armLifterLeft");
         armLifterMotorRight = hwMap.dcMotor.get("armLifterRight");
-        //ballGrabber = hwMap.dcMotor.get("ballGrabber");
-        //clawLifter = hwMap.dcMotor.get("clawLifter");
-
-
-        //armTurner = hwMap.get(Servo.class, "armTurner");
-        //webcam = hwMap.get(WebcamName.class, "Webcam");
         clawServo = hwMap.get(Servo.class, "clawServo");
-        //clawServo = hwMap.get(Servo.class, "clawServo");
 
         // Reset encoders
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
