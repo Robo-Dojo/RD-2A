@@ -11,7 +11,7 @@ public class ArmController {
     public ArmController(HardwareInit rd1, Telemetry telemetry) {
         this.rd1 = rd1;
         this.telemetry = telemetry;
-        //rd1.clawServo.setPosition();
+        rd1.clawServo.setPosition(1.0);
     }
 
 
@@ -19,12 +19,12 @@ public class ArmController {
         telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
         telemetry.update();
         if (_gamepad2.a) {
-            rd1.clawServo.setPosition(1.0);
+            rd1.clawServo.setPosition(0.96);
             //rd1.clawServo.resetDeviceConfigurationForOpMode();
             telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServo.getPosition());
             telemetry.update();
         } else if (_gamepad2.y) {
-            rd1.clawServo.setPosition(0.0);
+            rd1.clawServo.setPosition(1.0);
             telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServo.getPosition());
             telemetry.update();
         }
@@ -32,28 +32,6 @@ public class ArmController {
         telemetry.update();
     }
 
-//    public void armLifter(Gamepad _gamepad2) {
-//        telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
-//        telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
-//        telemetry.update();
-//        // get joystick params
-//        if ( _gamepad2.right_trigger > 0) {
-//            this.rd1.armLifterMotorLeft.setPower(1);
-//            this.rd1.armLifterMotorRight.setPower(-1);
-//            telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
-//            telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
-//            telemetry.update();
-//        } else if (_gamepad2.left_trigger > 0) {
-//            this.rd1.armLifterMotorLeft.setPower(-1);
-//            this.rd1.armLifterMotorRight.setPower(1);
-//            telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
-//            telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
-//            telemetry.update();
-//        } else {
-//            this.rd1.armLifterMotorLeft.setPower(0);
-//            this.rd1.armLifterMotorRight.setPower(0);
-//        }
-//    }
 
     public void armHolder(Gamepad _gamepad2) {
         telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
@@ -73,20 +51,36 @@ public class ArmController {
         }
         else if (_gamepad2.left_bumper) {
             while (rd1.armLifterMotorLeft.getCurrentPosition() > 1000 && rd1.armLifterMotorRight.getCurrentPosition() < -1000) {
-                this.rd1.armLifterMotorLeft.setPower(-0.80);
-                this.rd1.armLifterMotorRight.setPower(0.80);
+                this.rd1.armLifterMotorLeft.setPower(-0.70);
+                this.rd1.armLifterMotorRight.setPower(0.70);
                 telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
                 telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
                 telemetry.update();
             }
-//                this.rd1.armLifterMotorLeft.setPower(0);
-//                this.rd1.armLifterMotorRight.setPower(0);
         }
+        if (_gamepad2.dpad_right) {  //trebuie rezolvat coborare lenta
+            while (rd1.armLifterMotorLeft.getCurrentPosition() > 0 && rd1.armLifterMotorRight.getCurrentPosition() < 0) {
+                this.rd1.armLifterMotorLeft.setPower(0.40);
+                this.rd1.armLifterMotorRight.setPower(-0.40);
+                telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
+                telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
+                telemetry.update();
+            }
 
         telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
         telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
         telemetry.update();
+    } else if (_gamepad2.left_bumper) {
+            while (rd1.armLifterMotorLeft.getCurrentPosition() > 0 && rd1.armLifterMotorRight.getCurrentPosition() < 0) {
+                this.rd1.armLifterMotorLeft.setPower(-0.70);
+                this.rd1.armLifterMotorRight.setPower(0.70);
+                telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
+                telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
+                telemetry.update();
+            }
+        }
     }
+
 
 
     public void armLifter(Gamepad _gamepad2) {
@@ -106,7 +100,7 @@ public class ArmController {
                 this.rd1.armLifterMotorRight.setPower(0);
         }
         else if (_gamepad2.left_trigger > 0) {
-            while (rd1.armLifterMotorLeft.getCurrentPosition() > 1000 && rd1.armLifterMotorRight.getCurrentPosition() < -1000) {
+            while (rd1.armLifterMotorLeft.getCurrentPosition() > 0 && rd1.armLifterMotorRight.getCurrentPosition() < 0) {
                 this.rd1.armLifterMotorLeft.setPower(-0.80);
                 this.rd1.armLifterMotorRight.setPower(0.80);
                 telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
