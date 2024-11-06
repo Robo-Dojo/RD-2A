@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -17,6 +18,9 @@ public class HardwareInit {
     public DcMotor armLifterMotorLeft = null;
     public DcMotor armLifterMotorRight = null;
     public Servo clawServo = null;
+    public DcMotorEx par = null;
+    public DcMotorEx perp = null;
+
 
 
     HardwareMap hwMap = null;
@@ -25,19 +29,27 @@ public class HardwareInit {
         hwMap = hardwareMap;
 
         // Initialize motors from hardware map
-        frontLeftMotor = hwMap.dcMotor.get("frontLeftMotor");
-        rearLeftMotor = hwMap.dcMotor.get("rearLeftMotor");
-        frontRightMotor = hwMap.dcMotor.get("frontRightMotor");
-        rearRightMotor = hwMap.dcMotor.get("rearRightMotor");
+        frontLeftMotor = hwMap.dcMotor.get("leftFront");
+        rearLeftMotor = hwMap.dcMotor.get("leftBack");
+        frontRightMotor = hwMap.dcMotor.get("rightFront");
+        rearRightMotor = hwMap.dcMotor.get("rightBack");
         armLifterMotorLeft = hwMap.dcMotor.get("armLifterLeft");
         armLifterMotorRight = hwMap.dcMotor.get("armLifterRight");
         clawServo = hwMap.get(Servo.class, "clawServo");
+
+        // Initialize the parallel and perpendicular odometry motors (with encoders)
+        par = hwMap.get(DcMotorEx.class, "par");  // Ensure "par" is the name in the Driver Hub
+        perp = hwMap.get(DcMotorEx.class, "perp");  // Ensure "perp" is the name in the Driver Hub
 
         // Reset encoders
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        // Initialize parallel and perpendicular motors for odometry
+        par.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);  // Set to run without encoder if used only for odometry
+        perp.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);  // Same for perpendicular motor
 
         // Set motor modes and behaviors
         if (!isAutonom) {
@@ -74,6 +86,9 @@ public class HardwareInit {
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
+        // If you need to configure the direction of the odometry wheels (par and perp), do it here
+        par.setDirection(DcMotorSimple.Direction.FORWARD);  // Set based on your wiring and wheel alignment
+        perp.setDirection(DcMotorSimple.Direction.FORWARD); // Same here
 
     }
 }
