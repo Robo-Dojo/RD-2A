@@ -18,8 +18,8 @@ public class HardwareInit {
     public DcMotor armLifterMotorLeft = null;
     public DcMotor armLifterMotorRight = null;
     public Servo clawServo = null;
-    public DcMotorEx par = null;
-    public DcMotorEx perp = null;
+    //public DcMotorEx par = null;
+    //public DcMotorEx perp = null;
 
 
 
@@ -38,8 +38,8 @@ public class HardwareInit {
         clawServo = hwMap.get(Servo.class, "clawServo");
 
         // Initialize the parallel and perpendicular odometry motors (with encoders)
-        par = hwMap.get(DcMotorEx.class, "par");  // Ensure "par" is the name in the Driver Hub
-        perp = hwMap.get(DcMotorEx.class, "perp");  // Ensure "perp" is the name in the Driver Hub
+        //par = hwMap.get(DcMotorEx.class, "par");  // Ensure "par" is the name in the Driver Hub
+        //perp = hwMap.get(DcMotorEx.class, "perp");  // Ensure "perp" is the name in the Driver Hub
 
         // Reset encoders
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -48,8 +48,8 @@ public class HardwareInit {
         rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Initialize parallel and perpendicular motors for odometry
-        par.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);  // Set to run without encoder if used only for odometry
-        perp.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);  // Same for perpendicular motor
+        //par.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);  // Set to run without encoder if used only for odometry
+        //perp.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);  // Same for perpendicular motor
 
         // Set motor modes and behaviors
         if (!isAutonom) {
@@ -87,8 +87,8 @@ public class HardwareInit {
 
 
         // If you need to configure the direction of the odometry wheels (par and perp), do it here
-        par.setDirection(DcMotorSimple.Direction.FORWARD);  // Set based on your wiring and wheel alignment
-        perp.setDirection(DcMotorSimple.Direction.FORWARD); // Same here
+        //par.setDirection(DcMotorSimple.Direction.FORWARD);  // Set based on your wiring and wheel alignment
+        //perp.setDirection(DcMotorSimple.Direction.FORWARD); // Same here
 
     }
 }
