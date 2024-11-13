@@ -11,26 +11,26 @@ public class ArmController {
     public ArmController(HardwareInit rd1, Telemetry telemetry) {
         this.rd1 = rd1;
         this.telemetry = telemetry;
-        rd1.clawServo.setPosition(1.0);
+       // rd1.clawServo.setPosition(1.0);
     }
 
 
-    public void clawServo(Gamepad _gamepad2) {
-        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
-        telemetry.update();
-        if (_gamepad2.a) {
-            rd1.clawServo.setPosition(0.96);
-            //rd1.clawServo.resetDeviceConfigurationForOpMode();
-            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServo.getPosition());
-            telemetry.update();
-        } else if (_gamepad2.y) {
-            rd1.clawServo.setPosition(1.0);
-            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServo.getPosition());
-            telemetry.update();
-        }
-        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
-        telemetry.update();
-    }
+//    public void clawServo(Gamepad _gamepad2) {
+//        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
+//        telemetry.update();
+//        if (_gamepad2.a) {
+//            rd1.clawServo.setPosition(0.96);
+//            //rd1.clawServo.resetDeviceConfigurationForOpMode();
+//            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServo.getPosition());
+//            telemetry.update();
+//        } else if (_gamepad2.y) {
+//            rd1.clawServo.setPosition(1.0);
+//            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServo.getPosition());
+//            telemetry.update();
+//        }
+//        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
+//        telemetry.update();
+//    }
 
 
     public void armHolder(Gamepad _gamepad2) {
