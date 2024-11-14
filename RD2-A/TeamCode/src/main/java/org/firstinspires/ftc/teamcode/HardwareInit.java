@@ -84,11 +84,10 @@ public class HardwareInit {
         // Set motor directions
 
         frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        rearLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        rearRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rearLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rearRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-//        rearRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-//        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
 
         // If you need to configure the direction of the odometry wheels (par and perp), do it here
         //par.setDirection(DcMotorSimple.Direction.FORWARD);  // Set based on your wiring and wheel alignment
