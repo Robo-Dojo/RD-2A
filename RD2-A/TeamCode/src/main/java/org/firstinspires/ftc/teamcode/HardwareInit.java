@@ -17,7 +17,7 @@ public class HardwareInit {
     public Servo armTurner = null;
     public DcMotor armLifterMotorLeft = null;
     public DcMotor armLifterMotorRight = null;
-    //public Servo clawServo = null;
+    public Servo joint = null;
     //public Servo testServo = null;
     //public DcMotorEx par = null;
     //public DcMotorEx perp = null;
@@ -36,7 +36,7 @@ public class HardwareInit {
         rearRightMotor = hwMap.dcMotor.get("rightBack");
         armLifterMotorLeft = hwMap.dcMotor.get("armLifterLeft");
         armLifterMotorRight = hwMap.dcMotor.get("armLifterRight");
-        //clawServo = hwMap.get(Servo.class, "clawServo");
+        joint = hwMap.get(Servo.class, "joint");
         //testServo = hwMap.get(Servo.class, "testServo");
 
 
