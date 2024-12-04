@@ -15,7 +15,7 @@ public class ChassyController {
 
     public void dcpMovement(Gamepad _gamepad1) {
         // Get input values from the gamepad
-        double forward = -(_gamepad1.left_trigger - _gamepad1.right_trigger); // Forward/Backward
+        double forward = -(_gamepad1.right_trigger - _gamepad1.left_trigger); // Forward/Backward
         double strafe = -_gamepad1.left_stick_x * 1.1; // Strafe left/right
         double turn = _gamepad1.right_stick_x; // Rotation (turning)
 

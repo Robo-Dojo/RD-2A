@@ -15,8 +15,8 @@ public class HardwareInit {
     public DcMotor frontRightMotor = null;
     public DcMotor rearRightMotor = null;
     public Servo armTurner = null;
-    public DcMotor armLifterMotorLeft = null;
-    public DcMotor armLifterMotorRight = null;
+    //public DcMotor armLifterMotorLeft = null;
+    //public DcMotor armLifterMotorRight = null;
     //public Servo clawServo = null;
     //public Servo testServo = null;
     //public DcMotorEx par = null;
@@ -34,15 +34,11 @@ public class HardwareInit {
         rearLeftMotor = hwMap.dcMotor.get("leftBack");
         frontRightMotor = hwMap.dcMotor.get("rightFront");
         rearRightMotor = hwMap.dcMotor.get("rightBack");
-        armLifterMotorLeft = hwMap.dcMotor.get("armLifterLeft");
-        armLifterMotorRight = hwMap.dcMotor.get("armLifterRight");
+        //armLifterMotorLeft = hwMap.dcMotor.get("armLifterLeft");
+       // armLifterMotorRight = hwMap.dcMotor.get("armLifterRight");
         //clawServo = hwMap.get(Servo.class, "clawServo");
         //testServo = hwMap.get(Servo.class, "testServo");
 
-
-        // Initialize the parallel and perpendicular odometry motors (with encoders)
-        //par = hwMap.get(DcMotorEx.class, "par");  // Ensure "par" is the name in the Driver Hub
-        //perp = hwMap.get(DcMotorEx.class, "perp");  // Ensure "perp" is the name in the Driver Hub
 
         // Reset encoders
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -50,9 +46,6 @@ public class HardwareInit {
         rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        // Initialize parallel and perpendicular motors for odometry
-        //par.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);  // Set to run without encoder if used only for odometry
-        //perp.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);  // Same for perpendicular motor
 
         // Set motor modes and behaviors
         if (!isAutonom) {
@@ -87,11 +80,6 @@ public class HardwareInit {
         rearLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rearRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-
-        // If you need to configure the direction of the odometry wheels (par and perp), do it here
-        //par.setDirection(DcMotorSimple.Direction.FORWARD);  // Set based on your wiring and wheel alignment
-        //perp.setDirection(DcMotorSimple.Direction.FORWARD); // Same here
 
     }
 }
