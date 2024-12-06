@@ -18,7 +18,7 @@ public class ArmController {
         this.rd1 = rd1;
         this.telemetry = telemetry;
         rd1.clawServo1.setPosition(0.19);
-        rd1.clawServo2.setPosition(0.0);
+        //rd1.clawServo2.setPosition(0.0);
     }
 
 //    public void robotHanger(Gamepad _gamepad2){
@@ -138,7 +138,7 @@ public class ArmController {
             telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServo2.getPosition());
             telemetry.update();
         } else if (_gamepad2.b) {
-            rd1.clawServo2.setPosition(0.2);
+            rd1.clawServo2.setPosition(0.01);
             telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServo2.getPosition());
             telemetry.update();
         }
