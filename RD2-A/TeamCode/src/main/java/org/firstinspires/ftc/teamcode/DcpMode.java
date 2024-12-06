@@ -25,6 +25,7 @@ public class DcpMode extends LinearOpMode {
             //ArmController.clawServo(gamepad2);
             ArmController.armLifter(gamepad2);
             Intake1.clawServo1(gamepad2);
+            Intake1.clawServo2(gamepad2);
             //ArmController.armHolder(gamepad2);
             Intake1.intake(gamepad2);
             Intake1.clawIntake(gamepad2);

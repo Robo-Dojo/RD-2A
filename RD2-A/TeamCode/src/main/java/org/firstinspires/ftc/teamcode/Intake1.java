@@ -39,23 +39,23 @@ public class Intake1 {
     }
 
 
-//    public void clawServo2(Gamepad _gamepad2) {
-//        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo2.getPosition());
-//        telemetry.update();
-//        if (_gamepad2.x) {
-//            rd1.clawServo2.setPosition(0.378);
-//
-//            //rd1.clawServo.resetDeviceConfigurationForOpMode();
-//            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServo2.getPosition());
-//            telemetry.update();
-//        } else if (_gamepad2.b) {
-//            rd1.clawServo2.setPosition(0.487);
-//            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServo2.getPosition());
-//            telemetry.update();
-//        }
-//        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo2.getPosition());
-//        telemetry.update();
-//    }
+    public void clawServo2(Gamepad _gamepad2) {
+        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo2.getPosition());
+        telemetry.update();
+        if (_gamepad2.x) {
+            rd1.clawServo2.setPosition(0.378);
+
+            //rd1.clawServo.resetDeviceConfigurationForOpMode();
+            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServo2.getPosition());
+            telemetry.update();
+        } else if (_gamepad2.b) {
+            rd1.clawServo2.setPosition(0.487);
+            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServo2.getPosition());
+            telemetry.update();
+        }
+        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo2.getPosition());
+        telemetry.update();
+    }
 
 
     public void intake(Gamepad _gamepad2) {
@@ -66,7 +66,7 @@ public class Intake1 {
         if (_gamepad2.dpad_right) {
             rd1.intakeLeft.setPosition(1.0);
             rd1.intakeRight.setPosition(0.0);
-            rd1.clawServo2.setPosition(0.487);
+            //rd1.clawServo2.setPosition(0.487);
             //rd1.clawServo.resetDeviceConfigurationForOpMode();
             telemetry.addData("IntakeLeft la pozitia: ", rd1.intakeLeft.getPosition());
             telemetry.addData("IntakeRight la pozitia: ", rd1.intakeRight.getPosition());
@@ -75,7 +75,7 @@ public class Intake1 {
         } else if (_gamepad2.dpad_left) {
             rd1.intakeLeft.setPosition(0.0);
             rd1.intakeRight.setPosition(1.0);
-            rd1.clawServo2.setPosition(0.375);
+            //rd1.clawServo2.setPosition(0.375);
             telemetry.addData("IntakeLeft la pozitia: ", rd1.intakeLeft.getPosition());
             telemetry.addData("IntakeRight la pozitia: ", rd1.intakeRight.getPosition());
             telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo2.getPosition());
@@ -91,12 +91,12 @@ public class Intake1 {
     public void clawIntake(Gamepad _gamepad2) {
         telemetry.addData("Intake la pozitia: ", rd1.clawIntake.getPosition());
         telemetry.update();
-        if (_gamepad2.x){
-            rd1.clawIntake.setPosition(1.0);
+        if (_gamepad2.right_stick_y>0){
+            rd1.clawIntake.setPosition(0.8);
             telemetry.addData("Intake la pozitia: ", rd1.clawIntake.getPosition());
             telemetry.update();
-        } else if (_gamepad2.b) {
-            rd1.clawIntake.setPosition(0.2);
+        } else if (_gamepad2.right_stick_y<0) {
+            rd1.clawIntake.setPosition(0.4);
             telemetry.addData("Intake la pozitia: ", rd1.clawIntake.getPosition());
             telemetry.update();
         }
