@@ -77,8 +77,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.vision.VisionPortal;
 
 @Config
 @Autonomous(name = "AutoTest", group = "Autonomous")
@@ -87,8 +85,7 @@ public class AutoTest extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-24.21, -71.17, Math.toRadians(90.00)));
-
+        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-4.77, 72.00, Math.toRadians(-85.82)));
 
 
 
@@ -149,24 +146,12 @@ public class AutoTest extends LinearOpMode {
 //                .splineTo(new Vector2d(62.00, 4.44), Math.toRadians(53.96))
 //                .build();
 
-        trajectoryAction3 = drive.actionBuilder(new Pose2d(-23.66, -70.38, Math.toRadians(95.53)))
-                .splineTo(new Vector2d(-24.27, -26.91), Math.toRadians(90.80))
+
+        trajectoryAction1 = drive.actionBuilder(new Pose2d(-4.77, 72.00, Math.toRadians(-85.82)))
+                .splineTo(new Vector2d(-3.96, 49.05), Math.toRadians(-88.06))
+                .splineTo(new Vector2d(-4.37, 24.88), Math.toRadians(-89.51))
                 .build();
 
-
-
-//        drive.trajectorySequenceBuilder(new Pose2d(-71.39, 37.07, Math.toRadians(0.00)))
-//                .splineTo(new Vector2d(-24.07, 37.07), Math.toRadians(0.00))
-//                .build();
-
-
-// Alternative TrajectoryAction3 - Uncomment if needed
-// trajectoryAction3 = drive.actionBuilder(new Pose2d(59.54, -61.81, Math.toRadians(178.66)))
-//                .splineTo(new Vector2d(14.63, -60.68), Math.toRadians(176.80))
-//                .splineTo(new Vector2d(35.39, -35.95), Math.toRadians(43.61))
-//                .splineTo(new Vector2d(57.28, -17.65), Math.toRadians(59.93))
-//                .splineTo(new Vector2d(62.00, 4.44), Math.toRadians(53.96))
-//                .build();
 
 
         while (!isStopRequested() && !opModeIsActive()) {
@@ -185,7 +170,7 @@ public class AutoTest extends LinearOpMode {
         Action trajectoryActionChosen;
 
 
-            trajectoryActionChosen = trajectoryAction3;
+            trajectoryActionChosen = trajectoryAction1;
 
 
         Actions.runBlocking(

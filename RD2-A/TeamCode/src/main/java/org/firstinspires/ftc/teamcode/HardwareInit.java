@@ -1,13 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.Gamepad;
-
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
 public class HardwareInit {
     public DcMotor frontLeftMotor = null;
@@ -19,6 +15,10 @@ public class HardwareInit {
     public DcMotor armLifterMotorRight = null;
     public Servo clawServo1 = null;
     public Servo clawServo2 = null;
+    public Servo intakeLeft = null;
+    public Servo intakeRight = null;
+    public Servo clawIntake = null;
+    public Servo clawOuttake = null;
     //public Servo clawServo = null;
     //public Servo testServo = null;
     //public DcMotorEx par = null;
@@ -40,6 +40,10 @@ public class HardwareInit {
         armLifterMotorRight = hwMap.dcMotor.get("armLifterRight");
         clawServo1 = hwMap.get(Servo.class, "clawServo1");
         clawServo2 = hwMap.get(Servo.class, "clawServo2");
+        intakeLeft = hwMap.get(Servo.class, "intakeLeft");
+        intakeRight = hwMap.get(Servo.class, "intakeRight");
+        clawIntake = hwMap.get(Servo.class, "clawIntake");
+        clawOuttake = hwMap.get(Servo.class, "clawOuttake");
         //clawServo = hwMap.get(Servo.class, "clawServo");
         //testServo = hwMap.get(Servo.class, "testServo");
 

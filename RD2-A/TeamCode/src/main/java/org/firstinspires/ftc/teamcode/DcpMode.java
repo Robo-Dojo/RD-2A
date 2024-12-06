@@ -14,7 +14,7 @@ public class DcpMode extends LinearOpMode {
         org.firstinspires.ftc.teamcode.ArmController ArmController = new org.firstinspires.ftc.teamcode.ArmController(rd1, telemetry);
         //org.firstinspires.ftc.teamcode.Test Test = new org.firstinspires.ftc.teamcode.Test(rd1, telemetry);
         //org.firstinspires.ftc.teamcode.IntakeClaw IntakeClaw = new org.firstinspires.ftc.teamcode.IntakeClaw(rd1, telemetry);
-
+        org.firstinspires.ftc.teamcode.Intake1 Intake1 = new org.firstinspires.ftc.teamcode.Intake1(rd1, telemetry);
 
         waitForStart();
         if (isStopRequested()) return;
@@ -24,11 +24,11 @@ public class DcpMode extends LinearOpMode {
             ChassyController.dcpMovement(gamepad1);
             //ArmController.clawServo(gamepad2);
             ArmController.armLifter(gamepad2);
-            ArmController.clawServo1(gamepad2);
-            ArmController.clawServo2(gamepad2);
+            Intake1.clawServo1(gamepad2);
             //ArmController.armHolder(gamepad2);
-            //Test.testServo(gamepad2);
-            //IntakeClaw.joint(gamepad2);
+            Intake1.intake(gamepad2);
+            Intake1.clawIntake(gamepad2);
+            Intake1.clawOuttake(gamepad2);
             telemetry.update();
         }
     }
