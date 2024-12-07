@@ -20,7 +20,7 @@ public class Intake1 {
     }
 
 
-    public void clawServo1(Gamepad _gamepad2) {
+    public void clawServo1(Gamepad _gamepad2) {  //cleste orizontal
         telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo1.getPosition());
         telemetry.update();
         if (_gamepad2.a) {
@@ -39,7 +39,7 @@ public class Intake1 {
     }
 
 
-    public void clawServo2(Gamepad _gamepad2) {
+    public void clawServo2(Gamepad _gamepad2) {   //joint orizontal
         telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo2.getPosition());
         telemetry.update();
         if (_gamepad2.x) {
@@ -58,7 +58,7 @@ public class Intake1 {
     }
 
 
-    public void intake(Gamepad _gamepad2) {
+    public void intake(Gamepad _gamepad2) {    //glisiere orizontale
         telemetry.addData("IntakeLeft la pozitia: ", rd1.intakeLeft.getPosition());
         telemetry.addData("IntakeRight la pozitia: ", rd1.intakeRight.getPosition());
         telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo2.getPosition());
@@ -88,7 +88,7 @@ public class Intake1 {
         telemetry.update();}
 
 
-    public void clawIntake(Gamepad _gamepad2) {
+    public void clawIntake(Gamepad _gamepad2) {   //joint outtake
         telemetry.addData("Intake la pozitia: ", rd1.clawIntake.getPosition());
         telemetry.update();
         if (_gamepad2.right_stick_y>0){
@@ -104,7 +104,7 @@ public class Intake1 {
         telemetry.addData("Intake la pozitia: ", rd1.clawIntake.getPosition());
         telemetry.update();}
 
-    public void clawOuttake(Gamepad _gamepad2) {
+    public void clawOuttake(Gamepad _gamepad2) {    //cleste outtake
         telemetry.addData("Intake la pozitia: ", rd1.clawOuttake.getPosition());
         telemetry.update();
         if (_gamepad2.dpad_up){

@@ -107,8 +107,8 @@ public class AutoTest extends LinearOpMode {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    viperLeft.setPower(0.8);
-                    viperRight.setPower(0.8);
+                    viperLeft.setPower(1.0);
+                    viperRight.setPower(-1.0);
                     initialized = true;
                 }
 
@@ -116,7 +116,7 @@ public class AutoTest extends LinearOpMode {
                 double posRight = viperRight.getCurrentPosition();
                 packet.put("liftPosLeft", posLeft);
                 packet.put("liftPosRight", posRight);
-                if (posLeft < 1200.0 && posRight < 1200.0) {
+                if (posLeft > 0 && posRight < 0) {
                     return true;
                 } else {
                     viperLeft.setPower(0);
@@ -136,8 +136,8 @@ public class AutoTest extends LinearOpMode {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    viperLeft.setPower(-0.8);
-                    viperRight.setPower(-0.8);
+                    viperLeft.setPower(1.0);
+                    viperRight.setPower(-1.0);
                     initialized = true;
                 }
 
@@ -145,7 +145,7 @@ public class AutoTest extends LinearOpMode {
                 double posRight = viperRight.getCurrentPosition();
                 packet.put("liftPosLeft", posLeft);
                 packet.put("liftPosRight", posRight);
-                if (posLeft > 0.0 && posLeft > 0.0) {
+                if (posLeft < 3340 && posLeft > -3340) {
                     return true;
                 } else {
                     viperLeft.setPower(0);
@@ -364,56 +364,6 @@ public class AutoTest extends LinearOpMode {
         Action trajectoryAction3;
 
 
-        //Stanga
-//        trajectoryAction1 = drive.actionBuilder(drive.pose)
-//                .splineTo(new Vector2d(44.85, -60.12), Math.toRadians(165.60)).setReversed(true)
-//                .splineTo(new Vector2d(24.92, -49.10), Math.toRadians(140.00)).setReversed(false)
-//                .splineTo(new Vector2d(24.92, -30.01), Math.toRadians(50.00)).setReversed(true)
-//                .splineTo(new Vector2d(55.25, 8.80), Math.toRadians(52.00))
-//                .build();
-
-//        trajectoryAction1 = drive.actionBuilder(new Pose2d(-69.92, -69.17, Math.toRadians(62.06)))
-//                .splineTo(new Vector2d(-44.26, -28.97), Math.toRadians(57.44))
-//                .splineTo(new Vector2d(-65.39, 17.46), Math.toRadians(114.48))
-//                .build();
-
-//        trajectoryAction1 = drive.actionBuilder(new Pose2d(59.54, -61.81, Math.toRadians(178.66)))
-//                .splineTo(new Vector2d(14.63, -60.68), Math.toRadians(176.80)).setReversed(true)
-//                .splineTo(new Vector2d(35.39, -35.95), Math.toRadians(43.61))
-//                .splineTo(new Vector2d(57.28, -17.65), Math.toRadians(59.93)).setReversed(true)
-//                .splineTo(new Vector2d(62.00, 4.44), Math.toRadians(53.96))
-//                .build();
-
-
-//        trajectoryAction1 = drive.actionBuilder(new Pose2d(61.24, 62.75, Math.toRadians(90.00)))
-//                .setReversed(true)
-//                .splineTo(new Vector2d(60.30, 11.23), Math.toRadians(268.95))
-//                .splineTo(new Vector2d(9.91, 61.05), Math.toRadians(135.32))
-//                .splineTo(new Vector2d(-9.34, 62.56), Math.toRadians(175.52))
-//                .build();
-
-//        trajectoryAction1 = drive.actionBuilder(new Pose2d(61.24, 62.75, Math.toRadians(90.00)))
-//                .splineTo(new Vector2d(60.30, 11.23), Math.toRadians(268.95))
-//                .splineTo(new Vector2d(9.91, 61.05), Math.toRadians(135.32))
-//                .splineTo(new Vector2d(-9.34, 62.56), Math.toRadians(175.52))
-//                .build();
-//
-//
-//        trajectoryAction2 = drive.actionBuilder(drive.pose)
-//                .setReversed(true)
-//                .splineTo(new Vector2d(28.74, -10.92), Math.toRadians(50.00))
-//                .splineTo(new Vector2d(54.61, 31.92), Math.toRadians(52.00))
-//                .build();
-
-// Alternative TrajectoryAction2 - Uncomment if needed
-// trajectoryAction2 = drive.actionBuilder(new Pose2d(59.54, -61.81, Math.toRadians(178.66)))
-//                .splineTo(new Vector2d(14.63, -60.68), Math.toRadians(176.80))
-//                .splineTo(new Vector2d(35.39, -35.95), Math.toRadians(43.61))
-//                .splineTo(new Vector2d(57.28, -17.65), Math.toRadians(59.93))
-//                .splineTo(new Vector2d(62.00, 4.44), Math.toRadians(53.96))
-//                .build();
-
-
         trajectoryAction1 = drive.actionBuilder(new Pose2d(-4.77, 72.00, Math.toRadians(-85.82)))
                 .splineTo(new Vector2d(-3.96, 49.05), Math.toRadians(-88.06))
                 .splineTo(new Vector2d(-4.37, 24.88), Math.toRadians(-89.51))
@@ -421,7 +371,6 @@ public class AutoTest extends LinearOpMode {
 
 
         while (!isStopRequested() && !opModeIsActive()) {
-            // vision here that outputs position
 
             telemetry.update();
         }
