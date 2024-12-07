@@ -6,6 +6,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 //endregion
 
 // the class that controls the entire robot arm
+// Functional claw
 public class Intake1 {
     private HardwareInit rd1;
     private Telemetry telemetry;
@@ -17,6 +18,7 @@ public class Intake1 {
         rd1.clawServo1.setPosition(0.44);
         rd1.clawServo2.setPosition(0.378);
         //rd1.clawOuttake.setPosition(0.6);
+        rd1.clawIntake.setPosition(0.5);
     }
 
 
@@ -43,13 +45,13 @@ public class Intake1 {
         telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo2.getPosition());
         telemetry.update();
         if (_gamepad2.x) {
-            rd1.clawServo2.setPosition(0.378);
+            rd1.clawServo2.setPosition(0.38);
 
             //rd1.clawServo.resetDeviceConfigurationForOpMode();
             telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServo2.getPosition());
             telemetry.update();
         } else if (_gamepad2.b) {
-            rd1.clawServo2.setPosition(0.487);
+            rd1.clawServo2.setPosition(0.489);
             telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServo2.getPosition());
             telemetry.update();
         }
@@ -91,12 +93,12 @@ public class Intake1 {
     public void clawIntake(Gamepad _gamepad2) {   //joint outtake
         telemetry.addData("Intake la pozitia: ", rd1.clawIntake.getPosition());
         telemetry.update();
-        if (_gamepad2.right_stick_y>0){
+        if (_gamepad2.right_bumper){
             rd1.clawIntake.setPosition(0.5);
             telemetry.addData("Intake la pozitia: ", rd1.clawIntake.getPosition());
             telemetry.update();
-        } else if (_gamepad2.right_stick_y<0) {
-            rd1.clawIntake.setPosition(0.5);
+        } else if (_gamepad2.left_bumper) {
+            rd1.clawIntake.setPosition(0.595);
             telemetry.addData("Intake la pozitia: ", rd1.clawIntake.getPosition());
             telemetry.update();
         }
