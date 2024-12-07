@@ -92,11 +92,11 @@ public class Intake1 {
         telemetry.addData("Intake la pozitia: ", rd1.clawIntake.getPosition());
         telemetry.update();
         if (_gamepad2.right_stick_y>0){
-            rd1.clawIntake.setPosition(0.8);
+            rd1.clawIntake.setPosition(0.5);
             telemetry.addData("Intake la pozitia: ", rd1.clawIntake.getPosition());
             telemetry.update();
         } else if (_gamepad2.right_stick_y<0) {
-            rd1.clawIntake.setPosition(0.4);
+            rd1.clawIntake.setPosition(0.5);
             telemetry.addData("Intake la pozitia: ", rd1.clawIntake.getPosition());
             telemetry.update();
         }

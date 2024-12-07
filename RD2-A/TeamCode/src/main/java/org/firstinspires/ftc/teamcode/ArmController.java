@@ -81,28 +81,26 @@ public class ArmController {
         telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
         telemetry.update();
 
-        if (_gamepad2.right_trigger > 0) {
-            while (rd1.armLifterMotorLeft.getCurrentPosition() < 3340 && rd1.armLifterMotorRight.getCurrentPosition() > -3340) {
-                this.rd1.armLifterMotorLeft.setPower(1.0);
-                this.rd1.armLifterMotorRight.setPower(-1.0);
+            if (rd1.armLifterMotorLeft.getCurrentPosition() < 3340 && rd1.armLifterMotorRight.getCurrentPosition() > -3340 && _gamepad2.right_trigger > 0) {
+                this.rd1.armLifterMotorLeft.setPower(0.8);
+                this.rd1.armLifterMotorRight.setPower(-0.8);
+                telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
+                telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
+                telemetry.update();
+            }
+            //   this.rd1.armLifterMotorLeft.setPower(0);
+             //  this.rd1.armLifterMotorRight.setPower(0);
+
+        else if (rd1.armLifterMotorLeft.getCurrentPosition() > 0 && rd1.armLifterMotorRight.getCurrentPosition() < 0 && _gamepad2.left_trigger > 0) {
+                this.rd1.armLifterMotorLeft.setPower(-0.8);
+                this.rd1.armLifterMotorRight.setPower(0.8);
                 telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
                 telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
                 telemetry.update();
             }
 //                this.rd1.armLifterMotorLeft.setPower(0);
 //                this.rd1.armLifterMotorRight.setPower(0);
-        }
-        else if (_gamepad2.left_trigger > 0) {
-            while (rd1.armLifterMotorLeft.getCurrentPosition() > 0 && rd1.armLifterMotorRight.getCurrentPosition() < 0) {
-                this.rd1.armLifterMotorLeft.setPower(-1.0);
-                this.rd1.armLifterMotorRight.setPower(1.0);
-                telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
-                telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
-                telemetry.update();
-            }
-                this.rd1.armLifterMotorLeft.setPower(0);
-                this.rd1.armLifterMotorRight.setPower(0);
-        }
+
 
         telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
         telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
