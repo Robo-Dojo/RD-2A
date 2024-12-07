@@ -1,5 +1,4 @@
 package org.firstinspires.ftc.teamcode;
-import org.firstinspires.ftc.teamcode.*;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -24,7 +23,7 @@ public class DcpMode extends LinearOpMode {
         ViperTest LiftArm = new ViperTest();
         //org.firstinspires.ftc.teamcode.Test Test = new org.firstinspires.ftc.teamcode.Test(rd1, telemetry);
         //org.firstinspires.ftc.teamcode.IntakeClaw IntakeClaw = new org.firstinspires.ftc.teamcode.IntakeClaw(rd1, telemetry);
-        Intake1 Intake1 = new Intake1(rd1, telemetry);
+        Intake Intake = new Intake(rd1, telemetry);
 
         waitForStart();
         if (isStopRequested()) return;
@@ -32,33 +31,39 @@ public class DcpMode extends LinearOpMode {
         while(opModeIsActive()) {
 
             ChassyController.dcpMovement(gamepad1);
+
             // ArmController omora bateria
             // ArmController.armSample(gamepad2);
             //LiftArm();
-            //Intake1.clawServo1(gamepad2);
-            //Intake1.clawServo2(gamepad2);
+
+            Intake.clawServo1(gamepad2);
+            Intake.clawServo2(gamepad2);
+
+            Intake.clawIntake(gamepad2);
+            Intake.clawOuttake(gamepad2);
+
+            ViperMovement();
+
             //ArmController.armHolder(gamepad2);
-            //Intake1.intake(gamepad2);
-            //Intake1.clawIntake(gamepad2);
-            //Intake1.clawOuttake(gamepad2);
+            //Intake.intake(gamepad2);
+
             telemetry.update();
         }
     }
 
-    public void LiftArm() {
-        while(opModeIsActive()) {
-            if(gamepad2.right_trigger > 0.1) {
-                armLifterMotorLeft.setPower(1);
-                armLifterMotorRight.setPower(-1);
-            }
-            else if(gamepad2.left_trigger > 0.1) {
-                armLifterMotorLeft.setPower(-1);
-                armLifterMotorRight.setPower(1);
-            }
-            else {
-                armLifterMotorRight.setPower(0);
-                armLifterMotorLeft.setPower(0);
-            }
+
+    public void ViperMovement() {
+        if(gamepad2.right_trigger > 0.1) {
+            armLifterMotorLeft.setPower(1);
+            armLifterMotorRight.setPower(-1);
+        }
+        else if(gamepad2.left_trigger > 0.1) {
+            armLifterMotorLeft.setPower(-1);
+            armLifterMotorRight.setPower(1);
+        }
+        else {
+            armLifterMotorRight.setPower(0);
+            armLifterMotorLeft.setPower(0);
         }
     }
 }

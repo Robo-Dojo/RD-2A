@@ -7,11 +7,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 // the class that controls the entire robot arm
 // Functional claw
-public class Intake1 {
+public class Intake {
     private HardwareInit rd1;
     private Telemetry telemetry;
 
-    public Intake1(HardwareInit rd1, Telemetry telemetry)
+    public Intake(HardwareInit rd1, Telemetry telemetry)
     {
         this.rd1 = rd1;
         this.telemetry = telemetry;
@@ -90,6 +90,9 @@ public class Intake1 {
         telemetry.update();}
 
 
+    /*
+    Servo interior viper
+     */
     public void clawIntake(Gamepad _gamepad2) {   //joint outtake
         telemetry.addData("Intake la pozitia: ", rd1.clawIntake.getPosition());
         telemetry.update();
