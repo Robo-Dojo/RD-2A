@@ -13,6 +13,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -25,15 +27,22 @@ public class AutoPath extends LinearOpMode {
     public static class Lift {
         private static DcMotorEx liftLeft;
         private static DcMotorEx liftRight;
+        private static Telemetry telemetry;
 
-        public Lift(HardwareMap hardwareMap) {
+        public Lift(HardwareMap hardwareMap, Telemetry telemetry) {
             liftLeft = hardwareMap.get(DcMotorEx.class, "armLifterLeft");
             liftLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             liftLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+            liftLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            liftLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             liftRight = hardwareMap.get(DcMotorEx.class, "armLifterRight");
             liftRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             liftRight.setDirection(DcMotorSimple.Direction.FORWARD);
+            liftRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            liftRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            Lift.telemetry = telemetry;
         }
 
         public static class LiftUp implements Action {
@@ -54,8 +63,8 @@ public class AutoPath extends LinearOpMode {
                 if (posL < 1500.0 && posR > -1500.0) {
                     return true;
                 } else {
-                    liftLeft.setPower(0);
-                    liftRight.setPower(0);
+                    liftLeft.setPower(1);
+                    liftRight.setPower(1);
                     return false;
                 }
             }
@@ -70,8 +79,8 @@ public class AutoPath extends LinearOpMode {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    liftLeft.setPower(1.0);
-                    liftRight.setPower(1.0);
+                    liftLeft.setPower(-1);
+                    liftRight.setPower(-1);
                     initialized = true;
                 }
 
@@ -79,11 +88,14 @@ public class AutoPath extends LinearOpMode {
                 double posR = liftRight.getCurrentPosition();
                 packet.put("liftPosL", posL);
                 packet.put("liftPosR", posR);
-                if (posL <-70.00 && posR > 70.0) {
+                telemetry.addData("liftPosL_Down", posL);
+                telemetry.addData("liftPosR_Down", posR);
+                telemetry.update();
+                if (posL < -70.00 && posR > 70.0) {
                     return true;
                 } else {
-                    liftLeft.setPower(0);
-                    liftRight.setPower(0);
+                    liftLeft.setPower(1);
+                    liftRight.setPower(1);
                     return false;
                 }
             }
@@ -131,7 +143,7 @@ public class AutoPath extends LinearOpMode {
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         //Claw claw = new Claw(hardwareMap);
-        Lift lift = new Lift(hardwareMap);
+        Lift lift = new Lift(hardwareMap, telemetry);
 
         // vision here that outputs position
        // int visionOutputPosition = 1;
@@ -183,11 +195,15 @@ public class AutoPath extends LinearOpMode {
         //Actions.runBlocking(claw.closeClaw());
 
 
-        while (!isStopRequested() && !opModeIsActive()) {
+        while (!isStopRequested() && !opModeIsActive()) { // Asta actioneaza ca un Init la Autonomie
             //int position = visionOutputPosition;
            // telemetry.addData("Position during Init", position);
+            telemetry.addData("Status", "Waiting in Init");
             telemetry.update();
         }
+
+        telemetry.addData("Status", "Started");
+        telemetry.update();
 
         //int startPosition = visionOutputPosition;
         //telemetry.addData("Starting Position", startPosition);
@@ -208,8 +224,8 @@ public class AutoPath extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
 //                        //trajectoryAction1,
-//                        lift.liftUp(),
-//                        new SleepAction(1),
+                        lift.liftUp(),
+                        new SleepAction(1),
                         //claw.openClaw(),
                         //trajectoryAction2,
                         lift.liftDown()
@@ -217,5 +233,12 @@ public class AutoPath extends LinearOpMode {
                         //trajectoryActionCloseOut
                 )
         );
+
+        while(opModeIsActive()) {
+            telemetry.addData("Status", "Running");
+            telemetry.addData("liftPosL_Down", Lift.liftLeft.getCurrentPosition());
+            telemetry.addData("liftPosR_Down", Lift.liftRight.getCurrentPosition());
+            telemetry.update();
+        }
     }
 }
