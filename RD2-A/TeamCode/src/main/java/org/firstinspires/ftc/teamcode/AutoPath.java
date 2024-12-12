@@ -51,8 +51,8 @@ public class AutoPath extends LinearOpMode {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    liftLeft.setPower(-1.0);
-                    liftRight.setPower(-1.0);
+                    liftLeft.setPower(1.0);
+                    liftRight.setPower(1.0);
                     initialized = true;
                 }
 
@@ -61,6 +61,8 @@ public class AutoPath extends LinearOpMode {
                 packet.put("liftPosL", posL);
                 packet.put("liftPosR", posR);
                 if (posL < 2000.0 && posR > -2000.0) {
+                    liftLeft.setPower(0);
+                    liftRight.setPower(0);
                     return true;
                 } else {
                     liftLeft.setPower(1);
@@ -138,20 +140,23 @@ public class AutoPath extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        telemetry.addData("Status", "Run op mode start");
         Pose2d initialPose = new Pose2d(-5.52, 70.98, Math.toRadians(-86.63));
-
-
-
-        MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
-        //Claw claw = new Claw(hardwareMap);
+//
+//
+//
+       MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
+//        //Claw claw = new Claw(hardwareMap);
         Lift lift = new Lift(hardwareMap, telemetry);
-
-        // vision here that outputs position
-       // int visionOutputPosition = 1;
-
-        Action trajectoryAction1;
-        Action trajectoryAction2;
-
+//
+//        // vision here that outputs position
+//       // int visionOutputPosition = 1;
+//
+////        Action trajectoryAction1;
+////        Action trajectoryAction2;
+//        telemetry.addData("Status", "innit completed");
+        waitForStart();
+//        telemetry.addData("Status", "after wait start");
 //         trajectoryAction1 = drive.actionBuilder(new Pose2d(-5.52, 70.98, Math.toRadians(-86.63)))
 //                 .splineTo(new Vector2d(-6.14, 27.00), Math.toRadians(269.20))
 //                 .build();
@@ -196,35 +201,28 @@ public class AutoPath extends LinearOpMode {
         //Actions.runBlocking(claw.closeClaw());
 
 
-        while (!isStopRequested() && !opModeIsActive()) { // Asta actioneaza ca un Init la Autonomie
-            //int position = visionOutputPosition;
-           // telemetry.addData("Position during Init", position);
-            telemetry.addData("Status", "Waiting in Init");
-            telemetry.update();
-        }
-
-        telemetry.addData("Status", "Started");
-        telemetry.update();
-
-        //int startPosition = visionOutputPosition;
-        //telemetry.addData("Starting Position", startPosition);
-        telemetry.update();
-        waitForStart();
-
-        if (isStopRequested()) return;
-
+//        while (!isStopRequested() && !opModeIsActive()) { // Asta actioneaza ca un Init la Autonomie
+//            //int position = visionOutputPosition;
+//           // telemetry.addData("Position during Init", position);
+//            telemetry.addData("Status", "Waiting in Init");
+//            telemetry.addData("Stop requested:", isStopRequested());
+//            telemetry.addData("Op mode: ", opModeIsActive());
+//            telemetry.update();
+//        }
+//
+        telemetry.addData("Status", "before actions");
         Actions.runBlocking(
                 new SequentialAction(
 //                        //trajectoryAction1,
-                        lift.liftUp(),
-                        new SleepAction(2),
+                        //lift.liftUp()
+                        //new SleepAction(2),
                         //claw.openClaw(),
                         //trajectoryAction2,
-                        lift.liftDown(),
-                        new SleepAction(3),
-                        lift.liftUp(),
-                        new SleepAction(2),
-                        lift.liftDown()
+//                        lift.liftDown(),
+//                        new SleepAction(3),
+//                        lift.liftUp(),
+//                        new SleepAction(2),
+//                        lift.liftDown()
                         //trajectoryActionCloseOut
                 )
         );
