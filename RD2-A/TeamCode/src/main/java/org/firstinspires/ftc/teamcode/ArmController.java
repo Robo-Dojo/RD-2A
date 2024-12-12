@@ -76,27 +76,24 @@ public class ArmController {
 //    }
 
 
-    public void armLifter(Gamepad _gamepad2) {
+    public void armLifter(Gamepad _gamepad1) {
         telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
         telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
         telemetry.update();
-        if(_gamepad2.right_trigger > 0.1)
-        //while(rd1.armLifterMotorLeft.getCurrentPosition()<3000 && rd1.armLifterMotorRight.getCurrentPosition()<-3000)
-        {
-            this.rd1.armLifterMotorLeft.setPower(0.8);
-            this.rd1.armLifterMotorRight.setPower(-0.8);
-            telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
-            telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
-            telemetry.update();
-        }
-        else if(_gamepad2.left_trigger > 0.1 && rd1.armLifterMotorLeft.getCurrentPosition()>100 && rd1.armLifterMotorRight.getCurrentPosition()>-100)
-        //while (rd1.armLifterMotorLeft.getCurrentPosition()>100 && rd1.armLifterMotorRight.getCurrentPosition()>-100)
-        {
-            this.rd1.armLifterMotorLeft.setPower(-0.8);
-            this.rd1.armLifterMotorRight.setPower(0.8);
-            telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
-            telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
-            telemetry.update();
+        if (_gamepad1.right_bumper) {
+            rd1.armLifterMotorLeft.setTargetPosition(3000);
+            rd1.armLifterMotorRight.setTargetPosition(-3000);
+            rd1.armLifterMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rd1.armLifterMotorLeft.setPower(0.8);
+            rd1.armLifterMotorRight.setPower(-0.8);
+        } else if (_gamepad1.left_bumper) {
+            rd1.armLifterMotorLeft.setTargetPosition(100);
+            rd1.armLifterMotorRight.setTargetPosition(-100);
+            rd1.armLifterMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rd1.armLifterMotorLeft.setPower(-0.8);
+            rd1.armLifterMotorRight.setPower(0.8);
         }
 //        else {
 //            this.rd1.armLifterMotorLeft.setPower(0);

@@ -217,13 +217,13 @@ public class AutoPath extends LinearOpMode {
                 new SequentialAction(
 //                        //trajectoryAction1,
                         lift.liftUp(),
-                        new SleepAction(1),
+                        new SleepAction(2),
                         //claw.openClaw(),
                         //trajectoryAction2,
                         lift.liftDown(),
                         new SleepAction(3),
                         lift.liftUp(),
-                        new SleepAction(1),
+                        new SleepAction(2),
                         lift.liftDown()
                         //trajectoryActionCloseOut
                 )

@@ -32,7 +32,7 @@ public class DcpMode extends LinearOpMode {
 //            Intake.clawIntake(gamepad2);
 //            Intake.clawOuttake(gamepad2);
 
-            ArmController.armLifter(gamepad2);
+            ArmController.armLifter(gamepad1);
             telemetry.update();
         }
     }
