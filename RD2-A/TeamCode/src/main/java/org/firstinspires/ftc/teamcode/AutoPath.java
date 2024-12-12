@@ -60,7 +60,7 @@ public class AutoPath extends LinearOpMode {
                 double posR = liftRight.getCurrentPosition();
                 packet.put("liftPosL", posL);
                 packet.put("liftPosR", posR);
-                if (posL < 1500.0 && posR > -1500.0) {
+                if (posL < 2000.0 && posR > -2000.0) {
                     return true;
                 } else {
                     liftLeft.setPower(1);
@@ -91,11 +91,12 @@ public class AutoPath extends LinearOpMode {
                 telemetry.addData("liftPosL_Down", posL);
                 telemetry.addData("liftPosR_Down", posR);
                 telemetry.update();
-                if (posL < -70.00 && posR > 70.0) {
+//                if (posL < -70.00 && posR > 70.0) {
+                if (posL > 300.00 && posR < -300.0) {
                     return true;
                 } else {
-                    liftLeft.setPower(1);
-                    liftRight.setPower(1);
+                    liftLeft.setPower(0);
+                    liftRight.setPower(0);
                     return false;
                 }
             }
@@ -212,15 +213,6 @@ public class AutoPath extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-//        Action trajectoryActionChosen;
-//        if (startPosition == 1) {
-//            trajectoryActionChosen = tab1.build();
-//        } else if (startPosition == 2) {
-//            trajectoryActionChosen = tab2.build();
-//        } else {
-//            trajectoryActionChosen = tab3.build();
-//        }
-
         Actions.runBlocking(
                 new SequentialAction(
 //                        //trajectoryAction1,
@@ -228,8 +220,11 @@ public class AutoPath extends LinearOpMode {
                         new SleepAction(1),
                         //claw.openClaw(),
                         //trajectoryAction2,
+                        lift.liftDown(),
+                        new SleepAction(3),
+                        lift.liftUp(),
+                        new SleepAction(1),
                         lift.liftDown()
-
                         //trajectoryActionCloseOut
                 )
         );
