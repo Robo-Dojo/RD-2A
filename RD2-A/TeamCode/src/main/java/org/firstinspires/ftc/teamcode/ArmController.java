@@ -88,8 +88,8 @@ public class ArmController {
             rd1.armLifterMotorLeft.setPower(0.8);
             rd1.armLifterMotorRight.setPower(-0.8);
         } else if (_gamepad1.left_bumper) {
-            rd1.armLifterMotorLeft.setTargetPosition(100);
-            rd1.armLifterMotorRight.setTargetPosition(-100);
+            rd1.armLifterMotorLeft.setTargetPosition(50);
+            rd1.armLifterMotorRight.setTargetPosition(-50);
             rd1.armLifterMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rd1.armLifterMotorLeft.setPower(-0.8);

@@ -36,6 +36,7 @@ public class AutoPath extends LinearOpMode {
             liftLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             liftLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+
             liftRight = hardwareMap.get(DcMotorEx.class, "armLifterRight");
             liftRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             liftRight.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -51,24 +52,26 @@ public class AutoPath extends LinearOpMode {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    liftLeft.setPower(1.0);
-                    liftRight.setPower(1.0);
+                    liftLeft.setPower(-1.0);
+                    liftRight.setPower(-1.0);
                     initialized = true;
                 }
 
                 double posL = liftLeft.getCurrentPosition();
                 double posR = liftRight.getCurrentPosition();
-                packet.put("liftPosL", posL);
-                packet.put("liftPosR", posR);
-                if (posL < 2000.0 && posR > -2000.0) {
-                    liftLeft.setPower(0);
-                    liftRight.setPower(0);
-                    return true;
-                } else {
-                    liftLeft.setPower(1);
-                    liftRight.setPower(1);
+                telemetry.addData("liftPosL", posL);
+                telemetry.addData("liftPosR", posR);
+                telemetry.update();
+
+                    liftLeft.setTargetPosition(-2000);
+                    liftRight.setTargetPosition(-2000);
+                    liftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    liftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    liftLeft.setPower(-1);
+                    liftRight.setPower(-1);
+
                     return false;
-                }
+
             }
         }
         public Action liftUp() {
@@ -81,26 +84,24 @@ public class AutoPath extends LinearOpMode {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    liftLeft.setPower(-1);
-                    liftRight.setPower(-1);
+                    liftLeft.setPower(1);
+                    liftRight.setPower(1);
                     initialized = true;
                 }
 
                 double posL = liftLeft.getCurrentPosition();
                 double posR = liftRight.getCurrentPosition();
-                packet.put("liftPosL", posL);
-                packet.put("liftPosR", posR);
-                telemetry.addData("liftPosL_Down", posL);
-                telemetry.addData("liftPosR_Down", posR);
+                telemetry.addData("liftPosL", posL);
+                telemetry.addData("liftPosR", posR);
                 telemetry.update();
-//                if (posL < -70.00 && posR > 70.0) {
-                if (posL > 300.00 && posR < -300.0) {
-                    return true;
-                } else {
-                    liftLeft.setPower(0);
-                    liftRight.setPower(0);
+
+
+                    liftLeft.setTargetPosition(-120);
+                    liftRight.setTargetPosition(-120);
+                    liftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    liftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
                     return false;
-                }
             }
         }
         public Action liftDown(){
@@ -152,14 +153,19 @@ public class AutoPath extends LinearOpMode {
 //        // vision here that outputs position
 //       // int visionOutputPosition = 1;
 //
-////        Action trajectoryAction1;
-////        Action trajectoryAction2;
-//        telemetry.addData("Status", "innit completed");
+        Action trajectoryAction1;
+        Action trajectoryAction2;
+        telemetry.addData("Status", "innit completed");
         waitForStart();
-//        telemetry.addData("Status", "after wait start");
-//         trajectoryAction1 = drive.actionBuilder(new Pose2d(-5.52, 70.98, Math.toRadians(-86.63)))
-//                 .splineTo(new Vector2d(-6.14, 27.00), Math.toRadians(269.20))
-//                 .build();
+        telemetry.addData("Status", "after wait start");
+         trajectoryAction1 = drive.actionBuilder(new Pose2d(-5.52, 70.98, Math.toRadians(-86.63)))
+                 .splineTo(new Vector2d(-6.14, 27.00), Math.toRadians(269.20))
+                 .build();
+
+        trajectoryAction2 = drive.actionBuilder(new Pose2d(-6.14, 27.00, Math.toRadians(269.20)))
+                .splineTo(new Vector2d(-22.28, 33.41), Math.toRadians(183.04))
+                .splineTo(new Vector2d(-46.34, 33.61), Math.toRadians(196.73))
+                .build();
 
 
 
@@ -201,24 +207,24 @@ public class AutoPath extends LinearOpMode {
         //Actions.runBlocking(claw.closeClaw());
 
 
-//        while (!isStopRequested() && !opModeIsActive()) { // Asta actioneaza ca un Init la Autonomie
+        while (!isStopRequested() && !opModeIsActive()) { // Asta actioneaza ca un Init la Autonomie
 //            //int position = visionOutputPosition;
-//           // telemetry.addData("Position during Init", position);
-//            telemetry.addData("Status", "Waiting in Init");
-//            telemetry.addData("Stop requested:", isStopRequested());
-//            telemetry.addData("Op mode: ", opModeIsActive());
-//            telemetry.update();
-//        }
+           // telemetry.addData("Position during Init", position);
+            telemetry.addData("Status", "Waiting in Init");
+            telemetry.addData("Stop requested:", isStopRequested());
+            telemetry.addData("Op mode: ", opModeIsActive());
+            telemetry.update();
+        }
 //
         telemetry.addData("Status", "before actions");
         Actions.runBlocking(
                 new SequentialAction(
-//                        //trajectoryAction1,
-                        //lift.liftUp()
-                        //new SleepAction(2),
+                        trajectoryAction1,
+                        lift.liftUp(),
+                        new SleepAction(3),
                         //claw.openClaw(),
-                        //trajectoryAction2,
-//                        lift.liftDown(),
+                        lift.liftDown(),
+                        trajectoryAction2
 //                        new SleepAction(3),
 //                        lift.liftUp(),
 //                        new SleepAction(2),
@@ -229,8 +235,8 @@ public class AutoPath extends LinearOpMode {
 
         while(opModeIsActive()) {
             telemetry.addData("Status", "Running");
-            telemetry.addData("liftPosL_Down", Lift.liftLeft.getCurrentPosition());
-            telemetry.addData("liftPosR_Down", Lift.liftRight.getCurrentPosition());
+            telemetry.addData("liftPosL", Lift.liftLeft.getCurrentPosition());
+            telemetry.addData("liftPosR", Lift.liftRight.getCurrentPosition());
             telemetry.update();
         }
     }
