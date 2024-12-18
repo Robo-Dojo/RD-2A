@@ -22,8 +22,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-@Autonomous(name = "AutoTest", group = "Autonomous")
-public class AutoTest extends LinearOpMode {
+@Autonomous(name = "AutoTest1", group = "Autonomous")
+public class AutoTest1 extends LinearOpMode {
     public static class Lift {
         private static DcMotorEx liftLeft;
         private static DcMotorEx liftRight;
@@ -173,19 +173,16 @@ public class AutoTest extends LinearOpMode {
 //                .build();
 
         startToCage = drive.actionBuilder(new Pose2d(-6.32, 64.32, Math.toRadians(90.00)))
-                .lineToY(33.30)
+                .setReversed(true)
+                .splineTo(new Vector2d(-6.32, 33.30), Math.toRadians(270.00))
+
                 .build();
 
-        cageToSample1 = drive.actionBuilder(new Pose2d(-6.32, 33.30, Math.toRadians(90.00)))
-                .splineTo(new Vector2d(-28.09, 31.73), Math.toRadians(210.07))
-                .splineTo(new Vector2d(-48.47, 12.68), Math.toRadians(92.05))
-                .splineTo(new Vector2d(-48.80, 53.61), Math.toRadians(92.07))
-                .lineToY(12.51)
-                .setReversed(true)
-                .splineTo(new Vector2d(-59.07, 53.77), Math.toRadians(92.07))
-                .strafeTo(new Vector2d(-64.54, 12.51))
-                .turnTo(Math.toRadians(92.07))
-                .splineTo(new Vector2d(-64.54, 54.60), Math.toRadians(90.00))
+        cageToSample1 = drive.actionBuilder(new Pose2d(-6.32, 33.30, Math.toRadians(270.00)))
+                .splineTo(new Vector2d(-33.30, 30.58), Math.toRadians(180.00))
+//                .splineTo(new Vector2d(-48.8, 14.83), Math.toRadians(270.00))
+//                .splineTo(new Vector2d(-48.8, 55.43), Math.toRadians(90.00))
+
                 .build();
 
 
@@ -262,8 +259,7 @@ public class AutoTest extends LinearOpMode {
                         new SleepAction(2),
                         lift.liftDown(),
                         cageToSample1
-
-                        //cageToSample2
+//                        cageToSample2
                         //cageToSample3
                         //new SleepAction(3),
                         //claw.openClaw(),

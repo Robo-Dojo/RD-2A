@@ -156,7 +156,7 @@ public class AutoPath extends LinearOpMode {
 //        Action trajectory1;
 //        Action trajectoryAction2;
         Action startToCage;
-        Action cageToSample1;
+        TrajectoryActionBuilder cageToSample1;
         Action cageToSample2;
         Action cageToSample3;
 
@@ -180,14 +180,17 @@ startToCage = drive.actionBuilder(new Pose2d(-6.32, 64.32, Math.toRadians(90.00)
                 .splineTo(new Vector2d(-28.09, 31.73), Math.toRadians(210.07))
                 .splineTo(new Vector2d(-48.47, 12.68), Math.toRadians(92.05))
                 .splineTo(new Vector2d(-48.80, 53.61), Math.toRadians(92.07))
-                .lineToY(12.51)
-                .build();
+                .lineToY(12.51);
+
 
         cageToSample2 = drive.actionBuilder(new Pose2d(-48.80, 12.51, Math.toRadians(92.07)))
-                .strafeTo(new Vector2d(-59.07, 12.51))
-                .turnTo(Math.toRadians(92.07))
+//                .strafeTo(new Vector2d(-59.07, 12.51))
+//
+//                .turnTo(Math.toRadians(92.07))
+                .setReversed(true)
                 .splineTo(new Vector2d(-59.07, 53.77), Math.toRadians(92.07))
-                .lineToY(12.51)
+//                .lineToY(12.51)
+
                 .build();
 
         cageToSample3 = drive.actionBuilder(new Pose2d(-59.07, 12.51, Math.toRadians(92.07)))
@@ -251,9 +254,9 @@ startToCage = drive.actionBuilder(new Pose2d(-6.32, 64.32, Math.toRadians(90.00)
                         lift.liftUp(),
                         new SleepAction(2),
                         lift.liftDown(),
-                        cageToSample1,
-                        cageToSample2,
-                        cageToSample3
+                        cageToSample1.build(),
+                        cageToSample2
+                        //cageToSample3
                         //new SleepAction(3),
                         //claw.openClaw(),
                         //lift.liftDown(),
