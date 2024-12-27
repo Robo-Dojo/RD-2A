@@ -16,19 +16,19 @@
 //
 //
 //    public void testServo(Gamepad _gamepad2) {
-//        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
+//        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServoController.getPosition());
 //        telemetry.update();
 //        if (_gamepad2.a) {
 //            rd1.testServo.setPosition(0.0);
-//            //rd1.clawServo.resetDeviceConfigurationForOpMode();
-//            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServo.getPosition());
+//            //rd1.clawServoController.resetDeviceConfigurationForOpMode();
+//            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServoController.getPosition());
 //            telemetry.update();
 //        } else if (_gamepad2.y) {
 //            rd1.testServo.setPosition(0.1);
-//            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServo.getPosition());
+//            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServoController.getPosition());
 //            telemetry.update();
 //        }
-//        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
+//        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServoController.getPosition());
 //        telemetry.update();
 //    }
 //}

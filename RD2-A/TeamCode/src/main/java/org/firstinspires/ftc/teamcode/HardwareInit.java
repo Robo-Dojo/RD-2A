@@ -17,18 +17,18 @@ public class HardwareInit {
     //public Servo armTurner = null;
     public DcMotor armLifterMotorLeft = null;
     public DcMotor armLifterMotorRight = null;
-    public Servo clawServo1 = null;
-    public Servo clawServo2 = null;
-//    public Servo clawServo2 = null;
-//    public Servo intakeLeft = null;
+    public Servo clawServo = null;
+    public Servo twisterServo = null;
+    public Servo clawServoJoint = null;
+    public Servo intakeLeft = null;
     public Servo intakeRight = null;
 //    public Servo clawIntake = null;
 //    public Servo clawOuttake = null;
-    //public Servo clawServo = null;
+    //public Servo clawServoController = null;
     //public Servo testServo = null;
     //public DcMotorEx par = null;
     //public DcMotorEx perp = null;
-public WebcamName webcam;
+//public WebcamName webcam;
 
 
 
@@ -46,16 +46,16 @@ public WebcamName webcam;
         rearRightMotor = hwMap.dcMotor.get("rightBack");
         armLifterMotorLeft = hwMap.dcMotor.get("armLifterLeft");
         armLifterMotorRight = hwMap.dcMotor.get("armLifterRight");
-        clawServo1 = hwMap.get(Servo.class, "clawServo1");
-        clawServo2 = hwMap.get(Servo.class, "clawServo2");
-//        clawServo2 = hwMap.get(Servo.class, "clawServo2");
-//        intakeLeft = hwMap.get(Servo.class, "intakeLeft");
+        clawServo = hwMap.get(Servo.class, "clawServo1");
+        twisterServo = hwMap.get(Servo.class, "twisterServoController");
+        clawServoJoint = hwMap.get(Servo.class, "servoJointController");
+        intakeLeft = hwMap.get(Servo.class, "intakeLeft");
         intakeRight = hwMap.get(Servo.class, "intakeRight");
 //        clawIntake = hwMap.get(Servo.class, "clawIntake");
 //        clawOuttake = hwMap.get(Servo.class, "clawOuttake");
-        //clawServo = hwMap.get(Servo.class, "clawServo");
+        //clawServoController = hwMap.get(Servo.class, "clawServoController");
         //testServo = hwMap.get(Servo.class, "testServo");
-        webcam = hwMap.get(WebcamName.class, "Webcam 1");
+     //   webcam = hwMap.get(WebcamName.class, "Webcam 1");
 
 
 
