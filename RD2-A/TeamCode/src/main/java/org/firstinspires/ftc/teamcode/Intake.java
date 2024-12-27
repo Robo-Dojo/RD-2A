@@ -92,7 +92,7 @@ public class Intake {
     }
 
     public void intakeClose(Gamepad _gamepad1){
-        while(_gamepad1.x) {
+        while(_gamepad1.dpad_down) {
             rd1.clawServoJoint.setPosition(0.54);
             rd1.twisterServo.setPosition(0.56);
             try {

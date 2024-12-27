@@ -22,12 +22,9 @@ public class HardwareInit {
     public Servo clawServoJoint = null;
     public Servo intakeLeft = null;
     public Servo intakeRight = null;
-//    public Servo clawIntake = null;
-//    public Servo clawOuttake = null;
-    //public Servo clawServoController = null;
-    //public Servo testServo = null;
-    //public DcMotorEx par = null;
-    //public DcMotorEx perp = null;
+    public Servo clawServoOuttake = null;
+    public Servo clawPivotShort = null;
+    public Servo clawPivotLong = null;
 //public WebcamName webcam;
 
 
@@ -51,10 +48,9 @@ public class HardwareInit {
         clawServoJoint = hwMap.get(Servo.class, "servoJointController");
         intakeLeft = hwMap.get(Servo.class, "intakeLeft");
         intakeRight = hwMap.get(Servo.class, "intakeRight");
-//        clawIntake = hwMap.get(Servo.class, "clawIntake");
-//        clawOuttake = hwMap.get(Servo.class, "clawOuttake");
-        //clawServoController = hwMap.get(Servo.class, "clawServoController");
-        //testServo = hwMap.get(Servo.class, "testServo");
+        clawServoOuttake = hwMap.get(Servo.class, "clawServoOuttake");
+        clawPivotShort = hwMap.get(Servo.class, "clawPivotShort");
+        clawPivotLong = hwMap.get(Servo.class, "clawPivotLong");
      //   webcam = hwMap.get(WebcamName.class, "Webcam 1");
 
 
