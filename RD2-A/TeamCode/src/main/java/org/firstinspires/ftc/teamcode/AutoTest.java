@@ -1,4 +1,7 @@
 package org.firstinspires.ftc.teamcode;
+import static org.firstinspires.ftc.teamcode.BitmapLoader.loadBitmapFromFile;
+import static org.firstinspires.ftc.teamcode.FileWrite.writeToFile;
+
 import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -13,17 +16,38 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import android.graphics.Bitmap;
+import android.os.Environment;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.vision.VisionPortal;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import android.util.Size;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
+
+import java.io.File;
+
+
 
 @Config
 @Autonomous(name = "AutoTest", group = "Autonomous")
 public class AutoTest extends LinearOpMode {
+    private CameraProcessor visionProcessor;
+    private VisionPortal visionPortal;
+    CameraProcessor.Selected visionOutputPosition = CameraProcessor.Selected.NONE;
+
     public static class Lift {
         private static DcMotorEx liftLeft;
         private static DcMotorEx liftRight;
@@ -141,10 +165,42 @@ public class AutoTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        telemetry.addData("Status", "Run op mode start");
+        //telemetry.addData("Status", "Run op mode start");
         Pose2d initialPose = new Pose2d(-6.32, 64.32, Math.toRadians(90));
 //
-//
+        visionProcessor = new CameraProcessor();
+        try {
+//          visionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam"), visionProcessor);
+            visionPortal = new VisionPortal.Builder()
+                    .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
+                    .addProcessor(visionProcessor)
+                    .setCameraResolution(new Size(800, 600))
+                    .enableLiveView(true)
+                    .setAutoStopLiveView(true)
+                    .build();
+        } catch (Exception e) {
+        }
+        telemetry.addData("FPS: ", visionPortal.getFps());
+        telemetry.addData("FPS: ", visionProcessor.getSelection());
+        visionPortal.saveNextFrameRaw("test");
+
+        writeToFile("example_log.txt", "This is a test log for FTC operations.");
+
+        new SleepAction(0.1);
+
+        writeToFile("example_log2.txt", "This is a testfdigfifefjifjie log for FTC operations.");
+
+        String filePath = Environment.getExternalStorageDirectory().getPath() + "/r1.png";
+        Bitmap bitmap = loadBitmapFromFile(filePath);
+
+        int a = bitmap.getPixel(652, 464);
+        int red = (a >> 16) & 0xff;  // Extract the red component
+        int green = (a >> 8) & 0xff; // Extract the green component
+        int blue = a & 0xff;
+        writeToFile("example_log3.txt", String.valueOf(blue));
+
+        BlockRecognition.processImage(bitmap, false, true, false);
+
 //
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 //        //Claw claw = new Claw(hardwareMap);
@@ -257,11 +313,11 @@ public class AutoTest extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         //trajectory1,
-                        startToCage,
-                        lift.liftUp(),
-                        new SleepAction(2),
-                        lift.liftDown(),
-                        cageToSample1
+//                        startToCage,
+//                        lift.liftUp(),
+//                        new SleepAction(2),
+//                        lift.liftDown(),
+//                        cageToSample1
 
                         //cageToSample2
                         //cageToSample3

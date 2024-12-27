@@ -4,6 +4,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.vision.VisionPortal;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
 
 public class HardwareInit {
     public DcMotor frontLeftMotor = null;
@@ -13,16 +17,20 @@ public class HardwareInit {
     //public Servo armTurner = null;
     public DcMotor armLifterMotorLeft = null;
     public DcMotor armLifterMotorRight = null;
-//    public Servo clawServo1 = null;
+    public Servo clawServo1 = null;
+    public Servo clawServo2 = null;
 //    public Servo clawServo2 = null;
 //    public Servo intakeLeft = null;
-//    public Servo intakeRight = null;
+    public Servo intakeRight = null;
 //    public Servo clawIntake = null;
 //    public Servo clawOuttake = null;
     //public Servo clawServo = null;
     //public Servo testServo = null;
     //public DcMotorEx par = null;
     //public DcMotorEx perp = null;
+public WebcamName webcam;
+
+
 
 
 
@@ -38,14 +46,17 @@ public class HardwareInit {
         rearRightMotor = hwMap.dcMotor.get("rightBack");
         armLifterMotorLeft = hwMap.dcMotor.get("armLifterLeft");
         armLifterMotorRight = hwMap.dcMotor.get("armLifterRight");
-//        clawServo1 = hwMap.get(Servo.class, "clawServo1");
+        clawServo1 = hwMap.get(Servo.class, "clawServo1");
+        clawServo2 = hwMap.get(Servo.class, "clawServo2");
 //        clawServo2 = hwMap.get(Servo.class, "clawServo2");
 //        intakeLeft = hwMap.get(Servo.class, "intakeLeft");
-//        intakeRight = hwMap.get(Servo.class, "intakeRight");
+        intakeRight = hwMap.get(Servo.class, "intakeRight");
 //        clawIntake = hwMap.get(Servo.class, "clawIntake");
 //        clawOuttake = hwMap.get(Servo.class, "clawOuttake");
         //clawServo = hwMap.get(Servo.class, "clawServo");
         //testServo = hwMap.get(Servo.class, "testServo");
+        webcam = hwMap.get(WebcamName.class, "Webcam 1");
+
 
 
         // Reset encoders

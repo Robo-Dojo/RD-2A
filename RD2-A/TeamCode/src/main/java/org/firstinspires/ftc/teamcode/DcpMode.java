@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -17,22 +18,30 @@ public class DcpMode extends LinearOpMode {
         ChassyController ChassyController = new ChassyController(rd1, telemetry);
         //Intake Intake = new Intake(rd1, telemetry);
         org.firstinspires.ftc.teamcode.ArmController ArmController = new org.firstinspires.ftc.teamcode.ArmController(rd1, telemetry);
+        Intake Intake = new Intake(rd1, telemetry);
 
         waitForStart();
         if (isStopRequested()) return;
 
+        double c = 0.5;
+        int b = 0;
         while(opModeIsActive()) {
 
             ChassyController.dcpMovement(gamepad1);
-            // ArmController omora bateria
-
-//            Intake.clawServo1(gamepad2);
+            //Intake.clawServo1(gamepad1);
+           // Intake.clawServo2(gamepad1);
 //            Intake.clawServo2(gamepad2);
 //
 //            Intake.clawIntake(gamepad2);
 //            Intake.clawOuttake(gamepad2);
 
             ArmController.armLifter(gamepad1);
+            ArmController.robotHanger(gamepad1);
+            Intake.intake(gamepad1);
+            Intake.clawServo1(gamepad1);
+            Intake.clawServo2(gamepad2);
+
+
             telemetry.update();
         }
     }

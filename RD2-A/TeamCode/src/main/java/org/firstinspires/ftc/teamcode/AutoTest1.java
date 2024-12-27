@@ -3,6 +3,7 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
@@ -152,10 +153,14 @@ public class AutoTest1 extends LinearOpMode {
 //
 //        // vision here that outputs position
 //       // int visionOutputPosition = 1;
-//
-//        Action trajectory1;
-//        Action trajectoryAction2;
+
         Action startToCage;
+        Action trajectory0;
+        Action trajectory1;
+        Action trajectory2;
+        Action fataspate;
+//        Action trajectoryAction2;
+
         Action cageToSample1;
         Action cageToSample2;
         Action cageToSample3;
@@ -163,14 +168,6 @@ public class AutoTest1 extends LinearOpMode {
         telemetry.addData("Status", "innit completed");
         waitForStart();
         telemetry.addData("Status", "after wait start");
-//        trajectory1 = drive.actionBuilder(new Pose2d(4.34, -70.27, Math.toRadians(89.67)))
-//        .splineTo(new Vector2d(4.59, -26.89), Math.toRadians(89.67))
-//        .build();
-
-//        trajectoryAction2 = drive.actionBuilder(new Pose2d(-6.14, 27.00, Math.toRadians(269.20)))
-//                .splineTo(new Vector2d(-22.28, 33.41), Math.toRadians(183.04))
-//                .splineTo(new Vector2d(-46.34, 33.61), Math.toRadians(196.73))
-//                .build();
 
         startToCage = drive.actionBuilder(new Pose2d(-6.32, 64.32, Math.toRadians(90.00)))
                 .setReversed(true)
@@ -178,36 +175,117 @@ public class AutoTest1 extends LinearOpMode {
 
                 .build();
 
-        cageToSample1 = drive.actionBuilder(new Pose2d(-6.32, 33.30, Math.toRadians(270.00)))
-                .splineTo(new Vector2d(-33.30, 30.58), Math.toRadians(180.00))
-//                .splineTo(new Vector2d(-48.8, 14.83), Math.toRadians(270.00))
-//                .splineTo(new Vector2d(-48.8, 55.43), Math.toRadians(90.00))
 
+        trajectory0 = drive.actionBuilder(new Pose2d(-5.88, 32.06, Math.toRadians(90.00)))
+                .splineToConstantHeading(new Vector2d(-32.23, 34.55), Math.toRadians(172.57))
+                .splineToConstantHeading(new Vector2d(-32.23, 13.01), Math.toRadians(261.94))
+                .splineToConstantHeading(new Vector2d(-47.97, 13.01), Math.toRadians(187.50))
+                .splineToConstantHeading(new Vector2d(-48.47, 24.94), Math.toRadians(96.67))
+                .splineToConstantHeading(new Vector2d(-47.97, 40.52), Math.toRadians(88.17))
+                .splineToConstantHeading(new Vector2d(-48.14, 50.13), Math.toRadians(90.00))
+                .splineToConstantHeading(new Vector2d(-48.14, 14.17), Math.toRadians(269.75))
+                .splineToConstantHeading(new Vector2d(-58.25, 13.01), Math.toRadians(181.76))
+                .splineToConstantHeading(new Vector2d(-58.25, 27.26), Math.toRadians(88.57))
+                .splineToConstantHeading(new Vector2d(-58.41, 43.50), Math.toRadians(92.36))
+                .splineToConstantHeading(new Vector2d(-58.91, 51.45), Math.toRadians(91.35))
+                .splineToConstantHeading(new Vector2d(-58.91, 16.32), Math.toRadians(-89.30))
+                .splineToConstantHeading(new Vector2d(-65.70, 13.34), Math.toRadians(187.72))
+                .splineToConstantHeading(new Vector2d(-66.37, 28.58), Math.toRadians(97.50))
+                .splineToConstantHeading(new Vector2d(-66.86, 44.16), Math.toRadians(85.70))
+                .splineToConstantHeading(new Vector2d(-67.03, 54.60), Math.toRadians(88.57))
+                .splineToConstantHeading(new Vector2d(-67.03, 38.53), Math.toRadians(270.00))
+                .splineToConstantHeading(new Vector2d(-41.01, 39.02), Math.toRadians(1.09))
                 .build();
 
-
-
-        cageToSample2 = drive.actionBuilder(new Pose2d(-48.80, 12.51, Math.toRadians(92.07)))
-//                .strafeTo(new Vector2d(-59.07, 12.51))
-//
-//                .turnTo(Math.toRadians(92.07))
-                .setReversed(true)
-                .splineTo(new Vector2d(-59.07, 53.77), Math.toRadians(92.07))
-//                .lineToY(12.51)
-
-                .build();
-
-        cageToSample3 = drive.actionBuilder(new Pose2d(-59.07, 12.51, Math.toRadians(92.07)))
-                .strafeTo(new Vector2d(-64.54, 12.51))
-                .turnTo(Math.toRadians(92.07))
-                .splineTo(new Vector2d(-64.54, 54.60), Math.toRadians(90.00))
-
-                .build();
-
-//        trajectoryAction2 = drive.actionBuilder(new Pose2d(-7.62, 30.36, Math.toRadians(270.00)))
-//                .splineTo(new Vector2d(-7.62, 30.36), Math.toRadians(270.00))
+//STRAFE TRAJECTORY
+//        trajectory1 = drive.actionBuilder(new Pose2d(-5.88, 32.23, Math.toRadians(90.00)))
+//                .splineToConstantHeading(new Vector2d(-32.40, 34.38), Math.toRadians(175.35))
+//                .build();
+//        trajectory2 = drive.actionBuilder(new Pose2d(-32.40, 34.38, Math.toRadians(180.00)))
+//                .splineToConstantHeading(new Vector2d(-32.23, 13.51), Math.toRadians(-89.55))
+//                .splineToConstantHeading(new Vector2d(-40.49, 14.33), Math.toRadians(179.41))
+//                .splineToConstantHeading(new Vector2d(-45.65, 40.52), Math.toRadians(90.00))
+//                .splineToConstantHeading(new Vector2d(-46.48, 54.77), Math.toRadians(89.42))
+//                .splineToConstantHeading(new Vector2d(-43.66, 13.51), Math.toRadians(269.35))
+//                .splineToConstantHeading(new Vector2d(-49.46, 13.51), Math.toRadians(185.19))
+//                .splineToConstantHeading(new Vector2d(-54.27, 27.42), Math.toRadians(95.64))
+//                .splineToConstantHeading(new Vector2d(-55.43, 42.84), Math.toRadians(92.34))
+//                .splineToConstantHeading(new Vector2d(-56.26, 54.10), Math.toRadians(92.86))
+//                .splineToConstantHeading(new Vector2d(-51.62, 13.51), Math.toRadians(-89.59))
+//                .splineToConstantHeading(new Vector2d(-57.56, 13.67), Math.toRadians(192.34))
+//                .splineToConstantHeading(new Vector2d(-62.06, 34.22), Math.toRadians(96.86))
+//                .splineToConstantHeading(new Vector2d(-61.23, 56.75), Math.toRadians(99.09))
+//                .splineToConstantHeading(new Vector2d(-50.79, 44.99), Math.toRadians(-41.50))
+//                .splineToConstantHeading(new Vector2d(-38.20, 43.50), Math.toRadians(-4.82))
 //                .build();
 
+        trajectory1 = drive.actionBuilder(new Pose2d(-6.26, 32.29, Math.toRadians(90.00)))
+                .splineToConstantHeading(new Vector2d(-33.29, 33.29), Math.toRadians(174.44))
+                .splineToConstantHeading(new Vector2d(-34.12, 14.43), Math.toRadians(255.13))
+                .splineToConstantHeading(new Vector2d(-48.47, 14.10), Math.toRadians(180.00))
+                .splineToConstantHeading(new Vector2d(-47.97, 25.78), Math.toRadians(94.18))
+                .splineToConstantHeading(new Vector2d(-47.97, 37.13), Math.toRadians(90.00))
+                .splineToConstantHeading(new Vector2d(-47.30, 48.64), Math.toRadians(86.68))
+                .splineToConstantHeading(new Vector2d(-47.81, 52.14), Math.toRadians(95.71))
+                .splineToConstantHeading(new Vector2d(-48.47, 13.27), Math.toRadians(269.16))
+                .splineToConstantHeading(new Vector2d(-58.65, 13.10), Math.toRadians(191.98))
+                .splineToConstantHeading(new Vector2d(-58.65, 27.95), Math.toRadians(90.00))
+                .splineToConstantHeading(new Vector2d(-58.82, 40.13), Math.toRadians(93.87))
+                .splineToConstantHeading(new Vector2d(-58.98, 53.31), Math.toRadians(80.54))
+                .splineToConstantHeading(new Vector2d(-58.65, 14.27), Math.toRadians(269.59))
+                .splineToConstantHeading(new Vector2d(-64.83, 13.77), Math.toRadians(186.34))
+                .splineToConstantHeading(new Vector2d(-64.66, 31.29), Math.toRadians(99.73))
+                .splineToConstantHeading(new Vector2d(-64.66, 42.97), Math.toRadians(87.61))
+                .splineToConstantHeading(new Vector2d(-64.83, 55.98), Math.toRadians(93.32))
+                .splineToConstantHeading(new Vector2d(-63.49, 32.62), Math.toRadians(-84.50))
+                .splineToConstantHeading(new Vector2d(-41.13, 34.62), Math.toRadians(5.12))
+                .build();
+
+
+
+
+//wait for human player then close claw
+//        trajectory1 = drive.actionBuilder(new Pose2d(-41.68, 63.38, Math.toRadians(87.21)))
+//                .splineToConstantHeading(new Vector2d(-41.84, 42.01), Math.toRadians(269.64))
+//                .splineToConstantHeading(new Vector2d(-15.33, 39.52), Math.toRadians(-5.36))
+//                .splineToConstantHeading(new Vector2d(-7.37, 39.19), Math.toRadians(1.82))
+//                .splineToConstantHeading(new Vector2d(-6.38, 32.23), Math.toRadians(-82.65))
+//                .build();
+//viper up then open claw
+//        trajectory2 = drive.actionBuilder(new Pose2d(-6.38, 31.73, Math.toRadians(270.00)))
+//                .splineToConstantHeading(new Vector2d(-12.84, 35.54), Math.toRadians(135.00))
+//                .splineToConstantHeading(new Vector2d(-30.74, 45.49), Math.toRadians(150.95))
+//                .splineToConstantHeading(new Vector2d(-41.51, 45.98), Math.toRadians(177.36))
+//                .splineToConstantHeading(new Vector2d(-41.84, 63.71), Math.toRadians(91.07))
+//                .build();
+
+
+//        .splineToConstantHeading(new Vector2d(-40.18, 45.49), Math.toRadians(3.15))
+        //wait for human player
+//                .splineToConstantHeading(new Vector2d(-40.52, 63.05), Math.toRadians(88.65))
+        //claw takes sample from the perimeter
+//        .splineToConstantHeading(new Vector2d(-37.37, 50.46), Math.toRadians(-46.70))
+//                .splineToConstantHeading(new Vector2d(-10.19, 41.01), Math.toRadians(-25.76))
+//                .splineToConstantHeading(new Vector2d(-8.53, 32.23), Math.toRadians(-46.49))
+        //claw places specimen on bar
+//        .splineToConstantHeading(new Vector2d(-24.44, 43.50), Math.toRadians(144.41))
+//                .splineToConstantHeading(new Vector2d(-40.85, 64.21), Math.toRadians(126.87))
+        //wait for human player
+//        .splineToConstantHeading(new Vector2d(-38.53, 46.81), Math.toRadians(-67.21))
+//                .splineToConstantHeading(new Vector2d(-11.68, 42.67), Math.toRadians(-25.11))
+//                .splineToConstantHeading(new Vector2d(-10.85, 32.23), Math.toRadians(-36.50))
+
+
+        fataspate = drive.actionBuilder(new Pose2d(-36.04, 57.09, Math.toRadians(90.00)))
+                .splineToConstantHeading(new Vector2d(-36.04, 13.67), Math.toRadians(270.00))
+                .splineToConstantHeading(new Vector2d(-38.03, 56.75), Math.toRadians(90.24))
+                .splineToConstantHeading(new Vector2d(-37.86, 13.67), Math.toRadians(268.84))
+                .splineToConstantHeading(new Vector2d(-40.52, 56.75), Math.toRadians(93.52))
+                .splineToConstantHeading(new Vector2d(-40.52, 13.51), Math.toRadians(-89.78))
+                .splineToConstantHeading(new Vector2d(-43.66, 57.25), Math.toRadians(94.12))
+                .splineToConstantHeading(new Vector2d(-43.66, 13.67), Math.toRadians(270.00))
+                .build();
+        
 
 //        TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
 //                .lineToYSplineHeading(33, Math.toRadians(0))
@@ -254,13 +332,14 @@ public class AutoTest1 extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         //trajectory1,
+                        new ParallelAction(
                         startToCage,
-                        lift.liftUp(),
+                        lift.liftUp()
+                        ),
                         new SleepAction(2),
                         lift.liftDown(),
-                        cageToSample1
-//                        cageToSample2
-                        //cageToSample3
+                        trajectory1
+                        //fataspate
                         //new SleepAction(3),
                         //claw.openClaw(),
                         //lift.liftDown(),

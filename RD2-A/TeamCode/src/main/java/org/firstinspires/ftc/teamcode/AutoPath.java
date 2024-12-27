@@ -184,21 +184,23 @@ startToCage = drive.actionBuilder(new Pose2d(-6.32, 64.32, Math.toRadians(90.00)
 
 
         cageToSample2 = drive.actionBuilder(new Pose2d(-48.80, 12.51, Math.toRadians(92.07)))
-//                .strafeTo(new Vector2d(-59.07, 12.51))
-//
-//                .turnTo(Math.toRadians(92.07))
+                .strafeTo(new Vector2d(-59.07, 12.51))
+                .build();
+                System.out.println("okpdasoiksfdsokpsfdoksfdoikfdoikfdoizfdoijfdoifdjoifdomnkjokoklkoloololoslcfsloffdgdeddfhgdfhgnrewldgrdrdhgfdregdbfd");
+        cageToSample3 =  drive.actionBuilder(new Pose2d(-59.07, 12.51, Math.toRadians(92.07)))
+                .turnTo(Math.toRadians(92.07))
                 .setReversed(true)
                 .splineTo(new Vector2d(-59.07, 53.77), Math.toRadians(92.07))
 //                .lineToY(12.51)
 
                 .build();
 
-        cageToSample3 = drive.actionBuilder(new Pose2d(-59.07, 12.51, Math.toRadians(92.07)))
-                .strafeTo(new Vector2d(-64.54, 12.51))
-                .turnTo(Math.toRadians(92.07))
-                .splineTo(new Vector2d(-64.54, 54.60), Math.toRadians(90.00))
-
-                .build();
+//        cageToSample3 = drive.actionBuilder(new Pose2d(-59.07, 12.51, Math.toRadians(92.07)))
+//                .strafeTo(new Vector2d(-64.54, 12.51))
+//                .turnTo(Math.toRadians(92.07))
+//                .splineTo(new Vector2d(-64.54, 54.60), Math.toRadians(90.00))
+//
+//                .build();
 
 //        trajectoryAction2 = drive.actionBuilder(new Pose2d(-7.62, 30.36, Math.toRadians(270.00)))
 //                .splineTo(new Vector2d(-7.62, 30.36), Math.toRadians(270.00))
@@ -255,8 +257,8 @@ startToCage = drive.actionBuilder(new Pose2d(-6.32, 64.32, Math.toRadians(90.00)
                         new SleepAction(2),
                         lift.liftDown(),
                         cageToSample1.build(),
-                        cageToSample2
-                        //cageToSample3
+                        cageToSample2,
+                        cageToSample3
                         //new SleepAction(3),
                         //claw.openClaw(),
                         //lift.liftDown(),

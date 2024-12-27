@@ -75,10 +75,30 @@ public class ArmController {
 //        }
 //    }
 
+        public void robotHanger(Gamepad _gamepad1){
+//            telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
+//            telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
+            telemetry.update();
+            if (_gamepad1.dpad_down) {
+                rd1.armLifterMotorLeft.setTargetPosition(500);
+                rd1.armLifterMotorRight.setTargetPosition(-500);
+                rd1.armLifterMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rd1.armLifterMotorLeft.setPower(-0.8);
+                rd1.armLifterMotorRight.setPower(0.8);
+            } else if (_gamepad1.dpad_up) {
+                rd1.armLifterMotorLeft.setTargetPosition(2500);
+                rd1.armLifterMotorRight.setTargetPosition(-2500);
+                rd1.armLifterMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rd1.armLifterMotorLeft.setPower(0.8);
+                rd1.armLifterMotorRight.setPower(-0.8);
+            }
+    }
 
     public void armLifter(Gamepad _gamepad1) {
-        telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
-        telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
+//        telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
+//        telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
         telemetry.update();
         if (_gamepad1.right_bumper) {
             rd1.armLifterMotorLeft.setTargetPosition(3000);
