@@ -12,7 +12,7 @@ public class DcpMode extends LinearOpMode {
         Chassy Chassy = new Chassy(rd1, telemetry);
         Arm Arm = new Arm(rd1, telemetry);
         Intake Intake = new Intake(rd1, telemetry);
-
+        Outtake Outtake = new Outtake(rd1, telemetry);
         waitForStart();
         if (isStopRequested()) return;
 
@@ -25,6 +25,9 @@ public class DcpMode extends LinearOpMode {
             Intake.twisterServoController(gamepad2);
             Intake.servoJointController(gamepad2);
             Intake.intakeClose(gamepad1);
+            Outtake.clawOuttakeServoController(gamepad1);
+            Outtake.clawPivotShortController(gamepad1);
+            Outtake.clawPivotLongController(gamepad1);
 
             telemetry.update();
         }

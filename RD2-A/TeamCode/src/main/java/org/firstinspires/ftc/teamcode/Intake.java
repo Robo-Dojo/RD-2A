@@ -6,7 +6,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 //endregion
 
 // the class that controls the entire robot arm
-public class Intake {
+public class  Intake {
     private HardwareInit rd1;
     private Telemetry telemetry;
 

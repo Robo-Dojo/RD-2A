@@ -109,6 +109,135 @@ public class AutoPath extends LinearOpMode {
         }
     }
 
+
+    public class ClawControl {
+
+        private Servo clawServo;
+        private Servo twisterServo;
+        private Servo clawServoJoint;
+        private Servo intakeLeft;
+        private Servo intakeRight;
+        private Servo clawServoOuttake;
+        private Servo clawPivotShort;
+        private Servo clawPivotLong;
+
+
+        public ClawControl(HardwareMap hardwareMap, Telemetry telemetry){
+            clawServo = hardwareMap.get(Servo.class, "clawServo1");
+            twisterServo = hardwareMap.get(Servo.class, "twisterServoController");
+            clawServoJoint = hardwareMap.get(Servo.class, "servoJointController");
+            intakeLeft = hardwareMap.get(Servo.class, "intakeLeft");
+            intakeRight = hardwareMap.get(Servo.class, "intakeRight");
+            clawServoOuttake = hardwareMap.get(Servo.class, "clawServoOuttake");
+            clawPivotShort = hardwareMap.get(Servo.class, "clawPivotShort");
+            clawPivotLong = hardwareMap.get(Servo.class, "clawPivotLong");
+        }
+
+        public class IntakeArmOpen implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                intakeLeft.setPosition(0.48);
+                intakeRight.setPosition(0.505);
+                return false;
+            }
+        }
+        public Action intakeArmOpen() {
+            return new IntakeArmOpen();
+        }
+
+
+        public class IntakeArmClose implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                intakeLeft.setPosition(0.54);
+                intakeRight.setPosition(0.435);
+                return false;
+            }
+        }
+        public Action intakeArmClose() {
+            return new IntakeArmClose();
+        }
+
+
+        public class IntakeClawClose implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServo.setPosition(0.6);
+                return false;
+            }
+        }
+        public Action intakeClawClose() {
+            return new IntakeClawClose();
+        }
+
+        public class IntakeClawOpen implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServo.setPosition(0.35);
+                return false;
+            }
+        }
+        public Action intakeClawOpen() {
+            return new IntakeClawOpen();
+        }
+
+        public class IntakeClawTwistLeft implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                twisterServo.setPosition(0.48);
+                return false;
+            }
+        }
+        public Action intakeClawTwistLeft() {
+            return new IntakeClawTwistLeft();
+        }
+
+        public class IntakeClawTwistRight implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                twisterServo.setPosition(0.525);
+                return false;
+            }
+        }
+        public Action intakeClawTwistRight() {
+            return new IntakeClawTwistRight();
+        }
+
+        public class IntakeClawTwistMiddle implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                twisterServo.setPosition(0.5048);
+                return false;
+            }
+        }
+        public Action intakeClawTwistMiddle() {
+            return new IntakeClawTwistMiddle();
+        }
+
+        public class IntakeClawJointUp implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServoJoint.setPosition(0.462);
+                return false;
+            }
+        }
+        public Action intakeClawJointUp() {
+            return new IntakeClawJointUp();
+        }
+
+        public class IntakeClawJointDown implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServoJoint.setPosition(0.568);
+                return false;
+            }
+        }
+        public Action intakeClawJointDown() {
+            return new IntakeClawJointDown();
+        }
+
+    }
+
 //    public class Claw {
 //        private Servo claw;
 //
@@ -319,3 +448,16 @@ startToCage = drive.actionBuilder(new Pose2d(-6.32, 64.32, Math.toRadians(90.00)
 //                .splineTo(new Vector2d(-40.36, 29.17), Math.toRadians(23.75))
 //                .build();
 //
+
+//Clasa Principala{
+//Clasa {
+// Constructor
+// Metode
+//
+// Autonomia in Sine (runOpMode){
+// Traiectori
+// Actiuni
+//}
+//}
+//
+//}
