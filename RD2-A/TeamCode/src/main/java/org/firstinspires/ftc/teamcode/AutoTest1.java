@@ -110,6 +110,134 @@ public class AutoTest1 extends LinearOpMode {
         }
     }
 
+    public class ClawControl {
+
+        private Servo clawServo;
+        private Servo twisterServo;
+        private Servo clawServoJoint;
+        private Servo intakeLeft;
+        private Servo intakeRight;
+        private Servo clawServoOuttake;
+        private Servo clawPivotShort;
+        private Servo clawPivotLong;
+
+
+        public ClawControl(HardwareMap hardwareMap, Telemetry telemetry){
+            clawServo = hardwareMap.get(Servo.class, "clawServo1");
+            twisterServo = hardwareMap.get(Servo.class, "twisterServoController");
+            clawServoJoint = hardwareMap.get(Servo.class, "servoJointController");
+            intakeLeft = hardwareMap.get(Servo.class, "intakeLeft");
+            intakeRight = hardwareMap.get(Servo.class, "intakeRight");
+            clawServoOuttake = hardwareMap.get(Servo.class, "clawServoOuttake");
+            clawPivotShort = hardwareMap.get(Servo.class, "clawPivotShort");
+            clawPivotLong = hardwareMap.get(Servo.class, "clawPivotLong");
+        }
+
+        public class IntakeArmOpen implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                intakeLeft.setPosition(0.48);
+                intakeRight.setPosition(0.505);
+                return false;
+            }
+        }
+        public Action intakeArmOpen() {
+            return new IntakeArmOpen();
+        }
+
+
+        public class IntakeArmClose implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                intakeLeft.setPosition(0.54);
+                intakeRight.setPosition(0.435);
+                return false;
+            }
+        }
+        public Action intakeArmClose() {
+            return new IntakeArmClose();
+        }
+
+
+        public class IntakeClawClose implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServo.setPosition(0.6);
+                return false;
+            }
+        }
+        public Action intakeClawClose() {
+            return new IntakeClawClose();
+        }
+
+        public class IntakeClawOpen implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServo.setPosition(0.35);
+                return false;
+            }
+        }
+        public Action intakeClawOpen() {
+            return new IntakeClawOpen();
+        }
+
+        public class IntakeClawTwistLeft implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                twisterServo.setPosition(0.48);
+                return false;
+            }
+        }
+        public Action intakeClawTwistLeft() {
+            return new IntakeClawTwistLeft();
+        }
+
+        public class IntakeClawTwistRight implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                twisterServo.setPosition(0.525);
+                return false;
+            }
+        }
+        public Action intakeClawTwistRight() {
+            return new IntakeClawTwistRight();
+        }
+
+        public class IntakeClawTwistMiddle implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                twisterServo.setPosition(0.5048);
+                return false;
+            }
+        }
+        public Action intakeClawTwistMiddle() {
+            return new IntakeClawTwistMiddle();
+        }
+
+        public class IntakeClawJointUp implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServoJoint.setPosition(0.462);
+                return false;
+            }
+        }
+        public Action intakeClawJointUp() {
+            return new IntakeClawJointUp();
+        }
+
+        public class IntakeClawJointDown implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServoJoint.setPosition(0.568);
+                return false;
+            }
+        }
+        public Action intakeClawJointDown() {
+            return new IntakeClawJointDown();
+        }
+
+    }
+
 //    public class Claw {
 //        private Servo claw;
 //
@@ -242,79 +370,6 @@ public class AutoTest1 extends LinearOpMode {
                 .build();
 
 
-
-
-//wait for human player then close claw
-//        trajectory1 = drive.actionBuilder(new Pose2d(-41.68, 63.38, Math.toRadians(87.21)))
-//                .splineToConstantHeading(new Vector2d(-41.84, 42.01), Math.toRadians(269.64))
-//                .splineToConstantHeading(new Vector2d(-15.33, 39.52), Math.toRadians(-5.36))
-//                .splineToConstantHeading(new Vector2d(-7.37, 39.19), Math.toRadians(1.82))
-//                .splineToConstantHeading(new Vector2d(-6.38, 32.23), Math.toRadians(-82.65))
-//                .build();
-//viper up then open claw
-//        trajectory2 = drive.actionBuilder(new Pose2d(-6.38, 31.73, Math.toRadians(270.00)))
-//                .splineToConstantHeading(new Vector2d(-12.84, 35.54), Math.toRadians(135.00))
-//                .splineToConstantHeading(new Vector2d(-30.74, 45.49), Math.toRadians(150.95))
-//                .splineToConstantHeading(new Vector2d(-41.51, 45.98), Math.toRadians(177.36))
-//                .splineToConstantHeading(new Vector2d(-41.84, 63.71), Math.toRadians(91.07))
-//                .build();
-
-
-//        .splineToConstantHeading(new Vector2d(-40.18, 45.49), Math.toRadians(3.15))
-        //wait for human player
-//                .splineToConstantHeading(new Vector2d(-40.52, 63.05), Math.toRadians(88.65))
-        //claw takes sample from the perimeter
-//        .splineToConstantHeading(new Vector2d(-37.37, 50.46), Math.toRadians(-46.70))
-//                .splineToConstantHeading(new Vector2d(-10.19, 41.01), Math.toRadians(-25.76))
-//                .splineToConstantHeading(new Vector2d(-8.53, 32.23), Math.toRadians(-46.49))
-        //claw places specimen on bar
-//        .splineToConstantHeading(new Vector2d(-24.44, 43.50), Math.toRadians(144.41))
-//                .splineToConstantHeading(new Vector2d(-40.85, 64.21), Math.toRadians(126.87))
-        //wait for human player
-//        .splineToConstantHeading(new Vector2d(-38.53, 46.81), Math.toRadians(-67.21))
-//                .splineToConstantHeading(new Vector2d(-11.68, 42.67), Math.toRadians(-25.11))
-//                .splineToConstantHeading(new Vector2d(-10.85, 32.23), Math.toRadians(-36.50))
-
-
-        fataspate = drive.actionBuilder(new Pose2d(-36.04, 57.09, Math.toRadians(90.00)))
-                .splineToConstantHeading(new Vector2d(-36.04, 13.67), Math.toRadians(270.00))
-                .splineToConstantHeading(new Vector2d(-38.03, 56.75), Math.toRadians(90.24))
-                .splineToConstantHeading(new Vector2d(-37.86, 13.67), Math.toRadians(268.84))
-                .splineToConstantHeading(new Vector2d(-40.52, 56.75), Math.toRadians(93.52))
-                .splineToConstantHeading(new Vector2d(-40.52, 13.51), Math.toRadians(-89.78))
-                .splineToConstantHeading(new Vector2d(-43.66, 57.25), Math.toRadians(94.12))
-                .splineToConstantHeading(new Vector2d(-43.66, 13.67), Math.toRadians(270.00))
-                .build();
-        
-
-//        TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-//                .lineToYSplineHeading(33, Math.toRadians(0))
-//                .waitSeconds(2)
-//                .setTangent(Math.toRadians(90))
-//                .lineToY(48)
-//                .setTangent(Math.toRadians(0))
-//                .lineToX(32)
-//                .strafeTo(new Vector2d(44.5, 30))
-//                .turn(Math.toRadians(180))
-//                .lineToX(47.5)
-//                .waitSeconds(3);
-//        TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-//                .lineToY(37)
-//                .setTangent(Math.toRadians(0))
-//                .lineToX(18)
-//                .waitSeconds(3)
-//                .setTangent(Math.toRadians(0))
-//                .lineToXSplineHeading(46, Math.toRadians(180))
-//                .waitSeconds(3);
-//        TrajectoryActionBuilder tab3 = drive.actionBuilder(initialPose)
-//                .lineToYSplineHeading(33, Math.toRadians(180))
-//                .waitSeconds(2)
-//                .strafeTo(new Vector2d(46, 30))
-//                .waitSeconds(3);
-//        Action trajectoryActionCloseOut = tab1.endTrajectory().fresh()
-//                .strafeTo(new Vector2d(48, 12))
-//                .build();
-
         // actions that need to happen on init; for instance, a claw tightening.
         //Actions.runBlocking(claw.closeClaw());
 
@@ -360,43 +415,3 @@ public class AutoTest1 extends LinearOpMode {
         }
     }
 }
-
-
-//
-//startToCage = drive.actionBuilder(new Pose2d(-6.71, 30.51, Math.toRadians(90.0)))
-//        .setReversed(true)
-//                 .splineTo(new Vector2d(-6.71, 31.10), Math.toRadians(90.0))
-//        .build();
-//trajectory1 = drive.actionBuilder(new Pose2d(4.34, -70.27, Math.toRadians(89.67)))
-//        .splineTo(new Vector2d(4.59, -26.89), Math.toRadians(89.67))
-//        .build();
-//
-////
-//        cageToSample1 = drive.actionBuilder(new Pose2d(-6.71, 30.51, Math.toRadians(90)))
-//                .setReversed(true)
-//                .splineTo(new Vector2d(-26.15, 33.90), Math.toRadians(160))
-//                .setReversed(true)
-//                .splineTo(new Vector2d(-40.36, 29.17), Math.toRadians(210))
-//                .setReversed(true)
-//                .splineTo(new Vector2d(-47.96, 12.27), Math.toRadians(180))
-//                .build();
-//
-//        sampleToHuman = drive.actionBuilder(new Pose2d(-40.36, 29.17, Math.toRadians(0)))
-//                .strafeTo(new Vector2d(-40.36, 64.07))
-////                .splineTo(new Vector2d(-40.36, 64.07), Math.toRadians(0))
-//                .build();
-//
-//        waitHuman = drive.actionBuilder(new Pose2d(-40.36, 64.07, Math.toRadians(0)))
-//                .splineTo(new Vector2d(-27.64, 64.07), Math.toRadians(0))
-//                .build();
-//
-//        humanToCage1 = drive.actionBuilder(new Pose2d(-49.18, 60.59, Math.toRadians(90.0)))
-//                .splineTo(new Vector2d(-4.83, 31.85), Math.toRadians(270))
-//
-//                .build();
-//
-//        cageToSample2 = drive.actionBuilder(new Pose2d(-4.83, 31.85, Math.toRadians(270)))
-//                .splineTo(new Vector2d(-26.15, 33.90), Math.toRadians(23.75))
-//                .splineTo(new Vector2d(-40.36, 29.17), Math.toRadians(23.75))
-//                .build();
-//
