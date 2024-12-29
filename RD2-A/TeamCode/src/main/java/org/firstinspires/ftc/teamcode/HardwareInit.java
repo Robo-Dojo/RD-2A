@@ -17,14 +17,14 @@ public class HardwareInit {
     //public Servo armTurner = null;
     public DcMotor armLifterMotorLeft = null;
     public DcMotor armLifterMotorRight = null;
-    public Servo clawServo = null;
-    public Servo twisterServo = null;
-    public Servo clawServoJoint = null;
-    public Servo intakeLeft = null;
-    public Servo intakeRight = null;
+//    public Servo clawServo = null;
+//    public Servo twisterServo = null;
+//    public Servo clawServoJoint = null;
+//    public Servo intakeLeft = null;
+//    public Servo intakeRight = null;
     public Servo clawServoOuttake = null;
     public Servo clawPivotShort = null;
-    public Servo clawPivotLong = null;
+//    public Servo clawPivotLong = null;
 //public WebcamName webcam;
 
 
@@ -43,14 +43,14 @@ public class HardwareInit {
         rearRightMotor = hwMap.dcMotor.get("rightBack");
         armLifterMotorLeft = hwMap.dcMotor.get("armLifterLeft");
         armLifterMotorRight = hwMap.dcMotor.get("armLifterRight");
-        clawServo = hwMap.get(Servo.class, "clawServo1");
-        twisterServo = hwMap.get(Servo.class, "twisterServoController");
-        clawServoJoint = hwMap.get(Servo.class, "servoJointController");
-        intakeLeft = hwMap.get(Servo.class, "intakeLeft");
-        intakeRight = hwMap.get(Servo.class, "intakeRight");
+//        clawServo = hwMap.get(Servo.class, "clawServoIntake");
+//        twisterServo = hwMap.get(Servo.class, "twisterServoController");
+//        clawServoJoint = hwMap.get(Servo.class, "servoJointController");
+//        intakeLeft = hwMap.get(Servo.class, "intakeLeft");
+//        intakeRight = hwMap.get(Servo.class, "intakeRight");
         clawServoOuttake = hwMap.get(Servo.class, "clawServoOuttake");
         clawPivotShort = hwMap.get(Servo.class, "clawPivotShort");
-        clawPivotLong = hwMap.get(Servo.class, "clawPivotLong");
+//        clawPivotLong = hwMap.get(Servo.class, "clawPivotLong");
      //   webcam = hwMap.get(WebcamName.class, "Webcam 1");
 
 

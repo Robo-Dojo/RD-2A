@@ -123,7 +123,7 @@ public class AutoPath extends LinearOpMode {
 
 
         public ClawControl(HardwareMap hardwareMap, Telemetry telemetry){
-            clawServo = hardwareMap.get(Servo.class, "clawServo1");
+            clawServo = hardwareMap.get(Servo.class, "clawServoIntake");
             twisterServo = hardwareMap.get(Servo.class, "twisterServoController");
             clawServoJoint = hardwareMap.get(Servo.class, "servoJointController");
             intakeLeft = hardwareMap.get(Servo.class, "intakeLeft");

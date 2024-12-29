@@ -123,7 +123,7 @@ public class AutoTest1 extends LinearOpMode {
 
 
         public ClawControl(HardwareMap hardwareMap, Telemetry telemetry){
-            clawServo = hardwareMap.get(Servo.class, "clawServo1");
+            clawServo = hardwareMap.get(Servo.class, "clawServoIntake");
             twisterServo = hardwareMap.get(Servo.class, "twisterServoController");
             clawServoJoint = hardwareMap.get(Servo.class, "servoJointController");
             intakeLeft = hardwareMap.get(Servo.class, "intakeLeft");
@@ -234,6 +234,51 @@ public class AutoTest1 extends LinearOpMode {
         }
         public Action intakeClawJointDown() {
             return new IntakeClawJointDown();
+        }
+
+        public class OuttakeClawOpen implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServoOuttake.setPosition(0.62);
+                return false;
+            }
+        }
+        public Action outtakeClawOpen() {
+            return new OuttakeClawOpen();
+        }
+
+        public class OuttakeClawClose implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServoOuttake.setPosition(0.4789);
+                return false;
+            }
+        }
+        public Action outtakeClawClose() {
+            return new OuttakeClawClose();
+        }
+
+
+        public class OuttakeClawPivotShortOpen implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawPivotShort.setPosition(0.57);
+                return false;
+            }
+        }
+        public Action outtakeClawPivotShortOpen() {
+            return new OuttakeClawPivotShortOpen();
+        }
+
+        public class OuttakeClawPivotShortClose implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawPivotShort.setPosition(0.74);
+                return false;
+            }
+        }
+        public Action outtakeClawPivotShortClose() {
+            return new OuttakeClawPivotShortClose();
         }
 
     }
