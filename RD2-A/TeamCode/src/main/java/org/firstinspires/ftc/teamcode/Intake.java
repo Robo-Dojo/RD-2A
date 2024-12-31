@@ -1,39 +1,39 @@
-////region imports
-//package org.firstinspires.ftc.teamcode;
-//import com.qualcomm.robotcore.hardware.Gamepad;
-//
-//import org.firstinspires.ftc.robotcore.external.Telemetry;
-////endregion
-//
-//// the class that controls the entire robot arm
-//public class  Intake {
-//    private HardwareInit rd1;
-//    private Telemetry telemetry;
-//
-//    public Intake(HardwareInit rd1, Telemetry telemetry)
-//    {
-//        this.rd1 = rd1;
-//        this.telemetry = telemetry;
-//        rd1.clawServo.setPosition(0.35);
-//        rd1.twisterServo.setPosition(0.5048);
-//    }
-//
-//    public void clawServoController(Gamepad _gamepad2) {
-//        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
-//        telemetry.update();
-//        if (_gamepad2.a) {
-//            rd1.clawServo.setPosition(0.35);
-//            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServo.getPosition());
-//            telemetry.update();
-//        } else if (_gamepad2.y) {
-//            rd1.clawServo.setPosition(0.6);
-//            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServo.getPosition());
-//            telemetry.update();
-//        }
-//        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
-//        telemetry.update();
-//    }
-//
+//region imports
+package org.firstinspires.ftc.teamcode;
+import com.qualcomm.robotcore.hardware.Gamepad;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+//endregion
+
+// the class that controls the entire robot arm
+public class  Intake {
+    private HardwareInit rd1;
+    private Telemetry telemetry;
+
+    public Intake(HardwareInit rd1, Telemetry telemetry)
+    {
+        this.rd1 = rd1;
+        this.telemetry = telemetry;
+        rd1.clawServo.setPosition(0.35);
+       // rd1.twisterServo.setPosition(0.5048);
+    }
+
+    public void clawServoController(Gamepad _gamepad2) {
+        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
+        telemetry.update();
+        if (_gamepad2.a) {
+            rd1.clawServo.setPosition(0.35);
+            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServo.getPosition());
+            telemetry.update();
+        } else if (_gamepad2.y) {
+            rd1.clawServo.setPosition(0.6);
+            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServo.getPosition());
+            telemetry.update();
+        }
+        //telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
+        //telemetry.update();
+    }
+
 //    // control glisiere orizontale
 //    public void intakeController(Gamepad _gamepad2) {
 //    // telemetry.addData("IntakeLeft la pozitia: ", rd1.intakeLeft.getPosition());
@@ -71,8 +71,8 @@
 //            rd1.twisterServo.setPosition(0.525);
 //
 //        }
-//        telemetry.addData("Gheara plasata la pozitia: ", rd1.twisterServo.getPosition());
-//        telemetry.update();
+//        //telemetry.addData("Gheara plasata la pozitia: ", rd1.twisterServo.getPosition());
+//        //telemetry.update();
 //
 //    }
 //
@@ -89,8 +89,8 @@
 //            telemetry.addData("Joint deschis, plasat la pozitia: ", rd1.clawServoJoint.getPosition());
 //            telemetry.update();
 //        }
-//        telemetry.addData("Joint plasat la pozitia: ", rd1.clawServoJoint.getPosition());
-//        telemetry.update();
+//        //telemetry.addData("Joint plasat la pozitia: ", rd1.clawServoJoint.getPosition());
+//        //telemetry.update();
 //    }
 //
 //    public void intakeClose(Gamepad _gamepad2){
@@ -108,7 +108,7 @@
 //            rd1.twisterServo.setPosition(0.5048);
 //        }
 //    }
-//    }
-//
-//
-//
+    }
+
+
+
