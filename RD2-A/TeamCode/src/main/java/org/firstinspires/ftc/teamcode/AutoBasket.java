@@ -7,7 +7,6 @@ import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
-import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -16,15 +15,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-@Autonomous(name = "AutoTest2", group = "Autonomous")
-public class AutoTest2 extends LinearOpMode {
+@Autonomous(name = "AutoBasket", group = "Autonomous")
+public class AutoBasket extends LinearOpMode {
     public static class Lift {
         private static DcMotorEx liftLeft;
         private static DcMotorEx liftRight;
@@ -110,49 +108,210 @@ public class AutoTest2 extends LinearOpMode {
         }
     }
 
-    public class Intake {
-        private Servo intakeLeft;
-        private Servo intakeRight;
+    public static class ClawControl {
 
-        public Intake(HardwareMap hardwareMap) {
+        private static Servo clawServo;
+        private static Servo twisterServo;
+        private static Servo clawServoJoint;
+        private static Servo intakeLeft;
+        private static Servo intakeRight;
+        private static Servo clawServoOuttake;
+        private static Servo clawPivotShort;
+        private static Servo clawPivotLong;
+
+
+        public ClawControl(HardwareMap hardwareMap, Telemetry telemetry){
+            clawServo = hardwareMap.get(Servo.class, "clawServoIntake");
+            twisterServo = hardwareMap.get(Servo.class, "twisterServoController");
+            clawServoJoint = hardwareMap.get(Servo.class, "servoJointController");
             intakeLeft = hardwareMap.get(Servo.class, "intakeLeft");
             intakeRight = hardwareMap.get(Servo.class, "intakeRight");
+            clawServoOuttake = hardwareMap.get(Servo.class, "clawServoOuttake");
+            clawPivotShort = hardwareMap.get(Servo.class, "clawPivotShort");
+            clawPivotLong = hardwareMap.get(Servo.class, "clawPivotLong");
         }
 
-        public class CloseIntake implements Action {
+        public static class IntakeArmOpen implements Action {
             @Override
-            public boolean run(@NonNull TelemetryPacket packet) {
+            public boolean run(@NonNull TelemetryPacket packet){
                 intakeLeft.setPosition(0.48);
-                intakeLeft.setPosition(0.505);
+                intakeRight.setPosition(0.505);
                 return false;
             }
         }
-        public Action closeIntake() {
-            return new CloseIntake();
+        public Action intakeArmOpen() {
+            return new ClawControl.IntakeArmOpen();
         }
 
-        public class OpenIntake implements Action {
+
+        public static class IntakeArmClose implements Action {
             @Override
-            public boolean run(@NonNull TelemetryPacket packet) {
+            public boolean run(@NonNull TelemetryPacket packet){
                 intakeLeft.setPosition(0.54);
                 intakeRight.setPosition(0.435);
                 return false;
             }
         }
-        public Action openIntake() {
-            return new OpenIntake();
+        public Action intakeArmClose() {
+            return new ClawControl.IntakeArmClose();
         }
+
+
+        public static class IntakeClawClose implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServo.setPosition(0.6);
+                return false;
+            }
+        }
+        public Action intakeClawClose() {
+            return new ClawControl.IntakeClawClose();
+        }
+
+        public static class IntakeClawOpen implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServo.setPosition(0.35);
+                return false;
+            }
+        }
+        public Action intakeClawOpen() {
+            return new ClawControl.IntakeClawOpen();
+        }
+
+        public static class IntakeClawTwistLeft implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                twisterServo.setPosition(0.48);
+                return false;
+            }
+        }
+        public Action intakeClawTwistLeft() {
+            return new ClawControl.IntakeClawTwistLeft();
+        }
+
+        public static class IntakeClawTwistRight implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                twisterServo.setPosition(0.525);
+                return false;
+            }
+        }
+        public Action intakeClawTwistRight() {
+            return new ClawControl.IntakeClawTwistRight();
+        }
+
+        public static class IntakeClawTwistMiddle implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                twisterServo.setPosition(0.5048);
+                return false;
+            }
+        }
+        public Action intakeClawTwistMiddle() {
+            return new ClawControl.IntakeClawTwistMiddle();
+        }
+
+        public static class IntakeClawJointUp implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServoJoint.setPosition(0.462);
+                return false;
+            }
+        }
+        public Action intakeClawJointUp() {
+            return new ClawControl.IntakeClawJointUp();
+        }
+
+        public static class IntakeClawJointDown implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServoJoint.setPosition(0.568);
+                return false;
+            }
+        }
+        public Action intakeClawJointDown() {
+            return new ClawControl.IntakeClawJointDown();
+        }
+
+        public static class OuttakeClawOpen implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServoOuttake.setPosition(0.4789);
+                return false;
+            }
+        }
+        public Action outtakeClawOpen() {
+            return new ClawControl.OuttakeClawOpen();
+        }
+
+        public static class OuttakeClawClose implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawServoOuttake.setPosition(0.62);
+                return false;
+            }
+        }
+        public Action outtakeClawClose() {
+            return new ClawControl.OuttakeClawClose();
+        }
+
+
+        public static class OuttakeClawPivotShortOpen implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawPivotShort.setPosition(0.79);
+                return false;
+            }
+        }
+        public Action outtakeClawPivotShortOpen() {
+            return new ClawControl.OuttakeClawPivotShortOpen();
+        }
+
+        public static class OuttakeClawPivotShortClose implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawPivotShort.setPosition(0.53);
+                return false;
+            }
+        }
+        public Action outtakeClawPivotShortClose() {
+            return new ClawControl.OuttakeClawPivotShortClose();
+        }
+
+        public static class OuttakeClawPivotLongOpen implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawPivotLong.setPosition(0.6);
+                return false;
+            }
+        }
+        public Action outtakeClawPivotLongOpen() {
+            return new ClawControl.OuttakeClawPivotShortOpen();
+        }
+
+        public static class OuttakeClawPivotLongClose implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawPivotLong.setPosition(0.528);
+                return false;
+            }
+        }
+        public Action outtakeClawPivotLongClose() {
+            return new ClawControl.OuttakeClawPivotShortClose();
+        }
+
     }
 
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Run op mode start");
-        Pose2d initialPose = new Pose2d(-6.32, 64.32, Math.toRadians(90));
+        Pose2d initialPose = new Pose2d(7.16, 61.46, Math.toRadians(90));
 //
 //
 //
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
-        Intake intake = new Intake(hardwareMap);
+        ClawControl claws = new ClawControl(hardwareMap, telemetry);
         Lift lift = new Lift(hardwareMap, telemetry);
 //
 //        // vision here that outputs position
@@ -182,22 +341,20 @@ public class AutoTest2 extends LinearOpMode {
 
 
         // actions that need to happen on init; for instance, a claw tightening.
-        //Actions.runBlocking(claw.closeClaw());
-
+        Actions.runBlocking(claws.intakeClawClose());
 
         while (!isStopRequested() && !opModeIsActive()) { // Asta actioneaza ca un Init la Autonomie
-//            //int position = visionOutputPosition;
+            //int position = visionOutputPosition;
             // telemetry.addData("Position during Init", position);
             telemetry.addData("Status", "Waiting in Init");
             telemetry.addData("Stop requested:", isStopRequested());
             telemetry.addData("Op mode: ", opModeIsActive());
             telemetry.update();
         }
-//
+
         telemetry.addData("Status", "before actions");
         Actions.runBlocking(
                 new SequentialAction(
-                        //trajectory1,
                         new ParallelAction(
                                 startToCage,
                                 lift.liftUp()
@@ -205,13 +362,7 @@ public class AutoTest2 extends LinearOpMode {
                         new SleepAction(2),
                         lift.liftDown(),
                         trajectory0,
-                        trajectory1,
-                        intake.openIntake()
-//                        new SleepAction(3),
-//                        lift.liftUp(),
-//                        new SleepAction(2),
-//                        lift.liftDown()
-                        //trajectoryActionCloseOut
+                        trajectory1
                 )
         );
 
@@ -223,43 +374,3 @@ public class AutoTest2 extends LinearOpMode {
         }
     }
 }
-
-
-//
-//startToCage = drive.actionBuilder(new Pose2d(-6.71, 30.51, Math.toRadians(90.0)))
-//        .setReversed(true)
-//                 .splineTo(new Vector2d(-6.71, 31.10), Math.toRadians(90.0))
-//        .build();
-//trajectory1 = drive.actionBuilder(new Pose2d(4.34, -70.27, Math.toRadians(89.67)))
-//        .splineTo(new Vector2d(4.59, -26.89), Math.toRadians(89.67))
-//        .build();
-//
-////
-//        cageToSample1 = drive.actionBuilder(new Pose2d(-6.71, 30.51, Math.toRadians(90)))
-//                .setReversed(true)
-//                .splineTo(new Vector2d(-26.15, 33.90), Math.toRadians(160))
-//                .setReversed(true)
-//                .splineTo(new Vector2d(-40.36, 29.17), Math.toRadians(210))
-//                .setReversed(true)
-//                .splineTo(new Vector2d(-47.96, 12.27), Math.toRadians(180))
-//                .build();
-//
-//        sampleToHuman = drive.actionBuilder(new Pose2d(-40.36, 29.17, Math.toRadians(0)))
-//                .strafeTo(new Vector2d(-40.36, 64.07))
-////                .splineTo(new Vector2d(-40.36, 64.07), Math.toRadians(0))
-//                .build();
-//
-//        waitHuman = drive.actionBuilder(new Pose2d(-40.36, 64.07, Math.toRadians(0)))
-//                .splineTo(new Vector2d(-27.64, 64.07), Math.toRadians(0))
-//                .build();
-//
-//        humanToCage1 = drive.actionBuilder(new Pose2d(-49.18, 60.59, Math.toRadians(90.0)))
-//                .splineTo(new Vector2d(-4.83, 31.85), Math.toRadians(270))
-//
-//                .build();
-//
-//        cageToSample2 = drive.actionBuilder(new Pose2d(-4.83, 31.85, Math.toRadians(270)))
-//                .splineTo(new Vector2d(-26.15, 33.90), Math.toRadians(23.75))
-//                .splineTo(new Vector2d(-40.36, 29.17), Math.toRadians(23.75))
-//                .build();
-//

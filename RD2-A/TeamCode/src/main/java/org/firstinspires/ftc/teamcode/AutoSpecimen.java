@@ -7,7 +7,6 @@ import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
-import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -16,15 +15,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-@Autonomous(name = "AutoTest1", group = "Autonomous")
-public class AutoTest1 extends LinearOpMode {
+@Autonomous(name = "AutoSpecimen", group = "Autonomous")
+public class AutoSpecimen extends LinearOpMode {
     public static class Lift {
         private static DcMotorEx liftLeft;
         private static DcMotorEx liftRight;
@@ -110,16 +108,16 @@ public class AutoTest1 extends LinearOpMode {
         }
     }
 
-    public class ClawControl {
+    public static class ClawControl {
 
-        private Servo clawServo;
-        private Servo twisterServo;
-        private Servo clawServoJoint;
-        private Servo intakeLeft;
-        private Servo intakeRight;
-        private Servo clawServoOuttake;
-        private Servo clawPivotShort;
-        private Servo clawPivotLong;
+        private static Servo clawServo;
+        private static Servo twisterServo;
+        private static Servo clawServoJoint;
+        private static Servo intakeLeft;
+        private static Servo intakeRight;
+        private static Servo clawServoOuttake;
+        private static Servo clawPivotShort;
+        private static Servo clawPivotLong;
 
 
         public ClawControl(HardwareMap hardwareMap, Telemetry telemetry){
@@ -133,7 +131,7 @@ public class AutoTest1 extends LinearOpMode {
             clawPivotLong = hardwareMap.get(Servo.class, "clawPivotLong");
         }
 
-        public class IntakeArmOpen implements Action {
+        public static class IntakeArmOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
                 intakeLeft.setPosition(0.48);
@@ -146,7 +144,7 @@ public class AutoTest1 extends LinearOpMode {
         }
 
 
-        public class IntakeArmClose implements Action {
+        public static class IntakeArmClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
                 intakeLeft.setPosition(0.54);
@@ -159,7 +157,7 @@ public class AutoTest1 extends LinearOpMode {
         }
 
 
-        public class IntakeClawClose implements Action {
+        public static class IntakeClawClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
                 clawServo.setPosition(0.6);
@@ -170,7 +168,7 @@ public class AutoTest1 extends LinearOpMode {
             return new IntakeClawClose();
         }
 
-        public class IntakeClawOpen implements Action {
+        public static class IntakeClawOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
                 clawServo.setPosition(0.35);
@@ -181,7 +179,7 @@ public class AutoTest1 extends LinearOpMode {
             return new IntakeClawOpen();
         }
 
-        public class IntakeClawTwistLeft implements Action {
+        public static class IntakeClawTwistLeft implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
                 twisterServo.setPosition(0.48);
@@ -192,7 +190,7 @@ public class AutoTest1 extends LinearOpMode {
             return new IntakeClawTwistLeft();
         }
 
-        public class IntakeClawTwistRight implements Action {
+        public static class IntakeClawTwistRight implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
                 twisterServo.setPosition(0.525);
@@ -203,7 +201,7 @@ public class AutoTest1 extends LinearOpMode {
             return new IntakeClawTwistRight();
         }
 
-        public class IntakeClawTwistMiddle implements Action {
+        public static class IntakeClawTwistMiddle implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
                 twisterServo.setPosition(0.5048);
@@ -214,7 +212,7 @@ public class AutoTest1 extends LinearOpMode {
             return new IntakeClawTwistMiddle();
         }
 
-        public class IntakeClawJointUp implements Action {
+        public static class IntakeClawJointUp implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
                 clawServoJoint.setPosition(0.462);
@@ -225,7 +223,7 @@ public class AutoTest1 extends LinearOpMode {
             return new IntakeClawJointUp();
         }
 
-        public class IntakeClawJointDown implements Action {
+        public static class IntakeClawJointDown implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
                 clawServoJoint.setPosition(0.568);
@@ -236,10 +234,10 @@ public class AutoTest1 extends LinearOpMode {
             return new IntakeClawJointDown();
         }
 
-        public class OuttakeClawOpen implements Action {
+        public static class OuttakeClawOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawServoOuttake.setPosition(0.62);
+                clawServoOuttake.setPosition(0.4789);
                 return false;
             }
         }
@@ -247,10 +245,10 @@ public class AutoTest1 extends LinearOpMode {
             return new OuttakeClawOpen();
         }
 
-        public class OuttakeClawClose implements Action {
+        public static class OuttakeClawClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawServoOuttake.setPosition(0.4789);
+                clawServoOuttake.setPosition(0.62);
                 return false;
             }
         }
@@ -259,10 +257,10 @@ public class AutoTest1 extends LinearOpMode {
         }
 
 
-        public class OuttakeClawPivotShortOpen implements Action {
+        public static class OuttakeClawPivotShortOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotShort.setPosition(0.57);
+                clawPivotShort.setPosition(0.79);
                 return false;
             }
         }
@@ -270,14 +268,36 @@ public class AutoTest1 extends LinearOpMode {
             return new OuttakeClawPivotShortOpen();
         }
 
-        public class OuttakeClawPivotShortClose implements Action {
+        public static class OuttakeClawPivotShortClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotShort.setPosition(0.74);
+                clawPivotShort.setPosition(0.53);
                 return false;
             }
         }
         public Action outtakeClawPivotShortClose() {
+            return new OuttakeClawPivotShortClose();
+        }
+
+        public static class OuttakeClawPivotLongOpen implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawPivotLong.setPosition(0.6);
+                return false;
+            }
+        }
+        public Action outtakeClawPivotLongOpen() {
+            return new OuttakeClawPivotShortOpen();
+        }
+
+        public static class OuttakeClawPivotLongClose implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                clawPivotLong.setPosition(0.528);
+                return false;
+            }
+        }
+        public Action outtakeClawPivotLongClose() {
             return new OuttakeClawPivotShortClose();
         }
 
@@ -317,13 +337,11 @@ public class AutoTest1 extends LinearOpMode {
     public void runOpMode() {
         telemetry.addData("Status", "Run op mode start");
         Pose2d initialPose = new Pose2d(-6.32, 64.32, Math.toRadians(90));
-//
-//
-//
+
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
-//        //Claw claw = new Claw(hardwareMap);
+        ClawControl claws = new ClawControl(hardwareMap, telemetry);
         Lift lift = new Lift(hardwareMap, telemetry);
-//
+
 //        // vision here that outputs position
 //       // int visionOutputPosition = 1;
 
@@ -331,12 +349,6 @@ public class AutoTest1 extends LinearOpMode {
         Action trajectory0;
         Action trajectory1;
         Action trajectory2;
-        Action fataspate;
-//        Action trajectoryAction2;
-
-        Action cageToSample1;
-        Action cageToSample2;
-        Action cageToSample3;
 
         telemetry.addData("Status", "innit completed");
         waitForStart();
@@ -344,8 +356,7 @@ public class AutoTest1 extends LinearOpMode {
 
         startToCage = drive.actionBuilder(new Pose2d(-6.32, 64.32, Math.toRadians(90.00)))
                 .setReversed(true)
-                .splineTo(new Vector2d(-6.32, 33.30), Math.toRadians(270.00))
-
+                .splineTo(new Vector2d(-6.32, 35.30), Math.toRadians(270.00))
                 .build();
 
 
@@ -370,7 +381,7 @@ public class AutoTest1 extends LinearOpMode {
                 .splineToConstantHeading(new Vector2d(-41.01, 39.02), Math.toRadians(1.09))
                 .build();
 
-//STRAFE TRAJECTORY
+//STRAFE TRAJECTORY TO HUMAN PLAYER
 //        trajectory1 = drive.actionBuilder(new Pose2d(-5.88, 32.23, Math.toRadians(90.00)))
 //                .splineToConstantHeading(new Vector2d(-32.40, 34.38), Math.toRadians(175.35))
 //                .build();
@@ -416,39 +427,35 @@ public class AutoTest1 extends LinearOpMode {
 
 
         // actions that need to happen on init; for instance, a claw tightening.
-        //Actions.runBlocking(claw.closeClaw());
+        Actions.runBlocking(claws.intakeClawClose());
 
 
         while (!isStopRequested() && !opModeIsActive()) { // Asta actioneaza ca un Init la Autonomie
-//            //int position = visionOutputPosition;
+            //int position = visionOutputPosition;
             // telemetry.addData("Position during Init", position);
             telemetry.addData("Status", "Waiting in Init");
             telemetry.addData("Stop requested:", isStopRequested());
             telemetry.addData("Op mode: ", opModeIsActive());
             telemetry.update();
         }
-//
+
         telemetry.addData("Status", "before actions");
         Actions.runBlocking(
                 new SequentialAction(
-                        //trajectory1,
-                        new ParallelAction(
-                        startToCage,
-                        lift.liftUp()
-                        ),
-                        new SleepAction(2),
-                        lift.liftDown(),
-                        trajectory1
-                        //fataspate
-                        //new SleepAction(3),
-                        //claw.openClaw(),
-                        //lift.liftDown(),
-                        // trajectoryAction2
-//                        new SleepAction(3),
-//                        lift.liftUp(),
+                        claws.intakeArmOpen()
+//                        claws.intakeArmClose()
+//                        claws.intakeClawJointUp()
+//                        claws.intakeClawJointDown()
+//                        claws.intakeClawOpen()
+//                        claws.intakeClawClose()
+
+//                        new ParallelAction(
+//                        startToCage,
+//                        lift.liftUp()
+//                        ),
 //                        new SleepAction(2),
-//                        lift.liftDown()
-                        //trajectoryActionCloseOut
+//                        lift.liftDown(),
+//                        trajectory1
                 )
         );
 

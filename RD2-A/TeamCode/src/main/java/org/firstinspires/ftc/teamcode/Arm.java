@@ -41,9 +41,9 @@ public class Arm {
     }
 
     public void armLifter(Gamepad _gamepad1) {
-        // telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
-        // telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
-        // telemetry.update();
+         telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
+         telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
+         telemetry.update();
         if (_gamepad1.right_bumper) {
             rd1.armLifterMotorLeft.setTargetPosition(3000);
             rd1.armLifterMotorRight.setTargetPosition(-3000);
