@@ -23,42 +23,51 @@ public class  Intake {
         rd1.twisterServo.setPosition(0.5048);
     }
 
-    public void clawServoController(Gamepad _gamepad2) {
-//        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
-//        telemetry.update();
-        if (_gamepad2.a) {
-            rd1.clawServo.setPosition(0.35);
-//            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServo.getPosition());
-//            telemetry.update();
-        } else if (_gamepad2.y) {
-            rd1.clawServo.setPosition(0.6);
-//            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServo.getPosition());
-//            telemetry.update();
+    private boolean isClawOpen = true; // Track whether the claw is open
+
+    public void clawServoController(Gamepad _gamepad1) {
+        if (_gamepad1.right_bumper) {
+            if (isClawOpen) {
+                rd1.clawServo.setPosition(0.55); // Close the claw
+                isClawOpen = false;
+            } else {
+                rd1.clawServo.setPosition(0.35); // Open the claw
+                isClawOpen = true;
+            }
+
+            // Debounce to avoid rapid toggling if the button is held
+            while (_gamepad1.right_bumper) {
+                // Wait for the button to be released
+            }
         }
-        //telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
-        //telemetry.update();
     }
 
+
     // control glisiere orizontale
-    public void intakeController(Gamepad _gamepad2) {
-    // telemetry.addData("IntakeLeft la pozitia: ", rd1.intakeLeft.getPosition());
-    // telemetry.addData("IntakeRight la pozitia: ", rd1.intakeRight.getPosition());
-    // telemetry.update();
-    if (_gamepad2.left_bumper) {
-        rd1.intakeLeft.setPosition(0.505);
-        rd1.intakeRight.setPosition(0.48);
-//         telemetry.addData("IntakeLeft la pozitia: ", rd1.intakeLeft.getPosition());
-//         telemetry.addData("IntakeRight la pozitia: ", rd1.intakeRight.getPosition());
-//         telemetry.update();
-    } else
-    if (_gamepad2.right_bumper) {
-        rd1.intakeLeft.setPosition(0.435);
-        rd1.intakeRight.setPosition(0.54);
-        // telemetry.addData("IntakeLeft la pozitia: ", rd1.intakeLeft.getPosition());
-        // telemetry.addData("IntakeRight la pozitia: ", rd1.intakeRight.getPosition());
-        // telemetry.update();
+    private boolean isIntakeOpen = false; // Track whether the intake is open
+
+    public void intakeController(Gamepad _gamepad1) {
+        // Check for right bumper press to toggle intake state
+        if (_gamepad1.left_bumper) {
+            if (isIntakeOpen) {
+                // Close the intake
+                rd1.intakeLeft.setPosition(0.435);
+                rd1.intakeRight.setPosition(0.54);
+                isIntakeOpen = false; // Update state
+            } else {
+                // Open the intake
+                rd1.intakeLeft.setPosition(0.505);
+                rd1.intakeRight.setPosition(0.48);
+                isIntakeOpen = true; // Update state
+            }
+
+            // Debounce to prevent rapid toggling if the bumper is held
+            while (_gamepad1.left_bumper) {
+                // Wait for the button to be released
+            }
+        }
     }
-    }
+
 
     public void twisterServoController(Gamepad _gamepad2) {
         telemetry.addData("Gheara plasata la pozitia: ", rd1.twisterServo.getPosition());
@@ -84,14 +93,14 @@ public class  Intake {
         public void servoJointController(Gamepad _gamepad2) {
         telemetry.addData("Joint plasat la pozitia: ", rd1.clawServoJoint.getPosition());
         telemetry.update();
-        if (_gamepad2.x) {
+        if (_gamepad2.b) {
             rd1.clawServoJoint.setPosition(0.52);
             //52
 //            telemetry.addData("Joint inchis, plasat la pozitia: ", rd1.clawServoJoint.getPosition());
 //            telemetry.update();
         } else
-        if (_gamepad2.b) {
-            rd1.clawServoJoint.setPosition(0.56);
+        if (_gamepad2.y) {
+            rd1.clawServoJoint.setPosition(0.562);
             //568
 //            telemetry.addData("Joint deschis, plasat la pozitia: ", rd1.clawServoJoint.getPosition());
 //            telemetry.update();
@@ -100,36 +109,8 @@ public class  Intake {
         //telemetry.update();
     }
 
-//    public void intakeClose(Gamepad _gamepad2){
-//        while(_gamepad2.dpad_down) {
-//            rd1.clawServoJoint.setPosition(0.52);
-//            try {
-//                Thread.sleep(100);
-//            } catch (InterruptedException e) {
-//                Thread.currentThread().interrupt();
-//            }
-//            rd1.twisterServo.setPosition(0.56);
-//            try {
-//                Thread.sleep(100);
-//            } catch (InterruptedException e) {
-//                Thread.currentThread().interrupt();
-//            }
-//            rd1.intakeLeft.setPosition(0.505);
-//            //48
-//            rd1.intakeRight.setPosition(0.48);
-//            try {
-//                Thread.sleep(700);
-//            } catch (InterruptedException e) {
-//                Thread.currentThread().interrupt();
-//            }
-//            //462
-//            rd1.clawServoJoint.setPosition(0.468);
-//            rd1.twisterServo.setPosition(0.5048);
-//        }
-//    }
-
-    public void intakeClose(Gamepad _gamepad2) {
-        if (_gamepad2.dpad_down && !isActive) {
+    public void intakeClose(Gamepad _gamepad1) {
+        if (_gamepad1.dpad_down && !isActive) {
             // Start the sequence
             isActive = true;
             lastActionTime = System.currentTimeMillis();
@@ -157,7 +138,7 @@ public class  Intake {
             lastActionTime = currentTime;
             step++;
         } else if (step == 3 && currentTime - lastActionTime >= 700) {
-            rd1.clawServoJoint.setPosition(0.468);
+            rd1.clawServoJoint.setPosition(0.467);
             rd1.twisterServo.setPosition(0.5048);
             isActive = false; // End the sequence
         }

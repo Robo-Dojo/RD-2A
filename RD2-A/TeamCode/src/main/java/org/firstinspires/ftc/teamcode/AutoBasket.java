@@ -134,38 +134,38 @@ public class AutoBasket extends LinearOpMode {
         public static class IntakeArmOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                intakeLeft.setPosition(0.48);
-                intakeRight.setPosition(0.505);
+                intakeLeft.setPosition(0.435);
+                intakeRight.setPosition(0.54);
                 return false;
             }
         }
         public Action intakeArmOpen() {
-            return new ClawControl.IntakeArmOpen();
+            return new IntakeArmOpen();
         }
 
 
         public static class IntakeArmClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                intakeLeft.setPosition(0.54);
-                intakeRight.setPosition(0.435);
+                intakeLeft.setPosition(0.505);
+                intakeRight.setPosition(0.48);
                 return false;
             }
         }
         public Action intakeArmClose() {
-            return new ClawControl.IntakeArmClose();
+            return new IntakeArmClose();
         }
 
 
         public static class IntakeClawClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawServo.setPosition(0.6);
+                clawServo.setPosition(0.55);
                 return false;
             }
         }
         public Action intakeClawClose() {
-            return new ClawControl.IntakeClawClose();
+            return new IntakeClawClose();
         }
 
         public static class IntakeClawOpen implements Action {
@@ -176,7 +176,7 @@ public class AutoBasket extends LinearOpMode {
             }
         }
         public Action intakeClawOpen() {
-            return new ClawControl.IntakeClawOpen();
+            return new IntakeClawOpen();
         }
 
         public static class IntakeClawTwistLeft implements Action {
@@ -187,7 +187,7 @@ public class AutoBasket extends LinearOpMode {
             }
         }
         public Action intakeClawTwistLeft() {
-            return new ClawControl.IntakeClawTwistLeft();
+            return new IntakeClawTwistLeft();
         }
 
         public static class IntakeClawTwistRight implements Action {
@@ -198,7 +198,7 @@ public class AutoBasket extends LinearOpMode {
             }
         }
         public Action intakeClawTwistRight() {
-            return new ClawControl.IntakeClawTwistRight();
+            return new IntakeClawTwistRight();
         }
 
         public static class IntakeClawTwistMiddle implements Action {
@@ -209,29 +209,29 @@ public class AutoBasket extends LinearOpMode {
             }
         }
         public Action intakeClawTwistMiddle() {
-            return new ClawControl.IntakeClawTwistMiddle();
+            return new IntakeClawTwistMiddle();
         }
 
         public static class IntakeClawJointUp implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawServoJoint.setPosition(0.462);
+                clawServoJoint.setPosition(0.467);
                 return false;
             }
         }
         public Action intakeClawJointUp() {
-            return new ClawControl.IntakeClawJointUp();
+            return new IntakeClawJointUp();
         }
 
         public static class IntakeClawJointDown implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawServoJoint.setPosition(0.568);
+                clawServoJoint.setPosition(0.562);
                 return false;
             }
         }
         public Action intakeClawJointDown() {
-            return new ClawControl.IntakeClawJointDown();
+            return new IntakeClawJointDown();
         }
 
         public static class OuttakeClawOpen implements Action {
@@ -242,66 +242,67 @@ public class AutoBasket extends LinearOpMode {
             }
         }
         public Action outtakeClawOpen() {
-            return new ClawControl.OuttakeClawOpen();
+            return new OuttakeClawOpen();
         }
 
         public static class OuttakeClawClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawServoOuttake.setPosition(0.62);
+                clawServoOuttake.setPosition(0.5);
                 return false;
             }
         }
         public Action outtakeClawClose() {
-            return new ClawControl.OuttakeClawClose();
+            return new OuttakeClawClose();
         }
 
 
         public static class OuttakeClawPivotShortOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotShort.setPosition(0.79);
+                clawPivotShort.setPosition(0.52);
                 return false;
             }
         }
         public Action outtakeClawPivotShortOpen() {
-            return new ClawControl.OuttakeClawPivotShortOpen();
+            return new OuttakeClawPivotShortOpen();
         }
 
         public static class OuttakeClawPivotShortClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotShort.setPosition(0.53);
+                clawPivotShort.setPosition(0.77);
                 return false;
             }
         }
         public Action outtakeClawPivotShortClose() {
-            return new ClawControl.OuttakeClawPivotShortClose();
+            return new OuttakeClawPivotShortClose();
         }
 
         public static class OuttakeClawPivotLongOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotLong.setPosition(0.6);
+                clawPivotLong.setPosition(0.605);
                 return false;
             }
         }
         public Action outtakeClawPivotLongOpen() {
-            return new ClawControl.OuttakeClawPivotShortOpen();
+            return new OuttakeClawPivotShortOpen();
         }
 
         public static class OuttakeClawPivotLongClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotLong.setPosition(0.528);
+                clawPivotLong.setPosition(0.54);
                 return false;
             }
         }
         public Action outtakeClawPivotLongClose() {
-            return new ClawControl.OuttakeClawPivotShortClose();
+            return new OuttakeClawPivotShortClose();
         }
 
     }
+
 
     @Override
     public void runOpMode() {

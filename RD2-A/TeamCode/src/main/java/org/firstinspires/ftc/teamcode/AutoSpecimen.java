@@ -95,8 +95,8 @@ public class AutoSpecimen extends LinearOpMode {
                 telemetry.update();
 
 
-                liftLeft.setTargetPosition(-120);
-                liftRight.setTargetPosition(-120);
+                liftLeft.setTargetPosition(-20);
+                liftRight.setTargetPosition(-20);
                 liftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 liftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -160,7 +160,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class IntakeClawClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawServo.setPosition(0.6);
+                clawServo.setPosition(0.55);
                 return false;
             }
         }
@@ -215,7 +215,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class IntakeClawJointUp implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawServoJoint.setPosition(0.468);
+                clawServoJoint.setPosition(0.467);
                 return false;
             }
         }
@@ -226,7 +226,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class IntakeClawJointDown implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawServoJoint.setPosition(0.56);
+                clawServoJoint.setPosition(0.562);
                 return false;
             }
         }
@@ -260,7 +260,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class OuttakeClawPivotShortOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotShort.setPosition(0.75);
+                clawPivotShort.setPosition(0.52);
                 return false;
             }
         }
@@ -271,7 +271,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class OuttakeClawPivotShortClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotShort.setPosition(0.52);
+                clawPivotShort.setPosition(0.77);
                 return false;
             }
         }
@@ -282,7 +282,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class OuttakeClawPivotLongOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotLong.setPosition(0.577);
+                clawPivotLong.setPosition(0.605);
                 return false;
             }
         }
@@ -293,7 +293,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class OuttakeClawPivotLongClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotLong.setPosition(0.5085);
+                clawPivotLong.setPosition(0.54);
                 return false;
             }
         }

@@ -11,10 +11,15 @@ public class Outtake {
     private HardwareInit rd1;
     private Telemetry telemetry;
 
-
     private long lastActionTime = 0;
     private int step = 0;
     private boolean isActive = false;
+    private long lastActionTime1 = 0;
+    private int step1 = 0;
+    private boolean isActive1 = false;
+    private long lastActionTime2 = 0;
+    private int step2 = 0;
+    private boolean isActive2 = false;
 
     public Outtake(HardwareInit rd1, Telemetry telemetry)
     {
@@ -24,15 +29,15 @@ public class Outtake {
         rd1.clawPivotShort.setPosition(0.76);
     }
 
-    public void clawOuttakeServoController(Gamepad _gamepad1) {
+    public void clawOuttakeServoController(Gamepad _gamepad2) {
 //        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServoOuttake.getPosition());
 //        telemetry.update();
-        if (_gamepad1.a) {
+        if (_gamepad2.a) {
             rd1.clawServoOuttake.setPosition(0.4789);
 //            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServoOuttake.getPosition());
 //            telemetry.update();
         }
-        else if (_gamepad1.y) {
+        else if (_gamepad2.y) {
             rd1.clawServoOuttake.setPosition(0.5);
 //            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServoOuttake.getPosition());
 //            telemetry.update();
@@ -41,14 +46,14 @@ public class Outtake {
 //        telemetry.update();
     }
 
-    public void clawPivotShortController(Gamepad _gamepad1) {
+    public void clawPivotShortController(Gamepad _gamepad2) {
 //        telemetry.addData("Incheietura plasata la pozitia: ", rd1.clawPivotShort.getPosition());
 //        telemetry.update();
-        if (_gamepad1.x) {
+        if (_gamepad2.x) {
             rd1.clawPivotShort.setPosition(0.77);
 //            telemetry.addData("Incheietura deschisa, plasata la pozitia: ", rd1.clawPivotShort.getPosition());
 //            telemetry.update();
-        } else if (_gamepad1.b) {
+        } else if (_gamepad2.b) {
             rd1.clawPivotShort.setPosition(0.52);
 //            telemetry.addData("Incheietura inchisa, plasata la pozitia: ", rd1.clawPivotShort.getPosition());
 //            telemetry.update();
@@ -57,14 +62,13 @@ public class Outtake {
 //        telemetry.update();
     }
 
-
-    public void clawPivotLongController(Gamepad _gamepad1) {
-        if (_gamepad1.dpad_left) {
-            rd1.clawPivotLong.setPosition(0.577);
+    public void clawPivotLongController(Gamepad _gamepad2) {
+        if (_gamepad2.dpad_left) {
+            rd1.clawPivotLong.setPosition(0.605);
             telemetry.addData("Joint deschis, plasat la pozitia: ", rd1.clawPivotLong.getPosition());
             telemetry.update();
-        } else if (_gamepad1.dpad_right) {
-                rd1.clawPivotLong.setPosition(0.504);
+        } else if (_gamepad2.dpad_right) {
+                rd1.clawPivotLong.setPosition(0.54);
 
             telemetry.addData("Joint inchis, plasat la pozitia: ", rd1.clawPivotLong.getPosition());
             telemetry.update();
@@ -74,20 +78,15 @@ public class Outtake {
     }
 
     public void outtakeFromIntakeController(Gamepad _gamepad2) {
-        if (_gamepad2.left_trigger>0 && !isActive) {
-            // Start the sequence
+        if (_gamepad2.left_bumper && !isActive) {
             isActive = true;
             lastActionTime = System.currentTimeMillis();
             step = 0;
         }
-
         if (!isActive) {
-            return; // Do nothing if the sequence is not active
+            return;
         }
-
         long currentTime = System.currentTimeMillis();
-
-        // Execute the sequence step-by-step
         if (step == 0 && currentTime - lastActionTime >= 0) {
             rd1.clawServoOuttake.setPosition(0.51);
             lastActionTime = currentTime;
@@ -97,81 +96,138 @@ public class Outtake {
             lastActionTime = currentTime;
             step++;
         } else if (step == 2 && currentTime - lastActionTime >= 100) {
-            rd1.clawPivotLong.setPosition(0.577);
+            rd1.clawPivotLong.setPosition(0.605);
             rd1.clawPivotShort.setPosition(0.52);
             isActive = false; // End the sequence
         }
     }
 
-//    public void outtakeController(Gamepad _gamepad2) {
-//        if (_gamepad2.right_trigger>0 && !isActive) {
-//            // Start the sequence
-//            isActive = true;
-//            lastActionTime = System.currentTimeMillis();
-//            step = 0;
+public void outtakeCloseController(Gamepad _gamepad2) {
+    if (_gamepad2.dpad_down && !isActive1) {
+        // Start the sequence
+        isActive1 = true;
+        lastActionTime1 = System.currentTimeMillis();
+        step1 = 0;
+    }
+    if (!isActive1) {
+        return;
+    }
+    long currentTime1 = System.currentTimeMillis();
+    if (step1 == 0 && currentTime1 - lastActionTime1 >= 0) {
+        rd1.clawServoOuttake.setPosition(0.5);
+        lastActionTime1 = currentTime1;
+        step1++;}
+    else if (step1 == 1 && currentTime1 - lastActionTime1 >= 100){
+        rd1.clawPivotLong.setPosition(0.55);
+        rd1.clawPivotShort.setPosition(0.76);
+        step1++;
+    }
+     else if (step1 == 2 && currentTime1 - lastActionTime1 >= 100) {
+        rd1.armLifterMotorLeft.setTargetPosition(20);
+        rd1.armLifterMotorRight.setTargetPosition(-20);
+        rd1.armLifterMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rd1.armLifterMotorLeft.setPower(-1);
+        rd1.armLifterMotorRight.setPower(1);
+        rd1.clawServoOuttake.setPosition(0.4789);
+        step1++;
+    }else if (step1 == 3 && currentTime1 - lastActionTime1 >= 100) {
+        rd1.clawPivotLong.setPosition(0.54);
+        isActive1 = false; // End the sequence
+    }
+    if(rd1.armLifterMotorLeft.getCurrentPosition()<=20 && rd1.armLifterMotorRight.getCurrentPosition()>=-20){
+        rd1.armLifterMotorLeft.setPower(0);
+        rd1.armLifterMotorRight.setPower(0);
+    }
+}
+
+//    public void outtakeSpecimenController(Gamepad _gamepad2) {
+//        if (_gamepad2.dpad_up && !isActive2) {
+//            isActive2 = true;
+//            lastActionTime2 = System.currentTimeMillis();
+//            step2 = 0;
 //        }
 //
-//        if (!isActive) {
+//        if (!isActive2) {
 //            return; // Do nothing if the sequence is not active
 //        }
 //
-//        long currentTime = System.currentTimeMillis();
+//        long currentTime2 = System.currentTimeMillis();
 //
 //        // Execute the sequence step-by-step
-//        if (step == 0 && currentTime - lastActionTime >= 0) {
+//        if (step2 == 0 && currentTime2 - lastActionTime2 >= 0) {
 //            rd1.armLifterMotorLeft.setTargetPosition(50);
 //            rd1.armLifterMotorRight.setTargetPosition(-50);
 //            rd1.armLifterMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //            rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //            rd1.armLifterMotorLeft.setPower(-0.8);
 //            rd1.armLifterMotorRight.setPower(0.8);
-//            if(Math.abs(rd1.armLifterMotorLeft.getCurrentPosition() - 2200) <= 10 && Math.abs(rd1.armLifterMotorRight.getCurrentPosition() + 2200) <= 10) {
+//            if (Math.abs(rd1.armLifterMotorLeft.getCurrentPosition() - 2200) <= 10 && Math.abs(rd1.armLifterMotorRight.getCurrentPosition() + 2200) <= 10) {
 //                rd1.clawServoOuttake.setPosition(0.4789);
 //            }
-//            lastActionTime = currentTime;
-//            step++;
-//        } else if (step == 1 && currentTime - lastActionTime >= 100) {
-//            rd1.clawPivotShort.setPosition(0.77);
-//            rd1.clawPivotLong.setPosition(0.504);
-//            isActive = false; // End the sequence
+//            lastActionTime2 = currentTime2;
+////            step2++;
+//            isActive2 = false;
 //        }
+//        if (Math.abs(rd1.armLifterMotorLeft.getCurrentPosition() - 2200) <= 10 && Math.abs(rd1.armLifterMotorRight.getCurrentPosition() + 2200) <= 10) {
+//            rd1.clawServoOuttake.setPosition(0.4789);
+//        }
+////        } else if (step2 == 1 && currentTime2 - lastActionTime2 >= 100) {
+////            rd1.clawPivotShort.setPosition(0.77);
+////            rd1.clawPivotLong.setPosition(0.504);
+////            isActive2 = false; // End the sequence
+////        }
 //    }
-public void outtakeCloseController(Gamepad _gamepad2) {
 
-    if (_gamepad2.dpad_down && !isActive) {
-        // Start the sequence
-        isActive = true;
-        lastActionTime = System.currentTimeMillis();
-        step = 0;
-    }
+    public void outtakeSpecimenController(Gamepad _gamepad2) {
+        if (_gamepad2.dpad_up && !isActive2) {
+            // Start the sequence
+            isActive2 = true;
+            lastActionTime2 = System.currentTimeMillis();
+            step2 = 0;
 
-    if (!isActive) {
-        return; // Do nothing if the sequence is not active
-    }
-
-    long currentTime = System.currentTimeMillis();
-
-    // Execute the sequence step-by-step
-    if (step == 0 && currentTime - lastActionTime >= 0) {
-        rd1.clawPivotLong.setPosition(0.504);
-        rd1.clawPivotShort.setPosition(0.77);
-        lastActionTime = currentTime;
-        step++;
-    } else if (step == 1 && currentTime - lastActionTime >= 100) {
-        rd1.armLifterMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rd1.armLifterMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rd1.armLifterMotorLeft.setTargetPosition(50);
-        rd1.armLifterMotorRight.setTargetPosition(-50);
-        rd1.armLifterMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rd1.armLifterMotorLeft.setPower(-0.8);
-        rd1.armLifterMotorRight.setPower(0.8);
-        if(rd1.armLifterMotorLeft.getCurrentPosition()<=50 && rd1.armLifterMotorRight.getCurrentPosition()>=-50){
-            rd1.armLifterMotorLeft.setPower(0);
-            rd1.armLifterMotorRight.setPower(0);
+            // Set the target positions for the sliders
+            rd1.armLifterMotorLeft.setTargetPosition(20);
+            rd1.armLifterMotorRight.setTargetPosition(-20);
+            rd1.armLifterMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rd1.armLifterMotorLeft.setPower(-1);
+            rd1.armLifterMotorRight.setPower(1);
         }
-        isActive = false; // End the sequence
+
+        if (!isActive2) {
+            return; // Do nothing if the sequence is not active
+        }
+
+        long currentTime2 = System.currentTimeMillis();
+
+        if (step2 == 0) {
+            int leftPosition = rd1.armLifterMotorLeft.getCurrentPosition();
+            int rightPosition = rd1.armLifterMotorRight.getCurrentPosition();
+
+            if (Math.abs(leftPosition - 2200) <= 10 && Math.abs(rightPosition + 2200) <= 10) {
+                rd1.clawServoOuttake.setPosition(0.4789); // Open the claw
+                lastActionTime2 = currentTime2;
+                step2++;
+            }
+        }
+         else if (step2 == 1 && currentTime2 - lastActionTime2 >= 600) {
+            rd1.clawServoOuttake.setPosition(0.5);
+            step2++;
+        }
+        else if (step2 == 2 && currentTime2 - lastActionTime2 >= 100) {
+            rd1.clawPivotShort.setPosition(0.76);
+            rd1.clawPivotLong.setPosition(0.55);
+            step2++;
+        }
+        else if (step2 == 3 && currentTime2 - lastActionTime2 >= 100) {
+            rd1.clawPivotLong.setPosition(0.54);
+            step2++;
+        }
+        else if (step2 == 4 && currentTime2 - lastActionTime2 >= 100) {
+            rd1.clawServoOuttake.setPosition(0.4789);
+            isActive2 = false; // End the sequence
+        }
     }
-}
 
 }
