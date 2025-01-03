@@ -10,6 +10,7 @@ public class  Intake {
     private HardwareInit rd1;
     private Telemetry telemetry;
 
+
     private long lastActionTime = 0;
     private int step = 0;
     private boolean isActive = false;
@@ -23,16 +24,16 @@ public class  Intake {
     }
 
     public void clawServoController(Gamepad _gamepad2) {
-        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
-        telemetry.update();
+//        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
+//        telemetry.update();
         if (_gamepad2.a) {
             rd1.clawServo.setPosition(0.35);
-            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServo.getPosition());
-            telemetry.update();
+//            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServo.getPosition());
+//            telemetry.update();
         } else if (_gamepad2.y) {
             rd1.clawServo.setPosition(0.6);
-            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServo.getPosition());
-            telemetry.update();
+//            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServo.getPosition());
+//            telemetry.update();
         }
         //telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServo.getPosition());
         //telemetry.update();
@@ -46,9 +47,9 @@ public class  Intake {
     if (_gamepad2.left_bumper) {
         rd1.intakeLeft.setPosition(0.505);
         rd1.intakeRight.setPosition(0.48);
-         telemetry.addData("IntakeLeft la pozitia: ", rd1.intakeLeft.getPosition());
-         telemetry.addData("IntakeRight la pozitia: ", rd1.intakeRight.getPosition());
-         telemetry.update();
+//         telemetry.addData("IntakeLeft la pozitia: ", rd1.intakeLeft.getPosition());
+//         telemetry.addData("IntakeRight la pozitia: ", rd1.intakeRight.getPosition());
+//         telemetry.update();
     } else
     if (_gamepad2.right_bumper) {
         rd1.intakeLeft.setPosition(0.435);
@@ -62,16 +63,16 @@ public class  Intake {
     public void twisterServoController(Gamepad _gamepad2) {
         telemetry.addData("Gheara plasata la pozitia: ", rd1.twisterServo.getPosition());
         telemetry.update();
-        if (_gamepad2.dpad_left) {
+        if (_gamepad2.dpad_right) {
             rd1.twisterServo.setPosition(0.48);
-            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.twisterServo.getPosition());
-            telemetry.update();
+//            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.twisterServo.getPosition());
+//            telemetry.update();
 
         } else if (_gamepad2.dpad_up) {
             rd1.twisterServo.setPosition(0.5048);
-            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.twisterServo.getPosition());
-            telemetry.update();
-        } else if (_gamepad2.dpad_right) {
+//            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.twisterServo.getPosition());
+//            telemetry.update();
+        } else if (_gamepad2.dpad_left) {
             rd1.twisterServo.setPosition(0.525);
 
         }
@@ -86,14 +87,14 @@ public class  Intake {
         if (_gamepad2.x) {
             rd1.clawServoJoint.setPosition(0.52);
             //52
-            telemetry.addData("Joint inchis, plasat la pozitia: ", rd1.clawServoJoint.getPosition());
-            telemetry.update();
+//            telemetry.addData("Joint inchis, plasat la pozitia: ", rd1.clawServoJoint.getPosition());
+//            telemetry.update();
         } else
         if (_gamepad2.b) {
             rd1.clawServoJoint.setPosition(0.56);
             //568
-            telemetry.addData("Joint deschis, plasat la pozitia: ", rd1.clawServoJoint.getPosition());
-            telemetry.update();
+//            telemetry.addData("Joint deschis, plasat la pozitia: ", rd1.clawServoJoint.getPosition());
+//            telemetry.update();
         }
         //telemetry.addData("Joint plasat la pozitia: ", rd1.clawServoJoint.getPosition());
         //telemetry.update();

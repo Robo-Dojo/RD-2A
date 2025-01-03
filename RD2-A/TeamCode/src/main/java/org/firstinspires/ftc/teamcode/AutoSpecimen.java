@@ -134,8 +134,8 @@ public class AutoSpecimen extends LinearOpMode {
         public static class IntakeArmOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                intakeLeft.setPosition(0.48);
-                intakeRight.setPosition(0.505);
+                intakeLeft.setPosition(0.435);
+                intakeRight.setPosition(0.54);
                 return false;
             }
         }
@@ -147,8 +147,8 @@ public class AutoSpecimen extends LinearOpMode {
         public static class IntakeArmClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                intakeLeft.setPosition(0.54);
-                intakeRight.setPosition(0.435);
+                intakeLeft.setPosition(0.505);
+                intakeRight.setPosition(0.48);
                 return false;
             }
         }
@@ -215,7 +215,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class IntakeClawJointUp implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawServoJoint.setPosition(0.462);
+                clawServoJoint.setPosition(0.468);
                 return false;
             }
         }
@@ -226,7 +226,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class IntakeClawJointDown implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawServoJoint.setPosition(0.568);
+                clawServoJoint.setPosition(0.56);
                 return false;
             }
         }
@@ -248,7 +248,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class OuttakeClawClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawServoOuttake.setPosition(0.62);
+                clawServoOuttake.setPosition(0.5);
                 return false;
             }
         }
@@ -260,7 +260,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class OuttakeClawPivotShortOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotShort.setPosition(0.79);
+                clawPivotShort.setPosition(0.75);
                 return false;
             }
         }
@@ -271,7 +271,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class OuttakeClawPivotShortClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotShort.setPosition(0.53);
+                clawPivotShort.setPosition(0.52);
                 return false;
             }
         }
@@ -282,7 +282,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class OuttakeClawPivotLongOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotLong.setPosition(0.6);
+                clawPivotLong.setPosition(0.577);
                 return false;
             }
         }
@@ -293,7 +293,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class OuttakeClawPivotLongClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotLong.setPosition(0.528);
+                clawPivotLong.setPosition(0.5085);
                 return false;
             }
         }
@@ -427,7 +427,7 @@ public class AutoSpecimen extends LinearOpMode {
 
 
         // actions that need to happen on init; for instance, a claw tightening.
-        Actions.runBlocking(claws.intakeClawClose());
+        //Actions.runBlocking(claws.outtakeClawClose());
 
 
         while (!isStopRequested() && !opModeIsActive()) { // Asta actioneaza ca un Init la Autonomie
@@ -442,12 +442,14 @@ public class AutoSpecimen extends LinearOpMode {
         telemetry.addData("Status", "before actions");
         Actions.runBlocking(
                 new SequentialAction(
-                        claws.intakeArmOpen()
-//                        claws.intakeArmClose()
-//                        claws.intakeClawJointUp()
-//                        claws.intakeClawJointDown()
-//                        claws.intakeClawOpen()
-//                        claws.intakeClawClose()
+                        //claws.intakeArmOpen()
+                        claws.intakeArmClose(),
+                        claws.intakeClawJointUp(),
+                        new SleepAction(2),
+                        claws.intakeClawJointDown(),
+                        claws.intakeClawOpen(),
+                        new SleepAction(2),
+                        claws.intakeClawClose()
 
 //                        new ParallelAction(
 //                        startToCage,

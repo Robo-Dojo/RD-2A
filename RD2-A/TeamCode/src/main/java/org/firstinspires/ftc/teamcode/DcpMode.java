@@ -18,8 +18,8 @@ public class DcpMode extends LinearOpMode {
 
         while(opModeIsActive()) {
             Chassy.dcpMovement(gamepad1);
-            //Arm.armLifter(gamepad1);
-            //Arm.robotHanger(gamepad1);
+            Arm.armLifter(gamepad1);
+            Arm.robotHanger(gamepad1);
             Intake.intakeController(gamepad2);
             Intake.clawServoController(gamepad2);
             Intake.twisterServoController(gamepad2);
@@ -28,7 +28,8 @@ public class DcpMode extends LinearOpMode {
             Outtake.clawOuttakeServoController(gamepad1);
             Outtake.clawPivotShortController(gamepad1);
             Outtake.clawPivotLongController(gamepad1);
-            //Outtake.outtakeController(gamepad1);
+            Outtake.outtakeFromIntakeController(gamepad2);
+            Outtake.outtakeCloseController(gamepad2);
             telemetry.update();
         }
     }
