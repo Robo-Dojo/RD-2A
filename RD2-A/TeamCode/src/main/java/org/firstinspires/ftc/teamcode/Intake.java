@@ -19,7 +19,7 @@ public class  Intake {
     {
         this.rd1 = rd1;
         this.telemetry = telemetry;
-        rd1.clawServo.setPosition(0.35);
+        rd1.clawServo.setPosition(0.25);
         rd1.twisterServo.setPosition(0.5048);
     }
 
@@ -31,7 +31,7 @@ public class  Intake {
                 rd1.clawServo.setPosition(0.55); // Close the claw
                 isClawOpen = false;
             } else {
-                rd1.clawServo.setPosition(0.35); // Open the claw
+                rd1.clawServo.setPosition(0.25); // Open the claw
                 isClawOpen = true;
             }
 
@@ -100,7 +100,7 @@ public class  Intake {
 //            telemetry.update();
         } else
         if (_gamepad2.y) {
-            rd1.clawServoJoint.setPosition(0.562);
+            rd1.clawServoJoint.setPosition(0.566);
             //568
 //            telemetry.addData("Joint deschis, plasat la pozitia: ", rd1.clawServoJoint.getPosition());
 //            telemetry.update();

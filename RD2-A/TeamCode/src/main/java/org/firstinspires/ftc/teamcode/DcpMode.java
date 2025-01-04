@@ -19,7 +19,7 @@ public class DcpMode extends LinearOpMode {
         while(opModeIsActive()) {
             Chassy.dcpMovement(gamepad1);
             Arm.armLifter(gamepad2);
-            //Arm.robotHanger(gamepad1);
+            Arm.robotHanger(gamepad2);
             Intake.intakeController(gamepad1);
             Intake.clawServoController(gamepad1);
             Intake.twisterServoController(gamepad1);
