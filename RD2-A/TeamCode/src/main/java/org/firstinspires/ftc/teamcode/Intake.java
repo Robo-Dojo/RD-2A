@@ -90,7 +90,48 @@ public class  Intake {
 
     }
 
-        public void servoJointController(Gamepad _gamepad2) {
+//    private long lastUpdateTime = 0; // To track time for continuous adjustment
+//    private final long updateInterval = 200; // Minimum time interval between updates in milliseconds
+//
+//    public void twisterServoController(Gamepad _gamepad2) {
+//        // Retrieve the current position of the servo
+//        double currentPosition = rd1.twisterServo.getPosition();
+//        long currentTime = System.currentTimeMillis(); // Get the current system time
+//
+//        // Check if enough time has passed to update the servo position
+//        if (currentTime - lastUpdateTime > updateInterval) {
+//            // Increment position with dpad_left
+//            if (_gamepad2.dpad_left) {
+//                currentPosition += 0.1;
+//                // Cap the position at 0.7
+//                currentPosition = Math.min(currentPosition, 0.7);
+//                lastUpdateTime = currentTime; // Update the last update time
+//            }
+//            // Decrement position with dpad_right
+//            else if (_gamepad2.dpad_right) {
+//                currentPosition -= 0.1;
+//                // Ensure the position doesn't go below 0.3
+//                currentPosition = Math.max(currentPosition, 0.3);
+//                lastUpdateTime = currentTime; // Update the last update time
+//            }
+//        }
+//
+//        // Set a fixed position with dpad_up
+//        if (_gamepad2.dpad_up) {
+//            currentPosition = 0.5048;
+//        }
+//
+//        // Update the servo position
+//        rd1.twisterServo.setPosition(currentPosition);
+//
+//        // Display the current position on telemetry
+//        telemetry.addData("Gheara plasata la pozitia: ", currentPosition);
+//        telemetry.update();
+//    }
+
+
+
+    public void servoJointController(Gamepad _gamepad2) {
         telemetry.addData("Joint plasat la pozitia: ", rd1.clawServoJoint.getPosition());
         telemetry.update();
         if (_gamepad2.b) {
@@ -138,7 +179,7 @@ public class  Intake {
             lastActionTime = currentTime;
             step++;
         } else if (step == 3 && currentTime - lastActionTime >= 700) {
-            rd1.clawServoJoint.setPosition(0.467);
+            rd1.clawServoJoint.setPosition(0.465);
             rd1.twisterServo.setPosition(0.5048);
             isActive = false; // End the sequence
         }

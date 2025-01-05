@@ -3,11 +3,15 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.AngularVelConstraint;
+import com.acmerobotics.roadrunner.MinVelConstraint;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
+import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
+import com.acmerobotics.roadrunner.VelConstraint;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -20,6 +24,8 @@ import org.opencv.core.Mat;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import java.util.Arrays;
 
 @Config
 @Autonomous(name = "AutoBasket", group = "Autonomous")
@@ -76,6 +82,38 @@ public class AutoBasket extends LinearOpMode {
         }
         public Action liftUp() {
             return new LiftUp();
+        }
+
+        public static class LiftUpAscend implements Action {
+            private boolean initialized = false;
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    liftLeft.setPower(-1.0);
+                    liftRight.setPower(-1.0);
+                    initialized = true;
+                }
+
+                double posL = liftLeft.getCurrentPosition();
+                double posR = liftRight.getCurrentPosition();
+                telemetry.addData("liftPosL", posL);
+                telemetry.addData("liftPosR", posR);
+                telemetry.update();
+
+                liftLeft.setTargetPosition(-1990);
+                liftRight.setTargetPosition(-1990);
+                liftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                liftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                liftLeft.setPower(-1);
+                liftRight.setPower(-1);
+
+                return false;
+
+            }
+        }
+        public Action liftUpAscend() {
+            return new LiftUpAscend();
         }
 
         public static class LiftUpBasket implements Action {
@@ -289,7 +327,7 @@ public class AutoBasket extends LinearOpMode {
         public static class IntakeClawJointDown implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawServoJoint.setPosition(0.562);
+                clawServoJoint.setPosition(0.5675);
                 return false;
             }
         }
@@ -356,7 +394,7 @@ public class AutoBasket extends LinearOpMode {
         public static class OuttakeClawPivotLongOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotLong.setPosition(0.62);
+                clawPivotLong.setPosition(0.68);
                 return false;
             }
         }
@@ -367,7 +405,7 @@ public class AutoBasket extends LinearOpMode {
         public static class OuttakeClawPivotLongClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotLong.setPosition(0.555);
+                clawPivotLong.setPosition(0.6);
                 return false;
             }
         }
@@ -403,6 +441,7 @@ public class AutoBasket extends LinearOpMode {
         Action backBasket2;
         Action basketToPark;
         Action park;
+        Action parkL;
 
         startToCage = drive.actionBuilder(new Pose2d(7.16, 61.46, Math.toRadians(90.00)))
                 .splineToConstantHeading(new Vector2d(7.16, 33), Math.toRadians(270.00))
@@ -415,31 +454,54 @@ public class AutoBasket extends LinearOpMode {
                 .build();
         cageToSample = drive.actionBuilder(new Pose2d(7.21, 38.20, Math.toRadians(90.00)))
                 .splineToSplineHeading(new Pose2d(32.40, 42.84, Math.toRadians(270.00)), Math.toRadians(10.44))
-                .splineToSplineHeading(new Pose2d(48.47, 48.2, Math.toRadians(270.00)), Math.toRadians(7.35))
+                .splineToSplineHeading(new Pose2d(48, 48.5, Math.toRadians(270.00)), Math.toRadians(7.35))
                 .build();
-        sampleToBasket = drive.actionBuilder(new Pose2d(48.47, 48.2, Math.toRadians(270.00)))
-                .splineToSplineHeading(new Pose2d(57.58, 55.93, Math.toRadians(231.34)), Math.toRadians(231.34))
+        sampleToBasket = drive.actionBuilder(new Pose2d(48, 48.5, Math.toRadians(270.00)))
+                .splineToSplineHeading(new Pose2d(58.2, 56.3, Math.toRadians(231.34)), Math.toRadians(231.34))
                 .build();
-        backBasket = drive.actionBuilder(new Pose2d(57.58, 55.93, Math.toRadians(231.34)))
+        backBasket = drive.actionBuilder(new Pose2d(58, 56.1, Math.toRadians(231.34)))
                 .splineToSplineHeading(new Pose2d(53.77, 51.12, Math.toRadians(231.34)), Math.toRadians(103.03))
                 .build();
-        basketSample2 = drive.actionBuilder(new Pose2d(53.77, 51.29, Math.toRadians(231.34)))
-                .splineToSplineHeading(new Pose2d(62, 47.48, Math.toRadians(270.00)), Math.toRadians(-55.56))
+
+        VelConstraint vel40 = new MinVelConstraint(Arrays.asList(
+                new TranslationalVelConstraint(40),
+                new AngularVelConstraint(2)
+        ));
+
+        basketSample2 = drive.actionBuilder(new Pose2d(53.77, 51.12, Math.toRadians(231.34)))
+                .splineToSplineHeading(new Pose2d(60, 47.48, Math.toRadians(270.00)), Math.toRadians(-55.56), vel40)
                 .build();
-        sampleToBasket2 = drive.actionBuilder(new Pose2d(62, 47.48, Math.toRadians(270.00)))
+
+        sampleToBasket2 = drive.actionBuilder(new Pose2d(60, 47.48, Math.toRadians(270.00)))
                 .splineToSplineHeading(new Pose2d(55.59, 55.76, Math.toRadians(231.34)), Math.toRadians(225.00))
                 .build();
 
-        backBasket2 = drive.actionBuilder(new Pose2d(57.15, 56.82, Math.toRadians(45.00)))
+        backBasket2 = drive.actionBuilder(new Pose2d(55.59, 55.76, Math.toRadians(45.00)))
                 .splineToSplineHeading(new Pose2d(46.48, 46.15, Math.toRadians(45.00)), Math.toRadians(223.15))
                 .build();
-        basketToPark = drive.actionBuilder(new Pose2d(46.48, 46.15, Math.toRadians(231.34)))
-                .splineToSplineHeading(new Pose2d(36.70, 21.62, Math.toRadians(0.00)), Math.toRadians(71.57))
-                .splineToSplineHeading(new Pose2d(26.43, 7.71, Math.toRadians(0.00)), Math.toRadians(0.00))
+//        basketToPark = drive.actionBuilder(new Pose2d(46.48, 46.15, Math.toRadians(231.34)))
+//                .splineToSplineHeading(new Pose2d(36.70, 21.62, Math.toRadians(0.00)), Math.toRadians(71.57))
+//                .splineToSplineHeading(new Pose2d(26.43, 7.71, Math.toRadians(0.00)), Math.toRadians(0.00))
+//                .build();
+//        park = drive.actionBuilder(new Pose2d(26.43, 7.71, Math.toRadians(0.00)))
+//                .splineToSplineHeading(new Pose2d(22.78, 7.54, Math.toRadians(0.00)), Math.toRadians(178.78))
+//                .build();
+        //merge
+        basketToPark = drive.actionBuilder(new Pose2d(53.77, 51.12, Math.toRadians(231.34)))
+                .splineToSplineHeading(new Pose2d(39.02, 32.89, Math.toRadians(0.00)), Math.toRadians(240.13))
+                .splineToSplineHeading(new Pose2d(24, 10.52, Math.toRadians(0.00)), Math.toRadians(183.32))
                 .build();
-        park = drive.actionBuilder(new Pose2d(26.43, 7.71, Math.toRadians(0.00)))
-                .splineToSplineHeading(new Pose2d(22.78, 7.54, Math.toRadians(0.00)), Math.toRadians(178.78))
+        park = drive.actionBuilder(new Pose2d(24, 10.52, Math.toRadians(0.00)))
+                .splineToSplineHeading(new Pose2d(23.28, 10.85, Math.toRadians(0.00)), Math.toRadians(180.00))
                 .build();
+//
+        parkL = drive.actionBuilder(new Pose2d(53.77, 51.12, Math.toRadians(231.34)))
+                .splineToSplineHeading(new Pose2d(40.35, 41.84, Math.toRadians(226.04)), Math.toRadians(226.04))
+                .splineToSplineHeading(new Pose2d(-0.91, 38.20, Math.toRadians(181.88)), Math.toRadians(181.88))
+                .splineToSplineHeading(new Pose2d(-48.80, 39.52, Math.toRadians(180.37)), Math.toRadians(180.37))
+                .splineToSplineHeading(new Pose2d(-53.77, 56.09, Math.toRadians(85.54)), Math.toRadians(85.54))
+                .build();
+
 
 
         telemetry.addData("Status", "innit completed");
@@ -501,7 +563,7 @@ public class AutoBasket extends LinearOpMode {
                         new SleepAction(0.7),
                         claws.intakeClawJointDown(),
                         //0.9
-                        new SleepAction(0.5),
+                        new SleepAction(0.7),
                         claws.intakeClawClose(),
                         //1
                         new SleepAction(0.7),
@@ -541,52 +603,55 @@ public class AutoBasket extends LinearOpMode {
                         backBasket,
                         lift.liftDown(),
 
-                        new SleepAction(0.5),
-                        basketSample2,
-                        new SleepAction(0.3),
-                        claws.intakeArmOpen(),
-                        //1
-                        new SleepAction(0.7),
-                        claws.intakeClawJointDown(),
-                        //0.9
-                        new SleepAction(0.5),
-                        claws.intakeClawClose(),
-                        //1
-                        new SleepAction(0.7),
-                        claws.intakeClawJointUp(),
-                        claws.intakeArmClose(),
-                        //1
-                        new SleepAction(0.7),
-                        new ParallelAction(
-                                claws.outtakeClawClose(),
-                                claws.intakeClawOpen()
-                        ),
-                        new ParallelAction(
-                                sampleToBasket2,
-                                lift.liftUpBasket()
-                        ),
-                        new SleepAction(0.2),
-                        new ParallelAction(
-                                claws.outtakeClawPivotLongOpen(),
-                                claws.outtakeClawPivotShortClose()
-                        ),
-                        new SleepAction(0.5),
-                        claws.outtakeClawOpen(),
-                        new SleepAction(0.2),
-                        claws.outtakeClawClose(),
-                        new SleepAction(0.1),
-                        new ParallelAction(
-                                claws.outtakeClawPivotLongClose(),
-                                claws.outtakeClawPivotShortClose()
-                        ),
-                        claws.outtakeClawOpen(),
-                        backBasket2,
-                        lift.liftDown(),
-                        basketToPark,
-                        lift.liftUp(),
-                        park
 
+//                        new SleepAction(0.5),
+//                        basketSample2,
+//                        new SleepAction(0.3),
+//                        claws.intakeArmOpen(),
+//                        //1
+//                        new SleepAction(0.7),
+//                        claws.intakeClawJointDown(),
+//                        //0.9
+//                        new SleepAction(0.5),
+//                        claws.intakeClawClose(),
+//                        //1
+//                        new SleepAction(0.7),
+//                        claws.intakeClawJointUp(),
+//                        claws.intakeArmClose(),
+//                        //1
+//                        new SleepAction(0.7),
+//                        new ParallelAction(
+//                                claws.outtakeClawClose(),
+//                                claws.intakeClawOpen()
+//                        ),
+//                        new ParallelAction(
+//                                sampleToBasket2,
+//                                lift.liftUpBasket()
+//                        ),
+//                        new SleepAction(0.2),
+//                        new ParallelAction(
+//                                claws.outtakeClawPivotLongOpen(),
+//                                claws.outtakeClawPivotShortClose()
+//                        ),
+//                        new SleepAction(0.5),
+//                        claws.outtakeClawOpen(),
+//                        new SleepAction(0.2),
+//                        claws.outtakeClawClose(),
+//                        new SleepAction(0.1),
+//                        new ParallelAction(
+//                                claws.outtakeClawPivotLongClose(),
+//                                claws.outtakeClawPivotShortClose()
+//                        ),
+//                        claws.outtakeClawOpen(),
+//                        backBasket2,
+//                        lift.liftDown()
+                        //merge
+                        basketToPark
+                        //
+//                        lift.liftUpAscend(),
+//                        park
 
+                       // parkL
                 )
         );
 
