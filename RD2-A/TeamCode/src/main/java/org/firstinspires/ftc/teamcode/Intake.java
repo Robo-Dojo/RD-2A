@@ -14,6 +14,9 @@ public class  Intake {
     private long lastActionTime = 0;
     private int step = 0;
     private boolean isActive = false;
+    private double intakeTwisterIncrementor = 0;
+    private double middleAngleTwisterPosition = 0.5048;
+
 
     public Intake(HardwareInit rd1, Telemetry telemetry)
     {
@@ -21,6 +24,9 @@ public class  Intake {
         this.telemetry = telemetry;
         rd1.clawServo.setPosition(0.25);
         rd1.twisterServo.setPosition(0.5048);
+        intakeTwisterIncrementor = 0;
+        middleAngleTwisterPosition = 0.5048;
+
     }
 
     private boolean isClawOpen = true; // Track whether the claw is open
@@ -69,65 +75,44 @@ public class  Intake {
     }
 
 
-    public void twisterServoController(Gamepad _gamepad2) {
-        telemetry.addData("Gheara plasata la pozitia: ", rd1.twisterServo.getPosition());
-        telemetry.update();
-        if (_gamepad2.dpad_right) {
-            rd1.twisterServo.setPosition(0.48);
-//            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.twisterServo.getPosition());
-//            telemetry.update();
-
-        } else if (_gamepad2.dpad_up) {
-            rd1.twisterServo.setPosition(0.5048);
-//            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.twisterServo.getPosition());
-//            telemetry.update();
-        } else if (_gamepad2.dpad_left) {
-            rd1.twisterServo.setPosition(0.525);
-
-        }
-        //telemetry.addData("Gheara plasata la pozitia: ", rd1.twisterServo.getPosition());
-        //telemetry.update();
-
-    }
-
-//    private long lastUpdateTime = 0; // To track time for continuous adjustment
-//    private final long updateInterval = 200; // Minimum time interval between updates in milliseconds
-//
 //    public void twisterServoController(Gamepad _gamepad2) {
-//        // Retrieve the current position of the servo
-//        double currentPosition = rd1.twisterServo.getPosition();
-//        long currentTime = System.currentTimeMillis(); // Get the current system time
-//
-//        // Check if enough time has passed to update the servo position
-//        if (currentTime - lastUpdateTime > updateInterval) {
-//            // Increment position with dpad_left
-//            if (_gamepad2.dpad_left) {
-//                currentPosition += 0.1;
-//                // Cap the position at 0.7
-//                currentPosition = Math.min(currentPosition, 0.7);
-//                lastUpdateTime = currentTime; // Update the last update time
-//            }
-//            // Decrement position with dpad_right
-//            else if (_gamepad2.dpad_right) {
-//                currentPosition -= 0.1;
-//                // Ensure the position doesn't go below 0.3
-//                currentPosition = Math.max(currentPosition, 0.3);
-//                lastUpdateTime = currentTime; // Update the last update time
-//            }
-//        }
-//
-//        // Set a fixed position with dpad_up
-//        if (_gamepad2.dpad_up) {
-//            currentPosition = 0.5048;
-//        }
-//
-//        // Update the servo position
-//        rd1.twisterServo.setPosition(currentPosition);
-//
-//        // Display the current position on telemetry
-//        telemetry.addData("Gheara plasata la pozitia: ", currentPosition);
+//        telemetry.addData("Gheara plasata la pozitia: ", rd1.twisterServo.getPosition());
 //        telemetry.update();
+//        if (_gamepad2.dpad_right) {
+//            rd1.twisterServo.setPosition(0.48);
+////            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.twisterServo.getPosition());
+////            telemetry.update();
+//
+//        } else if (_gamepad2.dpad_up) {
+//            rd1.twisterServo.setPosition(0.5048);
+////            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.twisterServo.getPosition());
+////            telemetry.update();
+//        } else if (_gamepad2.dpad_left) {
+//            rd1.twisterServo.setPosition(0.525);
+//
+//        }
+//        //telemetry.addData("Gheara plasata la pozitia: ", rd1.twisterServo.getPosition());
+//        //telemetry.update();
+//
 //    }
+
+    public void twisterServoController(Gamepad _gamepad2) {
+        telemetry.addData("Rotatie gheara la pozitia: ", rd1.twisterServo.getPosition());
+        telemetry.update();
+        if (_gamepad2.dpad_right && (middleAngleTwisterPosition + intakeTwisterIncrementor < 0.5663)) {
+            intakeTwisterIncrementor += 0.001;
+        } else if (_gamepad2.dpad_up) {
+            rd1.twisterServo.setPosition(middleAngleTwisterPosition);
+            intakeTwisterIncrementor = 0;
+        } else if (_gamepad2.dpad_left && middleAngleTwisterPosition + intakeTwisterIncrementor > 0.4463) {
+            intakeTwisterIncrementor -= 0.001;
+        }
+        rd1.twisterServo.setPosition(middleAngleTwisterPosition + intakeTwisterIncrementor);
+
+        telemetry.addData("Rotatie gheara la pozitia: ", rd1.twisterServo.getPosition());
+        telemetry.update();
+}
+
 
 
 
