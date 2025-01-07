@@ -16,7 +16,7 @@ public class  Intake {
     private boolean isActive = false;
     private double intakeTwisterIncrementor = 0;
     private double middleAngleTwisterPosition = 0.5048;
-
+    private boolean isIntakeClosing = false;
 
     public Intake(HardwareInit rd1, Telemetry telemetry)
     {
@@ -26,6 +26,7 @@ public class  Intake {
         rd1.twisterServo.setPosition(0.5048);
         intakeTwisterIncrementor = 0;
         middleAngleTwisterPosition = 0.5048;
+
 
     }
 
@@ -96,36 +97,40 @@ public class  Intake {
 //
 //    }
 
-    public void twisterServoController(Gamepad _gamepad2) {
+    public void twisterServoController(Gamepad _gamepad1) {
+        if (isIntakeClosing) return; // Prevent adjustments while intake is closing
+
         telemetry.addData("Rotatie gheara la pozitia: ", rd1.twisterServo.getPosition());
         telemetry.update();
-        if (_gamepad2.dpad_right && (middleAngleTwisterPosition + intakeTwisterIncrementor < 0.5663)) {
+        if (_gamepad1.dpad_right && (middleAngleTwisterPosition + intakeTwisterIncrementor < 0.57)) {
             intakeTwisterIncrementor += 0.001;
-        } else if (_gamepad2.dpad_up) {
+            telemetry.addData("Rotatie gheara la pozitia: ", rd1.twisterServo.getPosition());
+            telemetry.update();
+        } else if (_gamepad1.dpad_up) {
             rd1.twisterServo.setPosition(middleAngleTwisterPosition);
             intakeTwisterIncrementor = 0;
-        } else if (_gamepad2.dpad_left && middleAngleTwisterPosition + intakeTwisterIncrementor > 0.4463) {
+        } else if (_gamepad1.dpad_left && middleAngleTwisterPosition + intakeTwisterIncrementor > 0.4463) {
             intakeTwisterIncrementor -= 0.001;
         }
         rd1.twisterServo.setPosition(middleAngleTwisterPosition + intakeTwisterIncrementor);
 
         telemetry.addData("Rotatie gheara la pozitia: ", rd1.twisterServo.getPosition());
         telemetry.update();
-}
+    }
 
 
 
 
-    public void servoJointController(Gamepad _gamepad2) {
+    public void servoJointController(Gamepad _gamepad1) {
         telemetry.addData("Joint plasat la pozitia: ", rd1.clawServoJoint.getPosition());
         telemetry.update();
-        if (_gamepad2.b) {
+        if (_gamepad1.b) {
             rd1.clawServoJoint.setPosition(0.52);
             //52
 //            telemetry.addData("Joint inchis, plasat la pozitia: ", rd1.clawServoJoint.getPosition());
 //            telemetry.update();
         } else
-        if (_gamepad2.y) {
+        if (_gamepad1.y) {
             rd1.clawServoJoint.setPosition(0.566);
             //568
 //            telemetry.addData("Joint deschis, plasat la pozitia: ", rd1.clawServoJoint.getPosition());
@@ -139,13 +144,12 @@ public class  Intake {
         if (_gamepad1.dpad_down && !isActive) {
             // Start the sequence
             isActive = true;
+            isIntakeClosing = true; // Lock the twister controller
             lastActionTime = System.currentTimeMillis();
             step = 0;
         }
 
-        if (!isActive) {
-            return; // Do nothing if the sequence is not active
-        }
+        if (!isActive) return;
 
         long currentTime = System.currentTimeMillis();
 
@@ -165,12 +169,11 @@ public class  Intake {
             step++;
         } else if (step == 3 && currentTime - lastActionTime >= 700) {
             rd1.clawServoJoint.setPosition(0.465);
-            rd1.twisterServo.setPosition(0.5048);
+            rd1.twisterServo.setPosition(middleAngleTwisterPosition); // Move to the middle position
+            intakeTwisterIncrementor = 0; // Reset incrementor to ensure proper middle position
             isActive = false; // End the sequence
+            isIntakeClosing = false; // Unlock the twister controller
         }
     }
 
 }
-
-
-

@@ -57,8 +57,8 @@ public class Arm {
         rd1.armLifterMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         if (_gamepad2.right_trigger>0) {
-            rd1.armLifterMotorLeft.setTargetPosition(4169);
-            rd1.armLifterMotorRight.setTargetPosition(-4169);
+            rd1.armLifterMotorLeft.setTargetPosition(4200);
+            rd1.armLifterMotorRight.setTargetPosition(-4200);
             rd1.armLifterMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rd1.armLifterMotorLeft.setPower(1);
