@@ -27,7 +27,8 @@ public class DcpMode extends LinearOpMode {
             Intake.intakeClose(gamepad1);
             Outtake.clawOuttakeServoController(gamepad2);
             Outtake.clawPivotShortController(gamepad2);
-            Outtake.clawPivotLongController(gamepad2);
+            Outtake.clawPivotLongOpen(gamepad2);
+            Outtake.clawPivotLongClosed(gamepad2);
             Outtake.outtakeFromIntakeController(gamepad2);
             Outtake.outtakeCloseController(gamepad2);
             Outtake.outtakeSpecimenController(gamepad2);

@@ -26,7 +26,8 @@ public class  Intake {
         rd1.twisterServo.setPosition(0.5048);
         intakeTwisterIncrementor = 0;
         middleAngleTwisterPosition = 0.5048;
-
+        rd1.intakeLeft.setPosition(0.505);
+        rd1.intakeRight.setPosition(0.48);
 
     }
 
@@ -42,7 +43,6 @@ public class  Intake {
                 isClawOpen = true;
             }
 
-            // Debounce to avoid rapid toggling if the button is held
             while (_gamepad1.right_bumper) {
                 // Wait for the button to be released
             }
@@ -68,7 +68,6 @@ public class  Intake {
                 isIntakeOpen = true; // Update state
             }
 
-            // Debounce to prevent rapid toggling if the bumper is held
             while (_gamepad1.left_bumper) {
                 // Wait for the button to be released
             }
@@ -153,7 +152,6 @@ public class  Intake {
 
         long currentTime = System.currentTimeMillis();
 
-        // Execute the sequence step-by-step
         if (step == 0 && currentTime - lastActionTime >= 0) {
             rd1.clawServoJoint.setPosition(0.52);
             lastActionTime = currentTime;
@@ -169,8 +167,8 @@ public class  Intake {
             step++;
         } else if (step == 3 && currentTime - lastActionTime >= 700) {
             rd1.clawServoJoint.setPosition(0.465);
-            rd1.twisterServo.setPosition(middleAngleTwisterPosition); // Move to the middle position
-            intakeTwisterIncrementor = 0; // Reset incrementor to ensure proper middle position
+            rd1.twisterServo.setPosition(middleAngleTwisterPosition);
+            intakeTwisterIncrementor = 0;
             isActive = false; // End the sequence
             isIntakeClosing = false; // Unlock the twister controller
         }

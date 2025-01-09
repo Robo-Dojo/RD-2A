@@ -20,6 +20,9 @@ public class Outtake {
     private long lastActionTime2 = 0;
     private int step2 = 0;
     private boolean isActive2 = false;
+    private long lastActionTime3 = 0;
+    private int step3 = 0;
+    private boolean isActive3 = false;
 
     public Outtake(HardwareInit rd1, Telemetry telemetry)
     {
@@ -38,7 +41,7 @@ public class Outtake {
 //            telemetry.update();
         }
         else if (_gamepad2.y) {
-            rd1.clawServoOuttake.setPosition(0.5);
+            rd1.clawServoOuttake.setPosition(0.56);
 //            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServoOuttake.getPosition());
 //            telemetry.update();
         }
@@ -59,9 +62,12 @@ public class Outtake {
 //            telemetry.addData("Incheietura inchisa, plasata la pozitia: ", rd1.clawPivotShort.getPosition());
 //            telemetry.update();
         }
+
 //        telemetry.addData("Incheietura plasata la pozitia: ", rd1.clawPivotShort.getPosition());
 //        telemetry.update();
     }
+
+
 
 //    public void clawPivotLongController(Gamepad _gamepad2) {
 //        if (_gamepad2.dpad_left) {
@@ -78,44 +84,81 @@ public class Outtake {
 ////        telemetry.update();
 //    }
 
-    private double currentPosition = 0.485; // Starting position (you can set this based on initial servo state)
-    private double targetPosition = currentPosition; // Target position initialized to current position
-    private double stepSize = 0.003; // Increment step for the servo (you can adjust this value for faster/slower movement)
-    private long lastUpdateTime = System.nanoTime(); // Time reference to control speed
+public void clawPivotLongOpen(Gamepad _gamepad2) {
+    if (_gamepad2.dpad_right) {
+        rd1.clawPivotLong.setPosition(0.575);
 
-    public void clawPivotLongController(Gamepad _gamepad2) {
-        long currentTime = System.nanoTime();
-        if (_gamepad2.dpad_left) {
-            targetPosition = 0.485; // Target position when button is pressed
-        } else if (_gamepad2.dpad_right) {
-            targetPosition = 0.56; // Target position when button is pressed
-        }
-
-        // If the current time exceeds the time interval for movement, update the position
-        if (currentTime - lastUpdateTime >= 1) {  // Control the update frequency (e.g., every 20ms)
-            lastUpdateTime = currentTime;
-
-            // Gradually move the servo to the target position
-            if (currentPosition < targetPosition) {
-                currentPosition += stepSize;  // Move towards target position
-                if (currentPosition > targetPosition) {  // Prevent overshooting
-                    currentPosition = targetPosition;
-                }
-            } else if (currentPosition > targetPosition) {
-                currentPosition -= stepSize;  // Move towards target position
-                if (currentPosition < targetPosition) {  // Prevent overshooting
-                    currentPosition = targetPosition;
-                }
-            }
-
-            // Set the new position to the servo
-            rd1.clawPivotLong.setPosition(currentPosition);
-
-            // Telemetry updates
-            telemetry.addData("Claw Pivot Position: ", currentPosition);
-            telemetry.update();
-        }
+        telemetry.addData("Joint deschis, plasat la pozitia: ", rd1.clawPivotLong.getPosition());
+        telemetry.update();
+    }else if (_gamepad2.back) {
+        rd1.clawPivotLong.setPosition(0.558);
+//            telemetry.addData("Incheietura inchisa, plasata la pozitia: ", rd1.clawPivotShort.getPosition());
+//            telemetry.update();
     }
+//        telemetry.addData("Joint plasat la pozitia: ", rd1.clawPivotLong.getPosition());
+//        telemetry.update();
+}
+
+    public void clawPivotLongClosed(Gamepad _gamepad2) {
+        if (_gamepad2.dpad_left && !isActive3) {
+            isActive3 = true;
+            lastActionTime3 = System.currentTimeMillis();
+            step3 = 0;
+        }
+        if (!isActive3) {
+            return;
+        }
+        long currentTime = System.currentTimeMillis();
+        if (step3 == 0 && currentTime - lastActionTime3 >= 0) {
+            rd1.clawPivotLong.setPosition(0.503);
+            lastActionTime3 = currentTime;
+            step3++;
+        } else if (step3 == 1 && currentTime - lastActionTime3 >= 300) {
+            rd1.clawPivotLong.setPosition(0.501);
+            isActive3 = false; // End the sequence
+        }
+//        telemetry.addData("Joint plasat la pozitia: ", rd1.clawPivotLong.getPosition());
+//        telemetry.update();
+    }
+
+//    private double currentPosition = 0.485; // Starting position (you can set this based on initial servo state)
+//    private double targetPosition = currentPosition; // Target position initialized to current position
+//    private double stepSize = 0.003; // Increment step for the servo (you can adjust this value for faster/slower movement)
+//    private long lastUpdateTime = System.nanoTime(); // Time reference to control speed
+//
+//    public void clawPivotLongController(Gamepad _gamepad2) {
+//        long currentTime = System.nanoTime();
+//        if (_gamepad2.dpad_left) {
+//            targetPosition = 0.485; // Target position when button is pressed
+//        } else if (_gamepad2.dpad_right) {
+//            targetPosition = 0.56; // Target position when button is pressed
+//        }
+//
+//        // If the current time exceeds the time interval for movement, update the position
+//        if (currentTime - lastUpdateTime >= 1) {  // Control the update frequency (e.g., every 20ms)
+//            lastUpdateTime = currentTime;
+//
+//            // Gradually move the servo to the target position
+//            if (currentPosition < targetPosition) {
+//                currentPosition += stepSize;  // Move towards target position
+//                if (currentPosition > targetPosition) {  // Prevent overshooting
+//                    currentPosition = targetPosition;
+//                }
+//            } else if (currentPosition > targetPosition) {
+//                currentPosition -= stepSize;  // Move towards target position
+//                if (currentPosition < targetPosition) {  // Prevent overshooting
+//                    currentPosition = targetPosition;
+//                }
+//            }
+//
+//            // Set the new position to the servo
+//            rd1.clawPivotLong.setPosition(currentPosition);
+//
+//            // Telemetry updates
+//            telemetry.addData("Claw Pivot Position: ", currentPosition);
+//            telemetry.update();
+//        }
+//    }
 
 
     public void outtakeFromIntakeController(Gamepad _gamepad2) {
@@ -137,8 +180,8 @@ public class Outtake {
             lastActionTime = currentTime;
             step++;
         } else if (step == 2 && currentTime - lastActionTime >= 100) {
-            rd1.clawPivotLong.setPosition(0.56);
-            rd1.clawPivotShort.setPosition(0.57);
+            rd1.clawPivotLong.setPosition(0.575);
+            rd1.clawPivotShort.setPosition(0.76);
             isActive = false; // End the sequence
         }
     }
@@ -159,8 +202,8 @@ public void outtakeCloseController(Gamepad _gamepad2) {
         lastActionTime1 = currentTime1;
         step1++;}
     else if (step1 == 1 && currentTime1 - lastActionTime1 >= 100){
-        rd1.clawPivotLong.setPosition(0.486);
-        rd1.clawPivotShort.setPosition(0.795);
+        rd1.clawPivotLong.setPosition(0.506);
+        rd1.clawPivotShort.setPosition(1);
         step1++;
     }
      else if (step1 == 2 && currentTime1 - lastActionTime1 >= 100) {
@@ -172,8 +215,8 @@ public void outtakeCloseController(Gamepad _gamepad2) {
         rd1.armLifterMotorRight.setPower(1);
         rd1.clawServoOuttake.setPosition(0.4789);
         step1++;
-    }else if (step1 == 3 && currentTime1 - lastActionTime1 >= 100) {
-        rd1.clawPivotLong.setPosition(0.485);
+    }else if (step1 == 3 && currentTime1 - lastActionTime1 >= 400) {
+        rd1.clawPivotLong.setPosition(0.501);
         isActive1 = false; // End the sequence
     }
     if(rd1.armLifterMotorLeft.getCurrentPosition()<=20 && rd1.armLifterMotorRight.getCurrentPosition()>=-20){
@@ -206,31 +249,50 @@ public void outtakeCloseController(Gamepad _gamepad2) {
             rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rd1.armLifterMotorLeft.setPower(-0.8);
             rd1.armLifterMotorRight.setPower(0.8);
-            rd1.clawPivotShort.setPosition(0.795);
+//            rd1.clawPivotShort.setPosition(0.795);
                 lastActionTime2 = currentTime2;
                 step2++;
         }
-        else if (step2 == 1 && currentTime2 - lastActionTime2 >= 900) {
+        else if (step2 == 1 && currentTime2 - lastActionTime2 >=1200) {
             rd1.clawServoOuttake.setPosition(0.4789); // Open the claw
             step2++;
         }
-         else if (step2 == 2 && currentTime2 - lastActionTime2 >= 600) {
-            rd1.clawServoOuttake.setPosition(0.5);
+         else if (step2 == 2 && currentTime2 - lastActionTime2 >= 300) {
+            rd1.armLifterMotorLeft.setTargetPosition(20);
+            rd1.armLifterMotorRight.setTargetPosition(-20);
+            rd1.armLifterMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rd1.armLifterMotorLeft.setPower(-1);
+            rd1.armLifterMotorRight.setPower(1);
             step2++;
         }
-        else if (step2 == 3 && currentTime2 - lastActionTime2 >= 100) {
-            rd1.clawPivotShort.setPosition(0.795);
-            rd1.clawPivotLong.setPosition(0.486);
+        else if (step2 == 3 && currentTime2 - lastActionTime2 >= 700) {
+//            rd1.clawPivotShort.setPosition(1);
+            rd1.clawPivotLong.setPosition(0.505);
             step2++;
         }
-        else if (step2 == 4 && currentTime2 - lastActionTime2 >= 100) {
-            rd1.clawPivotLong.setPosition(0.485);
-            step2++;
+        else if (step2 == 4 && currentTime2 - lastActionTime2 >= 400) {
+//            rd1.clawPivotLong.setPosition(0.485);
+            rd1.clawPivotShort.setPosition(1);
+            //  step2++;
+            isActive2 = false;
         }
-        else if (step2 == 5 && currentTime2 - lastActionTime2 >= 100) {
-            rd1.clawServoOuttake.setPosition(0.4789);
-            isActive2 = false; // End the sequence
-        }
+//        else if (step2 == 5 && currentTime2 - lastActionTime2 >= 600) {
+////            rd1.clawPivotLong.setPosition(0.485);
+//            rd1.clawPivotLong.setPosition(0.575);
+//            step2++;
+//            //isActive2 = false;
+//        }
+//        else if (step2 == 6 && currentTime2 - lastActionTime2 >= 600) {
+////            rd1.clawPivotLong.setPosition(0.485);
+//            rd1.clawPivotLong.setPosition(0.501);
+//            //step2++;
+//            isActive2 = false;
+//        }
+//        else if (step2 == 5 && currentTime2 - lastActionTime2 >= 100) {
+//            rd1.clawServoOuttake.setPosition(0.504);
+//            isActive2 = false; // End the sequence
+//        }
     }
 
 }

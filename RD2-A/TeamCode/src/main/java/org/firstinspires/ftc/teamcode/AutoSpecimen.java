@@ -454,7 +454,7 @@ public class AutoSpecimen extends LinearOpMode {
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Run op mode start");
-        Pose2d initialPose = new Pose2d(-17.36, 64.3, Math.toRadians(270));
+        Pose2d initialPose = new Pose2d(-17.27, 60.82, Math.toRadians(90.00));
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         ClawControl claws = new ClawControl(hardwareMap, telemetry);
@@ -467,10 +467,33 @@ public class AutoSpecimen extends LinearOpMode {
         Action trajectory0;
         Action trajectory1;
         Action trajectory2;
+        Action cageToSamples;
+        Action frontCage;
 
         telemetry.addData("Status", "innit completed");
         waitForStart();
         telemetry.addData("Status", "after wait start");
+
+        startToCage = drive.actionBuilder(new Pose2d(-17.27, 60.82, Math.toRadians(90.00)))
+                .splineToConstantHeading(new Vector2d(-6.59, 33.7), Math.toRadians(-74.18))
+                .build();
+
+        frontCage = drive.actionBuilder(new Pose2d(-6.59, 33.7, Math.toRadians(90.00)))
+                .splineToConstantHeading(new Vector2d(-6.59, 32.5), Math.toRadians(270.00))
+                .build();
+
+        cageToSamples = drive.actionBuilder(new Pose2d(-6.59, 32.5, Math.toRadians(90.00)))
+                .splineToLinearHeading(new Pose2d(-35.21, 34.05, Math.toRadians(270.00)), Math.toRadians(183.55))
+                .splineToLinearHeading(new Pose2d(-36.21, 18.31, Math.toRadians(270.00)), Math.toRadians(266.39))
+                .splineToLinearHeading(new Pose2d(-48.47, 15.83, Math.toRadians(270.00)), Math.toRadians(191.46))
+                .splineToLinearHeading(new Pose2d(-48.47, 59.24, Math.toRadians(270.00)), Math.toRadians(90.00))
+                .splineToLinearHeading(new Pose2d(-48.64, 12.51, Math.toRadians(270.00)), Math.toRadians(269.80))
+                .splineToLinearHeading(new Pose2d(-58.41, 15.83, Math.toRadians(270.00)), Math.toRadians(177.04))
+                .splineToLinearHeading(new Pose2d(-58.74, 59.24, Math.toRadians(270.00)), Math.toRadians(88.78))
+                .splineToLinearHeading(new Pose2d(-58.58, 13.01, Math.toRadians(270.00)), Math.toRadians(-89.79))
+                .build();
+
+
 
 //        Action specimenStartToCage = drive.actionBuilder(new Pose2d(-17.36, 64.3, Math.toRadians(90.00)))
 //                .setTangent(Math.atan2(34.66 - 61.68, -3.85 - (-17.36))) // Calculate tangent for diagonal motion
@@ -487,10 +510,6 @@ public class AutoSpecimen extends LinearOpMode {
 //                .splineToConstantHeading(new Vector2d(-57.18, 59.36), Math.toRadians(90.23))
 //                .build();
 
-
-trajectory0 = drive.actionBuilder(new Pose2d(-17.36, 64.3, Math.toRadians(270)))
-        .splineToConstantHeading(new Vector2d(-17.36, 63.3), Math.toRadians(270))
-        .build();
 
 
 //        startToCage = drive.actionBuilder(new Pose2d(-6.32, 64.32, Math.toRadians(90.00)))
@@ -581,25 +600,33 @@ trajectory0 = drive.actionBuilder(new Pose2d(-17.36, 64.3, Math.toRadians(270)))
         telemetry.addData("Status", "before actions");
         Actions.runBlocking(
                 new SequentialAction(
-                        claws.intakeClawTwist1()
-                        //trajectory0
-                        //claws.outtakeClawPivotShortClose()
-                        //claws.intakeArmOpen()
-//                        claws.intakeArmClose(),
-//                        claws.intakeClawJointUp(),
-//                        new SleepAction(2),
-//                        claws.intakeClawJointDown(),
-//                        claws.intakeClawOpen(),
-//                        new SleepAction(2),
-//                        claws.intakeClawClose()
-
-//                        new ParallelAction(
-//                        startToCage,
-//                        lift.liftUp()
-//                        ),
-//                        new SleepAction(2),
-//                        lift.liftDown(),
-//                        trajectory1
+                        new ParallelAction(
+                                startToCage,
+                                lift.liftUp()
+                        ),
+                        new ParallelAction(
+                                claws.outtakeClawPivotLongOpen(),
+                                claws.outtakeClawPivotShortClose()
+                        ),
+                        new SleepAction(0.2),
+                        new ParallelAction(
+                                lift.liftDownMid(),
+                                new SequentialAction(
+                                        frontCage,
+                                        new SleepAction(0.5),
+                                        claws.outtakeClawOpen(),
+                                        new SleepAction(0.4),
+                                        claws.outtakeClawClose(),
+                                        claws.outtakeClawPivotShortClose(),
+                                        claws.outtakeClawPivotLongClose(),
+                                        new SleepAction(0.1),
+                                        claws.outtakeClawOpen()
+                                )
+                        ),
+                        new ParallelAction(
+                                lift.liftDown(),
+                                cageToSamples
+                        )
                 )
         );
 

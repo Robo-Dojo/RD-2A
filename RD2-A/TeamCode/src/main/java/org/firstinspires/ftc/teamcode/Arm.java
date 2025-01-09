@@ -40,8 +40,8 @@ public class Arm {
 
         //} else
             if (_gamepad2.start) {
-            rd1.armLifterMotorLeft.setTargetPosition(1990);
-            rd1.armLifterMotorRight.setTargetPosition(-1990);
+            rd1.armLifterMotorLeft.setTargetPosition(1900);
+            rd1.armLifterMotorRight.setTargetPosition(-1900);
             rd1.armLifterMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rd1.armLifterMotorLeft.setPower(1);
