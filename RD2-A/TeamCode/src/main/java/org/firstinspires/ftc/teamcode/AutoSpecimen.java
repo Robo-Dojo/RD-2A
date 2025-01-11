@@ -3,11 +3,15 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.AngularVelConstraint;
+import com.acmerobotics.roadrunner.MinVelConstraint;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
+import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
+import com.acmerobotics.roadrunner.VelConstraint;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -19,6 +23,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import java.util.Arrays;
 
 @Config
 @Autonomous(name = "AutoSpecimen", group = "Autonomous")
@@ -42,7 +48,7 @@ public class AutoSpecimen extends LinearOpMode {
             liftRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             liftRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            telemetry = telemetry;
+            Lift.telemetry = telemetry;
         }
 
         public static class LiftUp implements Action {
@@ -342,7 +348,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class OuttakeClawOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawServoOuttake.setPosition(0.4789);
+                clawServoOuttake.setPosition(0.48);
                 return false;
             }
         }
@@ -353,7 +359,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class OuttakeClawClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawServoOuttake.setPosition(0.5);
+                clawServoOuttake.setPosition(0.56);
                 return false;
             }
         }
@@ -366,7 +372,7 @@ public class AutoSpecimen extends LinearOpMode {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
                 //0.52
-                clawPivotShort.setPosition(0.57);
+                clawPivotShort.setPosition(0.76);
                 return false;
             }
         }
@@ -400,7 +406,7 @@ public class AutoSpecimen extends LinearOpMode {
         public static class OuttakeClawPivotLongOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                clawPivotLong.setPosition(0.56);
+                clawPivotLong.setPosition(0.57);
                 return false;
             }
         }
@@ -454,7 +460,7 @@ public class AutoSpecimen extends LinearOpMode {
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Run op mode start");
-        Pose2d initialPose = new Pose2d(-17.27, 60.82, Math.toRadians(90.00));
+        Pose2d initialPose = new Pose2d(-17.27, 61.82, Math.toRadians(90.00));
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         ClawControl claws = new ClawControl(hardwareMap, telemetry);
@@ -467,30 +473,60 @@ public class AutoSpecimen extends LinearOpMode {
         Action trajectory0;
         Action trajectory1;
         Action trajectory2;
-        Action cageToSamples;
+        Action cageToSample;
+        Action toSample1;
+        Action toSample2;
         Action frontCage;
+        Action samplesToHumanPlayer;
+        Action humanPlayerToCage;
 
         telemetry.addData("Status", "innit completed");
         waitForStart();
         telemetry.addData("Status", "after wait start");
+        VelConstraint vel45 = new MinVelConstraint(Arrays.asList(
+                new TranslationalVelConstraint(45),
+                new AngularVelConstraint(2)
+        ));
 
-        startToCage = drive.actionBuilder(new Pose2d(-17.27, 60.82, Math.toRadians(90.00)))
-                .splineToConstantHeading(new Vector2d(-6.59, 33.7), Math.toRadians(-74.18))
+        VelConstraint vel40 = new MinVelConstraint(Arrays.asList(
+                new TranslationalVelConstraint(40),
+                new AngularVelConstraint(2)
+        ));
+
+        startToCage = drive.actionBuilder(new Pose2d(-17.27, 61.82, Math.toRadians(90.00)))
+                .splineToConstantHeading(new Vector2d(-6.59, 34.2), Math.toRadians(-74.18))
                 .build();
 
-        frontCage = drive.actionBuilder(new Pose2d(-6.59, 33.7, Math.toRadians(90.00)))
+        frontCage = drive.actionBuilder(new Pose2d(-6.59, 34.2, Math.toRadians(90.00)))
                 .splineToConstantHeading(new Vector2d(-6.59, 32.5), Math.toRadians(270.00))
                 .build();
 
-        cageToSamples = drive.actionBuilder(new Pose2d(-6.59, 32.5, Math.toRadians(90.00)))
-                .splineToLinearHeading(new Pose2d(-35.21, 34.05, Math.toRadians(270.00)), Math.toRadians(183.55))
-                .splineToLinearHeading(new Pose2d(-36.21, 18.31, Math.toRadians(270.00)), Math.toRadians(266.39))
-                .splineToLinearHeading(new Pose2d(-48.47, 15.83, Math.toRadians(270.00)), Math.toRadians(191.46))
-                .splineToLinearHeading(new Pose2d(-48.47, 59.24, Math.toRadians(270.00)), Math.toRadians(90.00))
-                .splineToLinearHeading(new Pose2d(-48.64, 12.51, Math.toRadians(270.00)), Math.toRadians(269.80))
-                .splineToLinearHeading(new Pose2d(-58.41, 15.83, Math.toRadians(270.00)), Math.toRadians(177.04))
-                .splineToLinearHeading(new Pose2d(-58.74, 59.24, Math.toRadians(270.00)), Math.toRadians(88.78))
-                .splineToLinearHeading(new Pose2d(-58.58, 13.01, Math.toRadians(270.00)), Math.toRadians(-89.79))
+        cageToSample = drive.actionBuilder(new Pose2d(-6.59, 32.5, Math.toRadians(90.00)))
+                .splineToLinearHeading(new Pose2d(-20.96, 42.17, Math.toRadians(90.00)), Math.toRadians(143.29))
+                .splineToLinearHeading(new Pose2d(-36.21, 39.85, Math.toRadians(90.00)), Math.toRadians(192.60))
+                .splineToLinearHeading(new Pose2d(-35.54, 22.29, Math.toRadians(90.00)), Math.toRadians(-80.13))
+                .splineToLinearHeading(new Pose2d(-47, 19.14, Math.toRadians(90.00)), Math.toRadians(182.44), vel45)
+                //.splineToLinearHeading(new Pose2d(-49.13, 57.58, Math.toRadians(90.00)), Math.toRadians(91.46))
+                .build();
+
+        toSample1 = drive.actionBuilder(new Pose2d(-47, 19.14, Math.toRadians(90.00)))
+                .splineToLinearHeading(new Pose2d(-47.30, 47, Math.toRadians(90.00)), Math.toRadians(91.46))
+                .splineToLinearHeading(new Pose2d(-46, 19.20, Math.toRadians(90.00)), Math.toRadians(270.00), vel45)
+                .build();
+        toSample2 = drive.actionBuilder(new Pose2d(-46, 19.20, Math.toRadians(90.00)))
+                .splineToLinearHeading(new Pose2d(-48, 19.20, Math.toRadians(90.00)), Math.toRadians(180.00), vel40)
+//                .splineToLinearHeading(new Pose2d(-58.41, 47, Math.toRadians(90.00)), Math.toRadians(90.0))
+//                .splineToLinearHeading(new Pose2d(-58.41, 36.04, Math.toRadians(90.00)), Math.toRadians(270.00))
+//                .splineToLinearHeading(new Pose2d(-47, 32.89, Math.toRadians(90.00)), Math.toRadians(-12.99), vel45)
+                .build();
+
+        samplesToHumanPlayer = drive.actionBuilder(new Pose2d(-58.58, 13.01, Math.toRadians(270.00)))
+                .splineToLinearHeading(new Pose2d(-47.97, 37.29, Math.toRadians(270.00)), Math.toRadians(58.86))
+                .splineToLinearHeading(new Pose2d(-48.31, 60.99, Math.toRadians(270.00)), Math.toRadians(90.00),vel40)
+                .build();
+        humanPlayerToCage = drive.actionBuilder(new Pose2d(-48.31, 60.99, Math.toRadians(270.00)))
+                .splineToLinearHeading(new Pose2d(-14.33, 50.79, Math.toRadians(90.00)), Math.toRadians(-41.37))
+                .splineToLinearHeading(new Pose2d(-7.54, 34.5, Math.toRadians(90.00)), Math.toRadians(-33.69))
                 .build();
 
 
@@ -585,7 +621,13 @@ public class AutoSpecimen extends LinearOpMode {
 
 
         // actions that need to happen on init; for instance, a claw tightening.
-        //Actions.runBlocking(claws.outtakeClawClose());
+        Actions.runBlocking(
+                new ParallelAction(
+                        claws.outtakeClawClose(),
+                        claws.intakeArmClose(),
+                        claws.intakeClawOpen()
+                )
+        );
 
 
         while (!isStopRequested() && !opModeIsActive()) { // Asta actioneaza ca un Init la Autonomie
@@ -625,8 +667,15 @@ public class AutoSpecimen extends LinearOpMode {
                         ),
                         new ParallelAction(
                                 lift.liftDown(),
-                                cageToSamples
-                        )
+                                cageToSample
+                        ),
+                        toSample1,
+                        new SleepAction(0.1),
+                        toSample2
+//                        new SleepAction(0.8),
+//                        samplesToHumanPlayer
+
+
                 )
         );
 

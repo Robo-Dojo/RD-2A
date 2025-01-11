@@ -33,38 +33,38 @@ public class Outtake {
     }
 
     public void clawOuttakeServoController(Gamepad _gamepad2) {
-//        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServoOuttake.getPosition());
-//        telemetry.update();
+        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServoOuttake.getPosition());
+        telemetry.update();
         if (_gamepad2.a) {
-            rd1.clawServoOuttake.setPosition(0.4789);
-//            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServoOuttake.getPosition());
-//            telemetry.update();
+            rd1.clawServoOuttake.setPosition(0.48);
+            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.clawServoOuttake.getPosition());
+            telemetry.update();
         }
         else if (_gamepad2.y) {
             rd1.clawServoOuttake.setPosition(0.56);
-//            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServoOuttake.getPosition());
-//            telemetry.update();
+            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.clawServoOuttake.getPosition());
+            telemetry.update();
         }
-//        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServoOuttake.getPosition());
-//        telemetry.update();
+        telemetry.addData("Gheara plasata la pozitia: ", rd1.clawServoOuttake.getPosition());
+        telemetry.update();
     }
 
     public void clawPivotShortController(Gamepad _gamepad2) {
-//        telemetry.addData("Incheietura plasata la pozitia: ", rd1.clawPivotShort.getPosition());
-//        telemetry.update();
+        telemetry.addData("Incheietura plasata la pozitia: ", rd1.clawPivotShort.getPosition());
+        telemetry.update();
         if (_gamepad2.x) {
-            //795
+            //95
             rd1.clawPivotShort.setPosition(1);
-//            telemetry.addData("Incheietura deschisa, plasata la pozitia: ", rd1.clawPivotShort.getPosition());
-//            telemetry.update();
+            telemetry.addData("Incheietura deschisa, plasata la pozitia: ", rd1.clawPivotShort.getPosition());
+            telemetry.update();
         } else if (_gamepad2.b) {
             rd1.clawPivotShort.setPosition(0.76);
-//            telemetry.addData("Incheietura inchisa, plasata la pozitia: ", rd1.clawPivotShort.getPosition());
-//            telemetry.update();
+            telemetry.addData("Incheietura inchisa, plasata la pozitia: ", rd1.clawPivotShort.getPosition());
+            telemetry.update();
         }
 
-//        telemetry.addData("Incheietura plasata la pozitia: ", rd1.clawPivotShort.getPosition());
-//        telemetry.update();
+        telemetry.addData("Incheietura plasata la pozitia: ", rd1.clawPivotShort.getPosition());
+        telemetry.update();
     }
 
 
@@ -92,11 +92,11 @@ public void clawPivotLongOpen(Gamepad _gamepad2) {
         telemetry.update();
     }else if (_gamepad2.back) {
         rd1.clawPivotLong.setPosition(0.558);
-//            telemetry.addData("Incheietura inchisa, plasata la pozitia: ", rd1.clawPivotShort.getPosition());
-//            telemetry.update();
+            telemetry.addData("Incheietura inchisa, plasata la pozitia: ", rd1.clawPivotShort.getPosition());
+            telemetry.update();
     }
-//        telemetry.addData("Joint plasat la pozitia: ", rd1.clawPivotLong.getPosition());
-//        telemetry.update();
+        telemetry.addData("Joint plasat la pozitia: ", rd1.clawPivotLong.getPosition());
+        telemetry.update();
 }
 
     public void clawPivotLongClosed(Gamepad _gamepad2) {
@@ -117,8 +117,8 @@ public void clawPivotLongOpen(Gamepad _gamepad2) {
             rd1.clawPivotLong.setPosition(0.501);
             isActive3 = false; // End the sequence
         }
-//        telemetry.addData("Joint plasat la pozitia: ", rd1.clawPivotLong.getPosition());
-//        telemetry.update();
+        telemetry.addData("Joint plasat la pozitia: ", rd1.clawPivotLong.getPosition());
+        telemetry.update();
     }
 
 //    private double currentPosition = 0.485; // Starting position (you can set this based on initial servo state)
@@ -172,7 +172,7 @@ public void clawPivotLongOpen(Gamepad _gamepad2) {
         }
         long currentTime = System.currentTimeMillis();
         if (step == 0 && currentTime - lastActionTime >= 0) {
-            rd1.clawServoOuttake.setPosition(0.51);
+            rd1.clawServoOuttake.setPosition(0.56);
             lastActionTime = currentTime;
             step++;
         } else if (step == 1 && currentTime - lastActionTime >= 100) {
@@ -198,12 +198,12 @@ public void outtakeCloseController(Gamepad _gamepad2) {
     }
     long currentTime1 = System.currentTimeMillis();
     if (step1 == 0 && currentTime1 - lastActionTime1 >= 0) {
-        rd1.clawServoOuttake.setPosition(0.5);
+        rd1.clawServoOuttake.setPosition(0.56);
         lastActionTime1 = currentTime1;
         step1++;}
     else if (step1 == 1 && currentTime1 - lastActionTime1 >= 100){
         rd1.clawPivotLong.setPosition(0.506);
-        rd1.clawPivotShort.setPosition(1);
+        rd1.clawPivotShort.setPosition(0.95);
         step1++;
     }
      else if (step1 == 2 && currentTime1 - lastActionTime1 >= 100) {
@@ -213,7 +213,7 @@ public void outtakeCloseController(Gamepad _gamepad2) {
         rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rd1.armLifterMotorLeft.setPower(-1);
         rd1.armLifterMotorRight.setPower(1);
-        rd1.clawServoOuttake.setPosition(0.4789);
+        rd1.clawServoOuttake.setPosition(0.48);
         step1++;
     }else if (step1 == 3 && currentTime1 - lastActionTime1 >= 400) {
         rd1.clawPivotLong.setPosition(0.501);
@@ -227,19 +227,13 @@ public void outtakeCloseController(Gamepad _gamepad2) {
 
     public void outtakeSpecimenController(Gamepad _gamepad2) {
         if (_gamepad2.dpad_up && !isActive2) {
-            // Start the sequence
             isActive2 = true;
             lastActionTime2 = System.currentTimeMillis();
             step2 = 0;
-
-            // Set the target positions for the sliders
-
         }
-
         if (!isActive2) {
-            return; // Do nothing if the sequence is not active
+            return;
         }
-
         long currentTime2 = System.currentTimeMillis();
 
         if (step2 == 0 && currentTime2 - lastActionTime1 >= 0) {
@@ -249,12 +243,11 @@ public void outtakeCloseController(Gamepad _gamepad2) {
             rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rd1.armLifterMotorLeft.setPower(-0.8);
             rd1.armLifterMotorRight.setPower(0.8);
-//            rd1.clawPivotShort.setPosition(0.795);
                 lastActionTime2 = currentTime2;
                 step2++;
         }
         else if (step2 == 1 && currentTime2 - lastActionTime2 >=1200) {
-            rd1.clawServoOuttake.setPosition(0.4789); // Open the claw
+            rd1.clawServoOuttake.setPosition(0.48); // Open the claw
             step2++;
         }
          else if (step2 == 2 && currentTime2 - lastActionTime2 >= 300) {
@@ -267,32 +260,14 @@ public void outtakeCloseController(Gamepad _gamepad2) {
             step2++;
         }
         else if (step2 == 3 && currentTime2 - lastActionTime2 >= 700) {
-//            rd1.clawPivotShort.setPosition(1);
             rd1.clawPivotLong.setPosition(0.505);
             step2++;
         }
         else if (step2 == 4 && currentTime2 - lastActionTime2 >= 400) {
-//            rd1.clawPivotLong.setPosition(0.485);
-            rd1.clawPivotShort.setPosition(1);
-            //  step2++;
+            rd1.clawPivotShort.setPosition(0.95);
             isActive2 = false;
         }
-//        else if (step2 == 5 && currentTime2 - lastActionTime2 >= 600) {
-////            rd1.clawPivotLong.setPosition(0.485);
-//            rd1.clawPivotLong.setPosition(0.575);
-//            step2++;
-//            //isActive2 = false;
-//        }
-//        else if (step2 == 6 && currentTime2 - lastActionTime2 >= 600) {
-////            rd1.clawPivotLong.setPosition(0.485);
-//            rd1.clawPivotLong.setPosition(0.501);
-//            //step2++;
-//            isActive2 = false;
-//        }
-//        else if (step2 == 5 && currentTime2 - lastActionTime2 >= 100) {
-//            rd1.clawServoOuttake.setPosition(0.504);
-//            isActive2 = false; // End the sequence
-//        }
+
     }
 
 }

@@ -31,7 +31,7 @@ public class  Intake {
 
     }
 
-    private boolean isClawOpen = true; // Track whether the claw is open
+    private boolean isClawOpen = true;
 
     public void clawServoController(Gamepad _gamepad1) {
         if (_gamepad1.right_bumper) {
@@ -44,17 +44,16 @@ public class  Intake {
             }
 
             while (_gamepad1.right_bumper) {
-                // Wait for the button to be released
+
             }
         }
     }
 
 
     // control glisiere orizontale
-    private boolean isIntakeOpen = false; // Track whether the intake is open
+    private boolean isIntakeOpen = false;
 
     public void intakeController(Gamepad _gamepad1) {
-        // Check for right bumper press to toggle intake state
         if (_gamepad1.left_bumper) {
             if (isIntakeOpen) {
                 // Close the intake
@@ -65,40 +64,18 @@ public class  Intake {
                 // Open the intake
                 rd1.intakeLeft.setPosition(0.505);
                 rd1.intakeRight.setPosition(0.48);
-                isIntakeOpen = true; // Update state
+                isIntakeOpen = true;
             }
 
             while (_gamepad1.left_bumper) {
-                // Wait for the button to be released
+
             }
         }
     }
 
 
-//    public void twisterServoController(Gamepad _gamepad2) {
-//        telemetry.addData("Gheara plasata la pozitia: ", rd1.twisterServo.getPosition());
-//        telemetry.update();
-//        if (_gamepad2.dpad_right) {
-//            rd1.twisterServo.setPosition(0.48);
-////            telemetry.addData("Gheara deschisa, plasata la pozitia: ", rd1.twisterServo.getPosition());
-////            telemetry.update();
-//
-//        } else if (_gamepad2.dpad_up) {
-//            rd1.twisterServo.setPosition(0.5048);
-////            telemetry.addData("Gheara inchisa, plasata la pozitia: ", rd1.twisterServo.getPosition());
-////            telemetry.update();
-//        } else if (_gamepad2.dpad_left) {
-//            rd1.twisterServo.setPosition(0.525);
-//
-//        }
-//        //telemetry.addData("Gheara plasata la pozitia: ", rd1.twisterServo.getPosition());
-//        //telemetry.update();
-//
-//    }
-
     public void twisterServoController(Gamepad _gamepad1) {
-        if (isIntakeClosing) return; // Prevent adjustments while intake is closing
-
+        if (isIntakeClosing) return;
         telemetry.addData("Rotatie gheara la pozitia: ", rd1.twisterServo.getPosition());
         telemetry.update();
         if (_gamepad1.dpad_right && (middleAngleTwisterPosition + intakeTwisterIncrementor < 0.57)) {
@@ -125,23 +102,20 @@ public class  Intake {
         telemetry.update();
         if (_gamepad1.b) {
             rd1.clawServoJoint.setPosition(0.52);
-            //52
-//            telemetry.addData("Joint inchis, plasat la pozitia: ", rd1.clawServoJoint.getPosition());
-//            telemetry.update();
-        } else
-        if (_gamepad1.y) {
+            telemetry.addData("Joint inchis, plasat la pozitia: ", rd1.clawServoJoint.getPosition());
+            telemetry.update();
+        } else if (_gamepad1.y) {
             rd1.clawServoJoint.setPosition(0.566);
-            //568
-//            telemetry.addData("Joint deschis, plasat la pozitia: ", rd1.clawServoJoint.getPosition());
-//            telemetry.update();
+            telemetry.addData("Joint deschis, plasat la pozitia: ", rd1.clawServoJoint.getPosition());
+            telemetry.update();
         }
-        //telemetry.addData("Joint plasat la pozitia: ", rd1.clawServoJoint.getPosition());
-        //telemetry.update();
+        telemetry.addData("Joint plasat la pozitia: ", rd1.clawServoJoint.getPosition());
+        telemetry.update();
     }
 
     public void intakeClose(Gamepad _gamepad1) {
         if (_gamepad1.dpad_down && !isActive) {
-            // Start the sequence
+
             isActive = true;
             isIntakeClosing = true; // Lock the twister controller
             lastActionTime = System.currentTimeMillis();
@@ -165,12 +139,12 @@ public class  Intake {
             rd1.intakeRight.setPosition(0.48);
             lastActionTime = currentTime;
             step++;
-        } else if (step == 3 && currentTime - lastActionTime >= 700) {
+        } else if (step == 3 && currentTime - lastActionTime >= 500) {
             rd1.clawServoJoint.setPosition(0.465);
             rd1.twisterServo.setPosition(middleAngleTwisterPosition);
             intakeTwisterIncrementor = 0;
-            isActive = false; // End the sequence
-            isIntakeClosing = false; // Unlock the twister controller
+            isActive = false;
+            isIntakeClosing = false;
         }
     }
 
