@@ -203,7 +203,7 @@ public void outtakeCloseController(Gamepad _gamepad2) {
         step1++;}
     else if (step1 == 1 && currentTime1 - lastActionTime1 >= 100){
         rd1.clawPivotLong.setPosition(0.506);
-        rd1.clawPivotShort.setPosition(0.95);
+        rd1.clawPivotShort.setPosition(1.0);
         step1++;
     }
      else if (step1 == 2 && currentTime1 - lastActionTime1 >= 100) {
@@ -264,7 +264,7 @@ public void outtakeCloseController(Gamepad _gamepad2) {
             step2++;
         }
         else if (step2 == 4 && currentTime2 - lastActionTime2 >= 400) {
-            rd1.clawPivotShort.setPosition(0.95);
+            rd1.clawPivotShort.setPosition(1.0);
             isActive2 = false;
         }
 

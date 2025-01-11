@@ -23,13 +23,15 @@ public class Arm {
         // telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
         // telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
         // telemetry.update();
-        if (_gamepad2.dpad_down && _gamepad2.start) {
-            rd1.armLifterMotorLeft.setTargetPosition(2100);
-            rd1.armLifterMotorRight.setTargetPosition(-2100);
+        if (_gamepad2.right_bumper) {
+            rd1.armLifterMotorLeft.setTargetPosition(2440);
+            rd1.armLifterMotorRight.setTargetPosition(-2440);
             rd1.armLifterMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rd1.armLifterMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rd1.armLifterMotorLeft.setPower(-1);
             rd1.armLifterMotorRight.setPower(1);
+            rd1.intakeLeft.setPosition(0.49);
+            rd1.intakeRight.setPosition(0.495);
 
         } else
             if (_gamepad2.start) {
@@ -43,12 +45,6 @@ public class Arm {
     }
 
     public void armLifter(Gamepad _gamepad2) {
-         telemetry.addData("Pozitie vipere1:", rd1.armLifterMotorLeft.getCurrentPosition());
-         telemetry.addData("Pozitie vipere2:", rd1.armLifterMotorRight.getCurrentPosition());
-         telemetry.update();
-         rd1.armLifterMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rd1.armLifterMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
         if (_gamepad2.right_trigger>0) {
             rd1.armLifterMotorLeft.setTargetPosition(4200);
             rd1.armLifterMotorRight.setTargetPosition(-4200);

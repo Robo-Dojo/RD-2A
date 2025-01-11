@@ -396,7 +396,7 @@ public class AutoBasket extends LinearOpMode {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
                 //0.77     1
-                clawPivotShort.setPosition(0.95);
+                clawPivotShort.setPosition(0.99);
                 return false;
             }
         }
@@ -432,11 +432,14 @@ public class AutoBasket extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        telemetry.addData("Status", "Run op mode start");
+
+        //var codeVersion = 1.0;
+
+        //telemetry.addData("Status", "Run op mode start, v" + codeVersion);
+
+        //61.82
         Pose2d initialPose = new Pose2d(17.60, 61.82, Math.toRadians(90.00));
-//
-//
-//
+
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         ClawControl claws = new ClawControl(hardwareMap, telemetry);
         Lift lift = new Lift(hardwareMap, telemetry);
@@ -457,23 +460,34 @@ public class AutoBasket extends LinearOpMode {
         Action basketToPark;
         Action park;
 
-        startToCage = drive.actionBuilder(new Pose2d(17.60, 61.82, Math.toRadians(90.00)))
-                .splineToConstantHeading(new Vector2d(9.76, 34.5), Math.toRadians(270.00))
+        // begin
+        Pose2d beginPose = new Pose2d(17.60, 61.82, Math.toRadians(90.00));
+        Vector2d cageVector = new Vector2d(9.76, 34.5);
+        double cageTangent = Math.toRadians(270.00);
+
+        // front cage
+        Pose2d frontCagePose = new Pose2d(9.76, 34.5, Math.toRadians(90.00));
+        Vector2d frontCageVector = new Vector2d(9.76, 32.85);
+        double frontCageTangent = Math.toRadians(270.00);
+
+        startToCage = drive.actionBuilder(beginPose)
+                .splineToConstantHeading(cageVector, cageTangent)
                 .build();                                        //33.9
-        frontCage = drive.actionBuilder(new Pose2d(9.76, 34.5, Math.toRadians(90.00)))
-                .splineToConstantHeading(new Vector2d(9.76, 32.85), Math.toRadians(270.00))
-                .build();                                       //32.5
+        frontCage = drive.actionBuilder(frontCagePose)
+                .splineToConstantHeading(frontCageVector, frontCageTangent)
+                .build();
+        //32.5
         backCage = drive.actionBuilder(new Pose2d(9.76, 32.85, Math.toRadians(90.00)))
                 .splineToConstantHeading(new Vector2d(9.76, 38), Math.toRadians(270.00))
                 .build();
         cageToSample = drive.actionBuilder(new Pose2d(9.76, 38, Math.toRadians(90.00)))
                 .splineToSplineHeading(new Pose2d(32.40, 42.84, Math.toRadians(270.00)), Math.toRadians(10.44))
-                .splineToSplineHeading(new Pose2d(48, 48.9, Math.toRadians(270.00)), Math.toRadians(7.35))
+                .splineToSplineHeading(new Pose2d(49, 48, Math.toRadians(270.00)), Math.toRadians(7.35))
                 .build();
-        sampleToBasket = drive.actionBuilder(new Pose2d(48, 48.9, Math.toRadians(270.00)))
-                .splineToLinearHeading(new Pose2d(58, 55.5, Math.toRadians(231.34)), Math.toRadians(41.45))
+        sampleToBasket = drive.actionBuilder(new Pose2d(49, 48, Math.toRadians(270.00)))
+                .splineToLinearHeading(new Pose2d(58, 55.8, Math.toRadians(231.34)), Math.toRadians(41.45))
                 .build();                                  //58.2      //56.09
-        backBasket = drive.actionBuilder(new Pose2d(58, 55.5, Math.toRadians(231.34)))
+        backBasket = drive.actionBuilder(new Pose2d(58, 55.8, Math.toRadians(231.34)))
                 .splineToLinearHeading(new Pose2d(55.26, 53.2, Math.toRadians(231.34)), Math.toRadians(-66.37))
                 .build();
 
@@ -483,17 +497,17 @@ public class AutoBasket extends LinearOpMode {
         ));
 
         basketSample2 = drive.actionBuilder(new Pose2d(55.26, 53.2, Math.toRadians(231.34)))
-                .splineToLinearHeading(new Pose2d(60, 49.5, Math.toRadians(270.00)), Math.toRadians(-60.95), vel40)
+                .splineToLinearHeading(new Pose2d(60, 49, Math.toRadians(270.00)), Math.toRadians(-60.95), vel40)
                 .build();
 
-        sampleToBasket2 = drive.actionBuilder(new Pose2d(60, 49.5, Math.toRadians(270.00)))
+        sampleToBasket2 = drive.actionBuilder(new Pose2d(60, 49, Math.toRadians(270.00)))
                 .splineToLinearHeading(new Pose2d(58.2, 55.6, Math.toRadians(231.34)), Math.toRadians(94.67))
                 .build();                                //58.25           //56.09
         basketSample3 = drive.actionBuilder(new Pose2d(58.1, 55.6, Math.toRadians(231.34)))
                 .splineToLinearHeading(new Pose2d(46.32, 29.25, Math.toRadians(0.00)), Math.toRadians(-70.20))
-                .splineToLinearHeading(new Pose2d(48.32, 26.75, Math.toRadians(0.00)), Math.toRadians(-70.20), vel40)
+                .splineToLinearHeading(new Pose2d(49, 26.75, Math.toRadians(0.00)), Math.toRadians(-70.20), vel40)
                 .build();
-        sampleToBasket3 = drive.actionBuilder(new Pose2d(48.32, 26.75, Math.toRadians(0.00)))
+        sampleToBasket3 = drive.actionBuilder(new Pose2d(49, 26.75, Math.toRadians(0.00)))
                 .splineToLinearHeading(new Pose2d(58.1, 55.5, Math.toRadians(231.34)), Math.toRadians(67.80))
                 .build();
         //merge
